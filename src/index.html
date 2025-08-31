@@ -8,21 +8,39 @@
   <meta name="description" content="Jogo de palavras cruzadas estilo CodyCross com tema de Medicina Veterinária">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
-  <!-- 👇 Styles just for the IME input + small touch optimization -->
+  <!-- IME inputs (keyboard helpers) + touch optimizations -->
   <style>
-    /* Keep the hidden input “rendered” so mobile can open the keyboard */
+    /* Keep focusable and rendered; iOS won’t show KB if fully hidden */
     #ime-input {
       position: fixed;
       bottom: 0; left: 0;
-      width: 1px; height: 1px;
-      opacity: 0;
+      width: 20px; height: 20px;   /* tiny but reliable on iOS */
+      opacity: 0.01;               /* not 0 for iOS */
       background: transparent;
       border: 0;
       color: transparent;
       z-index: 10;
-      /* Prevent iOS zoom-on-focus */
-      font-size: 16px;
+      font-size: 16px;             /* prevents iOS zoom */
+      caret-color: transparent;
     }
+
+    /* iOS fallback: contenteditable element */
+    #ime-ce[contenteditable] {
+      position: fixed;
+      bottom: 0; left: 0;
+      width: 20px; height: 20px;
+      opacity: 0.01;
+      background: transparent;
+      border: 0;
+      z-index: 10;
+      font-size: 16px;
+      color: transparent;
+      caret-color: transparent;
+      outline: none;
+      -webkit-user-select: text;
+      user-select: text;
+    }
+
     /* Improves tap responsiveness on mobile */
     #crossword-container { touch-action: manipulation; }
   </style>
@@ -41,11 +59,11 @@
       <main class="game-board">
         <div id="crossword-container"></div>
 
-        <!-- 👇 IME input (hidden but focusable) to summon the mobile keyboard -->
+        <!-- Primary hidden input (Android/most browsers) -->
         <input
           id="ime-input"
           type="text"
-          inputmode="latin"
+          inputmode="text"
           autocapitalize="characters"
           autocomplete="off"
           autocorrect="off"
@@ -54,6 +72,9 @@
           enterkeyhint="next"
           aria-label="Entrada de letra do jogo"
         />
+
+        <!-- iOS fallback (contenteditable) -->
+        <div id="ime-ce" contenteditable="true" aria-label="Entrada de letra do jogo (iOS)"></div>
 
         <div class="vertical-word-display">
           <div id="vertical-word"></div>

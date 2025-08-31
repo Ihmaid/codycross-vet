@@ -3,17 +3,40 @@ import { GameEngine } from './core/engine/GameEngine';
 import { Level } from './core/models/Level';
 
 // ---------------- IME (mobile keyboard) helpers ----------------
-const ime = document.getElementById('ime-input') as HTMLInputElement | null;
+const isIOS =
+  /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1); // iPadOS
+
+const imeInput = document.getElementById('ime-input') as HTMLInputElement | null;
+const imeCE = document.getElementById('ime-ce') as HTMLDivElement | null;
 
 function focusIME() {
-  if (!ime) return;
-  ime.value = '';
-  // Focus must happen after a user gesture (tap)
-  setTimeout(() => ime.focus(), 0);
+  const el = (isIOS ? imeCE : imeInput) as HTMLElement | null;
+  if (!el) return;
+
+  // clear previous char
+  if (isIOS && imeCE) imeCE.textContent = '';
+  if (!isIOS && imeInput) imeInput.value = '';
+
+  // focus after user gesture
+  setTimeout(() => {
+    el.focus();
+    // place caret at end (helps Safari)
+    if (isIOS && imeCE) {
+      const range = document.createRange();
+      range.selectNodeContents(imeCE);
+      range.collapse(false);
+      const sel = window.getSelection();
+      sel?.removeAllRanges();
+      sel?.addRange(range);
+    } else if (imeInput && imeInput.setSelectionRange) {
+      imeInput.setSelectionRange(1, 1);
+    }
+  }, 0);
 }
 
 function dispatchKey(key: string) {
-  // Simulate real keyboard events so existing listeners work
+  // Simulate real key events so your existing listeners keep working
   const kd = new KeyboardEvent('keydown', { key, bubbles: true });
   const ku = new KeyboardEvent('keyup', { key, bubbles: true });
   window.dispatchEvent(kd);
@@ -21,39 +44,58 @@ function dispatchKey(key: string) {
 }
 
 function bindIME() {
-  if (!ime) return;
-
-  let composing = false;
-  ime.addEventListener('compositionstart', () => (composing = true));
-  ime.addEventListener('compositionend', (e) => {
-    composing = false;
-    const v = (e.target as HTMLInputElement).value;
-    if (v) {
+  // Path 1: standard <input> (Android/most browsers)
+  if (imeInput) {
+    let composing = false;
+    imeInput.addEventListener('compositionstart', () => (composing = true));
+    imeInput.addEventListener('compositionend', (e) => {
+      composing = false;
+      const v = (e.target as HTMLInputElement).value;
+      if (v) {
+        dispatchKey(v.slice(-1).toUpperCase());
+        imeInput.value = '';
+      }
+    });
+    imeInput.addEventListener('input', () => {
+      if (composing) return;
+      const v = imeInput.value;
+      if (!v) return;
       dispatchKey(v.slice(-1).toUpperCase());
-      ime.value = '';
-    }
-  });
+      imeInput.value = '';
+    });
+    imeInput.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Backspace') {
+        ev.preventDefault();
+        dispatchKey('Backspace');
+        imeInput.value = '';
+      } else if (ev.key === 'Enter') {
+        ev.preventDefault();
+        dispatchKey('Enter');
+        imeInput.value = '';
+      }
+    });
+  }
 
-  ime.addEventListener('input', () => {
-    if (composing) return;
-    const v = ime.value;
-    if (!v) return;
-    dispatchKey(v.slice(-1).toUpperCase());
-    ime.value = '';
-  });
-
-  ime.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Backspace') {
-      ev.preventDefault();
-      dispatchKey('Backspace');
-      ime.value = '';
-    } else if (ev.key === 'Enter') {
-      // Optional: treat Enter as "next"
-      ev.preventDefault();
-      dispatchKey('Enter');
-      ime.value = '';
-    }
-  });
+  // Path 2: iOS contenteditable fallback
+  if (imeCE) {
+    imeCE.addEventListener('input', () => {
+      const txt = (imeCE.textContent || '').trim();
+      if (!txt) return;
+      dispatchKey(txt.slice(-1).toUpperCase());
+      imeCE.textContent = '';
+    });
+    imeCE.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Backspace') {
+        ev.preventDefault();
+        dispatchKey('Backspace');
+        imeCE.textContent = '';
+      } else if (ev.key === 'Enter') {
+        ev.preventDefault();
+        dispatchKey('Enter');
+        imeCE.textContent = '';
+      }
+    });
+  }
 }
 // ----------------------------------------------------------------
 
@@ -72,13 +114,13 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // Liga IME listeners (mobile)
+  // Liga IME (mobile)
   bindIME();
 
-  // Ao tocar no tabuleiro, garantir foco no IME (abre o teclado)
-  container.addEventListener('pointerdown', () => focusIME());
-  container.addEventListener('touchstart', () => focusIME(), { passive: true });
-  container.addEventListener('mousedown', () => focusIME());
+  // No mobile, focar o IME em eventos de gesto reais (touchend/click)
+  ['touchend', 'click'].forEach(evt =>
+    container.addEventListener(evt, () => focusIME(), { passive: true })
+  );
 
   container.classList.add('crossword-container-active');
 
@@ -101,7 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
         hintButton.addEventListener('click', () => {
           console.log("Botão de dica clicado");
           gameEngine.useHint();
-          // Mantém o teclado aberto após usar dica no mobile
           focusIME();
         });
       } else {
@@ -155,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const row = firstWord.position;
           const col = firstWord.intersectionIndex;
           console.log(`Selecionando primeira célula automaticamente: ${row}, ${col}`);
-          gameEngine.useHint(); // mantém seu comportamento atual
+          gameEngine.useHint();
           focusIME();
         } catch {
           // ignora se estrutura mudar
