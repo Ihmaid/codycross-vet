@@ -10,41 +10,59 @@ const isIOS =
 const imeInput = document.getElementById('ime-input') as HTMLInputElement | null;
 const imeCE = document.getElementById('ime-ce') as HTMLDivElement | null;
 
-function focusIME() {
+function focusIMEImmediate() {
   const el = (isIOS ? imeCE : imeInput) as HTMLElement | null;
   if (!el) return;
 
-  // clear previous char
   if (isIOS && imeCE) imeCE.textContent = '';
   if (!isIOS && imeInput) imeInput.value = '';
 
-  // focus after user gesture
-  setTimeout(() => {
-    el.focus();
-    // place caret at end (helps Safari)
-    if (isIOS && imeCE) {
-      const range = document.createRange();
-      range.selectNodeContents(imeCE);
-      range.collapse(false);
-      const sel = window.getSelection();
-      sel?.removeAllRanges();
-      sel?.addRange(range);
-    } else if (imeInput && imeInput.setSelectionRange) {
-      imeInput.setSelectionRange(1, 1);
-    }
-  }, 0);
+  // Focus synchronously in the same gesture (important for iOS)
+  el.focus();
+
+  // Put caret at end (helps Safari keep input active)
+  if (isIOS && imeCE) {
+    const range = document.createRange();
+    range.selectNodeContents(imeCE);
+    range.collapse(false);
+    const sel = window.getSelection();
+    sel?.removeAllRanges();
+    sel?.addRange(range);
+  } else if (imeInput && imeInput.setSelectionRange) {
+    imeInput.setSelectionRange(1, 1);
+  }
 }
 
+// Non-iOS: focusing can be async
+function focusIME() {
+  requestAnimationFrame(() => focusIMEImmediate());
+}
+
+// Simulate key events so existing listeners continue to work
 function dispatchKey(key: string) {
-  // Simulate real key events so your existing listeners keep working
   const kd = new KeyboardEvent('keydown', { key, bubbles: true });
   const ku = new KeyboardEvent('keyup', { key, bubbles: true });
   window.dispatchEvent(kd);
   window.dispatchEvent(ku);
 }
 
+// Prevent double typing: when IME is focused, block native keydowns.
+// (Our synthetic ones have isTrusted=false and pass through.)
+window.addEventListener(
+  'keydown',
+  (ev) => {
+    const active = document.activeElement;
+    const imeFocused = active === imeInput || active === imeCE;
+    if (imeFocused && ev.isTrusted) {
+      ev.stopImmediatePropagation();
+      ev.preventDefault();
+    }
+  },
+  true // capture phase
+);
+
 function bindIME() {
-  // Path 1: standard <input> (Android/most browsers)
+  // Path 1: <input> (Android/most browsers)
   if (imeInput) {
     let composing = false;
     imeInput.addEventListener('compositionstart', () => (composing = true));
@@ -117,10 +135,25 @@ document.addEventListener('DOMContentLoaded', () => {
   // Liga IME (mobile)
   bindIME();
 
-  // No mobile, focar o IME em eventos de gesto reais (touchend/click)
-  ['touchend', 'click'].forEach(evt =>
-    container.addEventListener(evt, () => focusIME(), { passive: true })
+  // Foco no IME em gestos do usuário
+  // iOS: foco síncrono no touchstart (precisa passive:false + preventDefault)
+  container.addEventListener(
+    'touchstart',
+    (ev) => {
+      if (isIOS) {
+        ev.preventDefault();
+        focusIMEImmediate();
+      }
+    },
+    { passive: false }
   );
+
+  // Android/desktop: pode ser assíncrono
+  container.addEventListener('touchend', () => {
+    if (!isIOS) focusIME();
+  }, { passive: true });
+
+  container.addEventListener('click', () => focusIME());
 
   container.classList.add('crossword-container-active');
 
