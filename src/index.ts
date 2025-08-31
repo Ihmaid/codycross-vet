@@ -10,6 +10,35 @@ const isIOS =
 const imeInput = document.getElementById('ime-input') as HTMLInputElement | null;
 const imeCE = document.getElementById('ime-ce') as HTMLDivElement | null;
 
+function keyToCodes(key: string) {
+  if (key === 'Backspace') return { keyCode: 8, which: 8, charCode: 0, code: 'Backspace' };
+  if (key === 'Enter')     return { keyCode: 13, which: 13, charCode: 13, code: 'Enter' };
+  const ch = (key || '').toUpperCase();
+  const kc = ch.length === 1 ? ch.charCodeAt(0) : 0;
+  return { keyCode: kc, which: kc, charCode: kc, code: kc ? `Key${ch}` : '' };
+}
+
+function fireKey(target: EventTarget, type: 'keydown'|'keypress'|'keyup', key: string) {
+  const { keyCode, which, charCode, code } = keyToCodes(key);
+  const e = new KeyboardEvent(type, { key, bubbles: true, cancelable: true });
+  try {
+    Object.defineProperty(e, 'keyCode',  { get: () => keyCode });
+    Object.defineProperty(e, 'which',    { get: () => which });
+    Object.defineProperty(e, 'charCode', { get: () => charCode });
+    if (code) Object.defineProperty(e, 'code', { get: () => code });
+  } catch {}
+  target.dispatchEvent(e);
+}
+
+function dispatchKeyEverywhere(key: string, container?: HTMLElement | null) {
+  [window, document, container].forEach(t => {
+    if (!t) return;
+    fireKey(t, 'keydown',  key);
+    fireKey(t, 'keypress', key);
+    fireKey(t, 'keyup',    key);
+  });
+}
+
 function focusIMEImmediate() {
   const el = (isIOS ? imeCE : imeInput) as HTMLElement | null;
   if (!el) return;
@@ -20,7 +49,7 @@ function focusIMEImmediate() {
   // Focus synchronously in the same gesture (important for iOS)
   el.focus();
 
-  // Put caret at end (helps Safari keep input active)
+  // Keep caret placed (helps Safari)
   if (isIOS && imeCE) {
     const range = document.createRange();
     range.selectNodeContents(imeCE);
@@ -33,36 +62,29 @@ function focusIMEImmediate() {
   }
 }
 
-// Non-iOS: focusing can be async
+// Non-iOS can be async
 function focusIME() {
   requestAnimationFrame(() => focusIMEImmediate());
 }
 
-// Simulate key events so existing listeners continue to work
-function dispatchKey(key: string) {
-  const kd = new KeyboardEvent('keydown', { key, bubbles: true });
-  const ku = new KeyboardEvent('keyup', { key, bubbles: true });
-  window.dispatchEvent(kd);
-  window.dispatchEvent(ku);
-}
-
-// Prevent double typing: when IME is focused, block native keydowns.
-// (Our synthetic ones have isTrusted=false and pass through.)
-window.addEventListener(
-  'keydown',
-  (ev) => {
+// Prevent double input: while IME focused, block *native* keydown/keypress (trusted events).
+function suppressNativeKeysWhenIMEFocused() {
+  const guard = (ev: KeyboardEvent) => {
     const active = document.activeElement;
     const imeFocused = active === imeInput || active === imeCE;
     if (imeFocused && ev.isTrusted) {
       ev.stopImmediatePropagation();
       ev.preventDefault();
     }
-  },
-  true // capture phase
-);
+  };
+  window.addEventListener('keydown',  guard, true);
+  window.addEventListener('keypress', guard, true);
+}
 
-function bindIME() {
-  // Path 1: <input> (Android/most browsers)
+function bindIME(container: HTMLElement) {
+  suppressNativeKeysWhenIMEFocused();
+
+  // <input> path (Android / most browsers)
   if (imeInput) {
     let composing = false;
     imeInput.addEventListener('compositionstart', () => (composing = true));
@@ -70,7 +92,7 @@ function bindIME() {
       composing = false;
       const v = (e.target as HTMLInputElement).value;
       if (v) {
-        dispatchKey(v.slice(-1).toUpperCase());
+        dispatchKeyEverywhere(v.slice(-1).toUpperCase(), container);
         imeInput.value = '';
       }
     });
@@ -78,38 +100,38 @@ function bindIME() {
       if (composing) return;
       const v = imeInput.value;
       if (!v) return;
-      dispatchKey(v.slice(-1).toUpperCase());
+      dispatchKeyEverywhere(v.slice(-1).toUpperCase(), container);
       imeInput.value = '';
     });
     imeInput.addEventListener('keydown', (ev) => {
       if (ev.key === 'Backspace') {
         ev.preventDefault();
-        dispatchKey('Backspace');
+        dispatchKeyEverywhere('Backspace', container);
         imeInput.value = '';
       } else if (ev.key === 'Enter') {
         ev.preventDefault();
-        dispatchKey('Enter');
+        dispatchKeyEverywhere('Enter', container);
         imeInput.value = '';
       }
     });
   }
 
-  // Path 2: iOS contenteditable fallback
+  // iOS contenteditable path
   if (imeCE) {
     imeCE.addEventListener('input', () => {
       const txt = (imeCE.textContent || '').trim();
       if (!txt) return;
-      dispatchKey(txt.slice(-1).toUpperCase());
+      dispatchKeyEverywhere(txt.slice(-1).toUpperCase(), container);
       imeCE.textContent = '';
     });
     imeCE.addEventListener('keydown', (ev) => {
       if (ev.key === 'Backspace') {
         ev.preventDefault();
-        dispatchKey('Backspace');
+        dispatchKeyEverywhere('Backspace', container);
         imeCE.textContent = '';
       } else if (ev.key === 'Enter') {
         ev.preventDefault();
-        dispatchKey('Enter');
+        dispatchKeyEverywhere('Enter', container);
         imeCE.textContent = '';
       }
     });
@@ -133,9 +155,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Liga IME (mobile)
-  bindIME();
+  bindIME(container);
 
-  // Foco no IME em gestos do usuário
   // iOS: foco síncrono no touchstart (precisa passive:false + preventDefault)
   container.addEventListener(
     'touchstart',
