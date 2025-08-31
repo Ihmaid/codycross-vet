@@ -1,0 +1,155 @@
+/* Responsividade */
+@import 'variables';
+
+/* Utilitários responsivos */
+.d-none {
+  display: none !important;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+/* Breakpoints */
+@media (min-width: $breakpoint-sm) {
+  .d-sm-none {
+    display: none !important;
+  }
+  
+  .d-sm-block {
+    display: block !important;
+  }
+  
+  .d-sm-flex {
+    display: flex !important;
+  }
+}
+
+@media (min-width: $breakpoint-md) {
+  .d-md-none {
+    display: none !important;
+  }
+  
+  .d-md-block {
+    display: block !important;
+  }
+  
+  .d-md-flex {
+    display: flex !important;
+  }
+}
+
+@media (min-width: $breakpoint-lg) {
+  .d-lg-none {
+    display: none !important;
+  }
+  
+  .d-lg-block {
+    display: block !important;
+  }
+  
+  .d-lg-flex {
+    display: flex !important;
+  }
+}
+
+/* Grid responsivo */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: $spacing-md;
+}
+
+.col-12 {
+  grid-column: span 12;
+}
+
+.col-6 {
+  grid-column: span 6;
+}
+
+.col-4 {
+  grid-column: span 4;
+}
+
+.col-3 {
+  grid-column: span 3;
+}
+
+@media (max-width: $breakpoint-md) {
+  .col-md-12 {
+    grid-column: span 12;
+  }
+  
+  .col-md-6 {
+    grid-column: span 6;
+  }
+  
+  .col-md-4 {
+    grid-column: span 4;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .col-sm-12 {
+    grid-column: span 12;
+  }
+  
+  .col-sm-6 {
+    grid-column: span 6;
+  }
+  
+  .grid {
+    gap: $spacing-sm;
+  }
+}
+
+/* Ajustes responsivos para o jogo */
+@media (max-width: $breakpoint-md) {
+  .game-board {
+    padding: $spacing-sm;
+  }
+  
+  .clue-container {
+    max-width: 100%;
+  }
+  
+  .header {
+    padding: 0 $spacing-sm;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .game-board {
+    padding: $spacing-xs;
+  }
+  
+  .btn {
+    padding: $spacing-xs $spacing-sm;
+    font-size: $font-size-small;
+  }
+  
+  .crossword-container {
+    max-height: 60vh;
+  }
+}
+
+/* Orientação do dispositivo */
+@media (orientation: landscape) and (max-height: 500px) {
+  .header {
+    height: 40px;
+  }
+  
+  .footer {
+    height: 30px;
+  }
+  
+  .game-board {
+    padding-top: $spacing-xs;
+    padding-bottom: $spacing-xs;
+  }
+}

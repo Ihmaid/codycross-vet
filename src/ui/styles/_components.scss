@@ -1,0 +1,227 @@
+/* Componentes */
+@import 'variables';
+
+/* Botões */
+.btn {
+  display: inline-block;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-base;
+  line-height: 1.5;
+  border-radius: $border-radius-sm;
+  transition: all $transition-speed ease-in-out;
+  cursor: pointer;
+  
+  &:focus, &:hover {
+    text-decoration: none;
+    outline: 0;
+  }
+  
+  &:disabled {
+    opacity: 0.65;
+    pointer-events: none;
+  }
+}
+
+.btn-primary {
+  color: white;
+  background-color: $primary-color;
+  border-color: $primary-color;
+  
+  &:hover, &:focus {
+    background-color: darken($primary-color, 10%);
+    border-color: darken($primary-color, 12%);
+  }
+}
+
+.btn-secondary {
+  color: white;
+  background-color: $secondary-color;
+  border-color: $secondary-color;
+  
+  &:hover, &:focus {
+    background-color: darken($secondary-color, 10%);
+    border-color: darken($secondary-color, 12%);
+  }
+}
+
+.btn-accent {
+  color: $text-color;
+  background-color: $accent-color;
+  border-color: $accent-color;
+  
+  &:hover, &:focus {
+    background-color: darken($accent-color, 10%);
+    border-color: darken($accent-color, 12%);
+  }
+}
+
+.btn-outline {
+  background-color: transparent;
+  
+  &.btn-primary {
+    color: $primary-color;
+    border-color: $primary-color;
+    
+    &:hover, &:focus {
+      color: white;
+      background-color: $primary-color;
+    }
+  }
+}
+
+.btn-sm {
+  padding: $spacing-xs $spacing-sm;
+  font-size: $font-size-small;
+}
+
+.btn-lg {
+  padding: $spacing-md $spacing-lg;
+  font-size: $font-size-large;
+}
+
+/* Cards */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: white;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: $border-radius-md;
+  box-shadow: $box-shadow;
+  
+  .card-header {
+    padding: $spacing-md;
+    margin-bottom: 0;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  }
+  
+  .card-body {
+    flex: 1 1 auto;
+    padding: $spacing-md;
+  }
+  
+  .card-footer {
+    padding: $spacing-md;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+  }
+}
+
+/* Formulários */
+.form-group {
+  margin-bottom: $spacing-md;
+}
+
+.form-label {
+  display: inline-block;
+  margin-bottom: $spacing-xs;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: $spacing-sm;
+  font-size: $font-size-base;
+  line-height: 1.5;
+  color: $text-color;
+  background-color: white;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: $border-radius-sm;
+  transition: border-color $transition-speed ease-in-out, box-shadow $transition-speed ease-in-out;
+  
+  &:focus {
+    color: $text-color;
+    background-color: white;
+    border-color: lighten($primary-color, 25%);
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
+  }
+}
+
+/* Alertas */
+.alert {
+  position: relative;
+  padding: $spacing-sm $spacing-md;
+  margin-bottom: $spacing-md;
+  border: 1px solid transparent;
+  border-radius: $border-radius-sm;
+}
+
+.alert-success {
+  color: darken($success-color, 30%);
+  background-color: lighten($success-color, 40%);
+  border-color: lighten($success-color, 35%);
+}
+
+.alert-error {
+  color: darken($error-color, 30%);
+  background-color: lighten($error-color, 40%);
+  border-color: lighten($error-color, 35%);
+}
+
+.alert-warning {
+  color: darken($warning-color, 30%);
+  background-color: lighten($warning-color, 40%);
+  border-color: lighten($warning-color, 35%);
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: $spacing-xs $spacing-sm;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: $border-radius-sm;
+}
+
+.badge-primary {
+  color: white;
+  background-color: $primary-color;
+}
+
+.badge-secondary {
+  color: white;
+  background-color: $secondary-color;
+}
+
+.badge-accent {
+  color: $text-color;
+  background-color: $accent-color;
+}
+
+/* Spinners */
+.spinner {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: text-bottom;
+  border: 0.25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spinner-border .75s linear infinite;
+}
+
+.spinner-sm {
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.2em;
+}
+
+@keyframes spinner-border {
+  to { transform: rotate(360deg); }
+}

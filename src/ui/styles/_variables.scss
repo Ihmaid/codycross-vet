@@ -1,0 +1,35 @@
+// Arquivo de variáveis SCSS
+$primary-color: #4a6fa5;
+$secondary-color: #47b8e0;
+$accent-color: #ffc107;
+$text-color: #333333;
+$background-color: #f8f9fa;
+$success-color: #28a745;
+$error-color: #dc3545;
+$warning-color: #fd7e14;
+
+$font-family: 'Nunito', sans-serif;
+$font-size-base: 16px;
+$font-size-small: 14px;
+$font-size-large: 18px;
+$font-size-xlarge: 24px;
+
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+
+$box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+$box-shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.15);
+
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+$transition-speed: 0.2s;

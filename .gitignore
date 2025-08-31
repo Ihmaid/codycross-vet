@@ -1,0 +1,51 @@
+# Arquivo .gitignore para o projeto CodyCross Veterinária
+
+# Dependências
+/node_modules
+/.pnp
+.pnp.js
+
+# Arquivos de build
+/dist
+/build
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs
+*.log
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de IDE e editores
+/.idea
+/.vscode
+*.swp
+*.swo
+.project
+.classpath
+.settings/
+
+# Arquivos de cache
+.npm
+.eslintcache
+.stylelintcache
+.cache
+.parcel-cache
+
+# Arquivos de cobertura de testes
+/coverage
+
+# Arquivos temporários
+/tmp
+/temp
