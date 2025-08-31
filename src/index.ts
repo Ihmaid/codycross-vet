@@ -31,9 +31,9 @@ function fireKeydown(target: EventTarget, key: string) {
   target.dispatchEvent(e);
 }
 
-function dispatchKeyMobile(key: string, container?: HTMLElement | null) {
-  // Send a single keydown to typical targets (avoid doubles)
-  [window, document, container].forEach(t => t && fireKeydown(t, key));
+// Send to a single target (window) to avoid double/triple deliveries
+function dispatchKeyMobile(key: string) {
+  fireKeydown(window, key);
 }
 
 function focusIMEImmediate() {
@@ -46,8 +46,8 @@ function focusIMEImmediate() {
   // Focus synchronously within the same gesture (iOS requirement)
   el.focus();
 
+  // Place caret (helps Safari)
   if (isIOS && imeCE) {
-    // Place caret (helps Safari)
     const range = document.createRange();
     range.selectNodeContents(imeCE);
     range.collapse(false);
@@ -62,8 +62,7 @@ function focusIME() {
   requestAnimationFrame(() => focusIMEImmediate());
 }
 
-// Suppress *native* (trusted) keydown/keypress only on touch devices while IME focused.
-// This prevents doubles on Android; desktop path doesn’t use IME, so nothing is suppressed there.
+// Suppress *native* keydown/keypress ONLY on touch devices while IME focused (prevents doubles on Android)
 function installNativeKeySuppressor() {
   if (!isTouch) return;
   const guard = (ev: KeyboardEvent) => {
@@ -78,58 +77,79 @@ function installNativeKeySuppressor() {
   window.addEventListener('keypress', guard, true);
 }
 
-function bindIME(container: HTMLElement) {
+function bindIME() {
   installNativeKeySuppressor();
 
+  // ANDROID / general: <input> path
   if (imeInput) {
     let composing = false;
+
     imeInput.addEventListener('compositionstart', () => (composing = true));
+
     imeInput.addEventListener('compositionend', (e) => {
+      // Use compositionend ONLY if we were composing; ignore input for this char
+      if (!isTouch) return;
+      if (!composing) return;
       composing = false;
+
       const v = (e.target as HTMLInputElement).value;
-      if (v && isTouch) {
-        dispatchKeyMobile(v.slice(-1).toUpperCase(), container);
-      }
+      if (v) dispatchKeyMobile(v.slice(-1).toUpperCase());
       imeInput.value = '';
     });
+
     imeInput.addEventListener('input', () => {
+      // If we are composing, skip 'input' (compositionend will handle it)
+      if (!isTouch) return;
       if (composing) return;
+
       const v = imeInput.value;
-      if (v && isTouch) {
-        dispatchKeyMobile(v.slice(-1).toUpperCase(), container);
-      }
+      if (v) dispatchKeyMobile(v.slice(-1).toUpperCase());
       imeInput.value = '';
     });
+
     imeInput.addEventListener('keydown', (ev) => {
-      if (!isTouch) return; // desktop: do nothing, let native flow
+      if (!isTouch) return; // desktop: let native flow
       if (ev.key === 'Backspace') {
         ev.preventDefault();
-        dispatchKeyMobile('Backspace', container);
+        dispatchKeyMobile('Backspace');
         imeInput.value = '';
       } else if (ev.key === 'Enter') {
         ev.preventDefault();
-        dispatchKeyMobile('Enter', container);
+        dispatchKeyMobile('Enter');
         imeInput.value = '';
       }
     });
   }
 
+  // iOS: contenteditable path
   if (imeCE) {
+    imeCE.addEventListener('beforeinput', (ev) => {
+      // Some iOS keyboards send beforeinput; we can use input below
+      // but prevent rich text ops just in case
+      const anyEv = ev as any;
+      if (anyEv.inputType && anyEv.inputType.startsWith('insert')) {
+        // allow
+      }
+    });
+
     imeCE.addEventListener('input', () => {
-      const txt = (imeCE.textContent || '').trim();
-      if (!txt) return;
-      if (isTouch) dispatchKeyMobile(txt.slice(-1).toUpperCase(), container);
+      if (!isTouch) return;
+      const txt = (imeCE.textContent || '');
+      // Use the last character typed; trim only trailing newlines
+      const ch = txt.replace(/\n+$/,'').slice(-1);
+      if (ch) dispatchKeyMobile(ch.toUpperCase());
       imeCE.textContent = '';
     });
+
     imeCE.addEventListener('keydown', (ev) => {
       if (!isTouch) return;
       if (ev.key === 'Backspace') {
         ev.preventDefault();
-        dispatchKeyMobile('Backspace', container);
+        dispatchKeyMobile('Backspace');
         imeCE.textContent = '';
       } else if (ev.key === 'Enter') {
         ev.preventDefault();
-        dispatchKeyMobile('Enter', container);
+        dispatchKeyMobile('Enter');
         imeCE.textContent = '';
       }
     });
@@ -152,11 +172,11 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // IME only for touch devices (mobile). Desktop keeps native keyboard.
-  bindIME(container);
+  // Bind IME (mobile only affects touch devices; desktop unchanged)
+  bindIME();
 
   if (isTouch) {
-    // iOS: focus IME synchronously on touchstart (needs passive:false + preventDefault)
+    // iOS: focus synchronously on touchstart (needs passive:false + preventDefault)
     container.addEventListener(
       'touchstart',
       (ev) => {
@@ -167,11 +187,13 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       { passive: false }
     );
-    // Android: async focus OK
+
+    // Android: async focus is fine
     container.addEventListener('touchend', () => {
       if (!isIOS) focusIME();
     }, { passive: true });
-    // Also allow tap/click to refocus (both platforms)
+
+    // Tap/click to refocus
     container.addEventListener('click', () => focusIME());
   }
 
