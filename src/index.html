@@ -7,6 +7,25 @@
   <title>CodyCross Veterinária</title>
   <meta name="description" content="Jogo de palavras cruzadas estilo CodyCross com tema de Medicina Veterinária">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+
+  <!-- 👇 Styles just for the IME input + small touch optimization -->
+  <style>
+    /* Keep the hidden input “rendered” so mobile can open the keyboard */
+    #ime-input {
+      position: fixed;
+      bottom: 0; left: 0;
+      width: 1px; height: 1px;
+      opacity: 0;
+      background: transparent;
+      border: 0;
+      color: transparent;
+      z-index: 10;
+      /* Prevent iOS zoom-on-focus */
+      font-size: 16px;
+    }
+    /* Improves tap responsiveness on mobile */
+    #crossword-container { touch-action: manipulation; }
+  </style>
 </head>
 <body>
   <div id="app">
@@ -21,7 +40,21 @@
       
       <main class="game-board">
         <div id="crossword-container"></div>
-        
+
+        <!-- 👇 IME input (hidden but focusable) to summon the mobile keyboard -->
+        <input
+          id="ime-input"
+          type="text"
+          inputmode="latin"
+          autocapitalize="characters"
+          autocomplete="off"
+          autocorrect="off"
+          spellcheck="false"
+          maxlength="1"
+          enterkeyhint="next"
+          aria-label="Entrada de letra do jogo"
+        />
+
         <div class="vertical-word-display">
           <div id="vertical-word"></div>
           <p>Dica: <span id="vertical-clue"></span></p>
