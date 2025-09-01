@@ -4,6 +4,11 @@ import { CrosswordRenderer } from './CrosswordRenderer';
 import { WordValidator } from './WordValidator';
 import { GameStore } from '../services/GameStore';
 
+type EngineOptions = {
+  onComplete?: () => void;      // called when the level is fully solved
+  autoAdvanceDelayMs?: number;  // optional delay before auto-calling onComplete
+};
+
 export class GameEngine {
   private app: PIXI.Application;
   private level: Level;
@@ -14,69 +19,72 @@ export class GameEngine {
   private gameStore = GameStore.getInstance();
   private hintsUsed: number = 0;
   private isGameComplete: boolean = false;
+  private onComplete?: () => void;
+  private autoAdvanceDelayMs = 0;
+  private boundKeyDown = this.handleKeyDown.bind(this);
+  private boundResize = this.handleResize.bind(this);
 
-  constructor(container: HTMLElement, level: Level) {
-    console.log("Inicializando GameEngine");
-    this.container = container;
-    this.level = level;
-    
-    console.log("Criando aplicação PIXI");
-    // Inicializar a aplicação PIXI
-    this.app = new PIXI.Application({
-      width: this.container.clientWidth || 800,
-      height: this.container.clientHeight || 600,
-      backgroundColor: 0xf8f9fa,
-      antialias: true,
-      resolution: window.devicePixelRatio || 1,
-      autoDensity: true
-    });
-    
-    console.log(`Dimensões do container: ${this.container.clientWidth}x${this.container.clientHeight}`);
-    console.log(`Dimensões da aplicação PIXI: ${this.app.screen.width}x${this.app.screen.height}`);
-    
-    console.log("Anexando canvas ao container");
-    this.container.appendChild(this.app.view as HTMLCanvasElement);
-    
-    console.log("Inicializando renderer");
-    // Inicializar o renderer
-    this.renderer = new CrosswordRenderer(
-      this.app,
-      level,
-      this.handleCellSelect.bind(this),
-      this.handleWordComplete.bind(this)
-    );
-    
-    console.log("Inicializando validador");
-    // Inicializar o validador
-    this.validator = new WordValidator(
-      level,
-      this.handleWordValidated.bind(this),
-      this.handleVerticalWordValidated.bind(this),
-      this.handleGameCompleted.bind(this)
-    );
-    
-    console.log("Configurando eventos de teclado");
-    // Configurar eventos de teclado
-    window.addEventListener('keydown', this.handleKeyDown.bind(this));
-    
-    console.log("Configurando redimensionamento");
-    // Configurar redimensionamento
-    window.addEventListener('resize', this.handleResize.bind(this));
-    this.handleResize();
-    
-    console.log("Inicializando estado do jogo");
-    // Inicializar o estado do jogo
-    this.gameStore.setState({
-      currentLevel: level,
-      timeRemaining: level.timeLimit,
-      isGameActive: false,
-      isGameComplete: false,
-      selectedCell: null,
-      selectedClue: ''
-    });
-    
-    console.log("GameEngine inicializado com sucesso");
-  }
+constructor(container: HTMLElement, level: Level, opts?: EngineOptions) {
+  console.log("Inicializando GameEngine");
+  this.container = container;
+  this.level = level;
+
+  // NEW: options
+  this.onComplete = opts?.onComplete;
+  this.autoAdvanceDelayMs = opts?.autoAdvanceDelayMs ?? 1000; // 1s by default
+
+  console.log("Criando aplicação PIXI");
+  this.app = new PIXI.Application({
+    width: this.container.clientWidth || 800,
+    height: this.container.clientHeight || 600,
+    backgroundColor: 0xf8f9fa,
+    antialias: true,
+    resolution: window.devicePixelRatio || 1,
+    autoDensity: true
+  });
+
+  console.log(`Dimensões do container: ${this.container.clientWidth}x${this.container.clientHeight}`);
+  console.log(`Dimensões da aplicação PIXI: ${this.app.screen.width}x${this.app.screen.height}`);
+
+  console.log("Anexando canvas ao container");
+  this.container.appendChild(this.app.view as HTMLCanvasElement);
+
+  console.log("Inicializando renderer");
+  this.renderer = new CrosswordRenderer(
+    this.app,
+    level,
+    this.handleCellSelect.bind(this),
+    this.handleWordComplete.bind(this)
+  );
+
+  console.log("Inicializando validador");
+  this.validator = new WordValidator(
+    level,
+    this.handleWordValidated.bind(this),
+    this.handleVerticalWordValidated.bind(this),
+    this.handleGameCompleted.bind(this)
+  );
+
+  console.log("Configurando eventos de teclado");
+  // USE STORED BOUND HANDLERS (so we can remove later)
+  window.addEventListener('keydown', this.boundKeyDown);
+
+  console.log("Configurando redimensionamento");
+  window.addEventListener('resize', this.boundResize);
+  this.handleResize();
+
+  console.log("Inicializando estado do jogo");
+  this.gameStore.setState({
+    currentLevel: level,
+    timeRemaining: level.timeLimit,
+    isGameActive: false,
+    isGameComplete: false,
+    selectedCell: null,
+    selectedClue: ''
+  });
+
+  console.log("GameEngine inicializado com sucesso");
+}
 
   public startGame(): void {
     console.log("Iniciando jogo");
@@ -326,22 +334,32 @@ export class GameEngine {
     console.log("Jogo completado!");
     this.isGameComplete = true;
     this.pauseGame();
-    
+
     // Calcular pontuação
     const timeRemaining = this.gameStore.getState().timeRemaining;
     const score = this.calculateScore(timeRemaining);
-    
+
     // Atualizar estado
     this.gameStore.setState({
       isGameComplete: true,
       score: score
     });
-    
+
     // Atualizar UI
     this.updateScoreDisplay();
-    
-    // Exibir mensagem de conclusão
+
+    // Exibir mensagem de conclusão com botão "Próximo nível"
     this.showGameCompleteMessage(score, timeRemaining);
+
+    // Auto-advance (optional delay)
+    if (this.onComplete && this.autoAdvanceDelayMs >= 0) {
+      setTimeout(() => {
+        // If message still present, remove it to avoid stacking
+        const msg = this.container.querySelector('.game-complete-message');
+        msg?.parentElement?.removeChild(msg);
+        this.onComplete?.();
+      }, this.autoAdvanceDelayMs);
+    }
   }
 
   private handleResize(): void {
@@ -447,14 +465,24 @@ export class GameEngine {
       <p>Pontuação: ${score}</p>
       <p>Tempo restante: ${Math.floor(timeRemaining / 60)}:${(timeRemaining % 60).toString().padStart(2, '0')}</p>
       <p>Dicas usadas: ${this.hintsUsed}</p>
-      <button class="btn btn-primary">Jogar Novamente</button>
+      <div style="display:flex; gap:8px; justify-content:center; margin-top:12px;">
+        <button id="btn-replay" class="btn btn-primary">Jogar Novamente</button>
+        <button id="btn-next" class="btn btn-hint">Próximo Nível ▶</button>
+      </div>
     `;
-    
-    message.querySelector('button')?.addEventListener('click', () => {
+
+    message.querySelector('#btn-replay')?.addEventListener('click', () => {
       this.container.removeChild(message);
       this.startGame();
     });
-    
+
+    message.querySelector('#btn-next')?.addEventListener('click', () => {
+      // Cancel auto-advance and go immediately
+      this.onComplete?.();
+      // remove the popup if still present
+      if (message.parentElement) this.container.removeChild(message);
+    });
+
     this.container.appendChild(message);
   }
 
@@ -476,4 +504,28 @@ export class GameEngine {
     
     this.container.appendChild(message);
   }
+
+  public destroy(): void {
+  try {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+      this.timerInterval = null;
+    }
+    window.removeEventListener('keydown', this.boundKeyDown);
+    window.removeEventListener('resize', this.boundResize);
+
+    // Remove any overlay messages we created
+    const messages = this.container.querySelectorAll('.game-complete-message');
+    messages.forEach((n) => n.parentElement?.removeChild(n));
+
+    // Remove PIXI canvas
+    if (this.app?.view && this.app.view.parentElement === this.container) {
+      this.container.removeChild(this.app.view as HTMLCanvasElement);
+    }
+    // Destroy PIXI application
+    this.app?.destroy(true, { children: true, texture: true, baseTexture: true } as any);
+  } catch (e) {
+    console.warn('GameEngine destroy() warning:', e);
+  }
+}
 }
