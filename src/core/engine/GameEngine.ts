@@ -519,8 +519,11 @@ constructor(container: HTMLElement, level: Level, opts?: EngineOptions) {
     messages.forEach((n) => n.parentElement?.removeChild(n));
 
     // Remove PIXI canvas
-    if (this.app?.view && this.app.view.parentElement === this.container) {
-      this.container.removeChild(this.app.view as HTMLCanvasElement);
+    if (this.app?.view) {
+      const viewEl = this.app.view as unknown as Element; // canvas element
+      if (this.container.contains(viewEl)) {
+        this.container.removeChild(viewEl);
+      }
     }
     // Destroy PIXI application
     this.app?.destroy(true, { children: true, texture: true, baseTexture: true } as any);

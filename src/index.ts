@@ -169,18 +169,20 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log("DOM carregado, inicializando jogo");
   document.getElementById('loading')?.remove();
 
-  const container = document.getElementById('crossword-container');
-  if (!container) {
+  // ✅ Narrow to a non-null HTMLElement and reuse it everywhere as `root`
+  const containerEl = document.getElementById('crossword-container');
+  if (!(containerEl instanceof HTMLElement)) {
     console.error('Container do jogo não encontrado!');
     document.body.innerHTML += '<div style="color: red; padding: 20px;">Erro: Container do jogo não encontrado!</div>';
     return;
   }
+  const root: HTMLElement = containerEl;
 
   // Keep IME binding (does nothing on desktop)
   bindIME();
-  bindMobileFocus(container);
+  bindMobileFocus(root);
 
-  container.classList.add('crossword-container-active');
+  root.classList.add('crossword-container-active');
 
   // Cache DOM refs once
   const hintButton = document.getElementById('hint-button');
@@ -213,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showEndGame() {
-    container.innerHTML = `
+    root.innerHTML = `
       <div class="endgame">
         <h2>Parabéns! Você concluiu todos os níveis 🎉</h2>
         <button id="restart-all" class="btn btn-primary">Recomeçar do início</button>
@@ -241,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
         (gameEngine as any)?.destroy?.();
 
         // Create engine with completion hook (auto-advance after 1s)
-        gameEngine = new GameEngine(container, level, {
+        gameEngine = new GameEngine(root, level, {
           onComplete: () => {
             const next = index + 1;
             if (next < LEVELS.length) {
@@ -276,9 +278,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Optional: focus keyboard shortly after start on mobile
         setTimeout(() => { if (isTouch) focusIME(); }, 300);
       })
-      .catch((error) => {
-        console.error('Erro ao inicializar o nível:', error);
-        container.innerHTML = `<div class="error-message">Erro ao carregar o jogo: ${error.message}</div>`;
+      .catch(error => {
+        console.error('Erro ao inicializar o jogo:', error);
+        // ✅ use the already-narrowed root here
+        root.innerHTML = `<div class="error-message">Erro ao carregar o jogo: ${error.message}</div>`;
       });
   }
 
