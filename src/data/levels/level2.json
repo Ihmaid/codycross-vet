@@ -1,76 +1,58 @@
 {
-  "id": "level1",
-  "theme": "Anatomia Animal",
+  "id": "level2",
+  "theme": "Doenças Infecciosas Veterinárias",
   "verticalWord": {
-    "word": "VETERINARIA",
-    "clue": "Ciência que cuida da saúde dos animais"
+    "word": "",
+    "clue": ""
   },
   "horizontalWords": [
     {
-      "word": "VEIB",
-      "clue": "Vaso sanguíneo que leva sangue ao coração",
-      "intersectionIndex": 0,
+      "word": "CORONAVÍRUS",
+      "clue": "Afeta os cachorros e se assemelha ao COVID-19.",
+      "intersectionIndex": 2,
       "position": 0
     },
     {
-      "word": "ESTOMAGO",
-      "clue": "Órgão digestivo onde ocorre a digestão química",
-      "intersectionIndex": 2,
+      "word": "PRION",
+      "clue": "Partícula infecciosa proteica capaz de provocar doenças graves e fatais em animais, como na EEB.",
+      "intersectionIndex": 1,
       "position": 1
     },
     {
-      "word": "TRAQUEIA",
-      "clue": "Tubo que conecta a laringe aos brônquios",
-      "intersectionIndex": 0,
+      "word": "RESPIRATÓRIO",
+      "clue": "Qual o principal sistema acometido pelo Herpesvírus Felino?",
+      "intersectionIndex": 3,
       "position": 2
     },
     {
-      "word": "ENCEFALO",
-      "clue": "Conjunto de órgãos que formam o sistema nervoso central",
-      "intersectionIndex": 3,
+      "word": "ROTAVÍRUS",
+      "clue": "Doença que afeta as células do epitélio intestinal, em aves e mamíferos.",
+      "intersectionIndex": 2,
       "position": 3
     },
     {
-      "word": "RINS",
-      "clue": "Órgãos responsáveis pela filtração do sangue",
-      "intersectionIndex": 0,
+      "word": "FEBREAFTOOSA",
+      "clue": "Doença altamente contagiosa que afeta animais de casco fendido.",
+      "intersectionIndex": 4,
       "position": 4
     },
     {
-      "word": "INTESTINO",
-      "clue": "Órgão tubular onde ocorre a absorção de nutrientes",
-      "intersectionIndex": 2,
+      "word": "AEDES",
+      "clue": "A Febre Amarela pode ser transmitida por qual gênero de mosquito?",
+      "intersectionIndex": 1,
       "position": 5
     },
     {
-      "word": "NARIZ",
-      "clue": "Órgão responsável pelo olfato",
+      "word": "AIDS",
+      "clue": "Qual doença humana se relaciona com a FIV?",
       "intersectionIndex": 0,
       "position": 6
     },
     {
-      "word": "ARTERIA",
-      "clue": "Vaso sanguíneo que leva sangue do coração para os tecidos",
+      "word": "CINOMOSE",
+      "clue": "Pode ser fatal e não possui cura específica, sendo a vacinação crucial para o controle.",
       "intersectionIndex": 2,
       "position": 7
-    },
-    {
-      "word": "RETINA",
-      "clue": "Camada do olho sensível à luz",
-      "intersectionIndex": 0,
-      "position": 8
-    },
-    {
-      "word": "IMUNIDADE",
-      "clue": "Capacidade do organismo de se defender contra agentes patogênicos",
-      "intersectionIndex": 0,
-      "position": 9
-    },
-    {
-      "word": "AORTA",
-      "clue": "Principal artéria do corpo",
-      "intersectionIndex": 0,
-      "position": 10
     }
   ],
   "difficulty": "médio",
