@@ -7,13 +7,13 @@
   },
   "horizontalWords": [
     {
-      "word": "PATÓGENO",
+      "word": "PATOGENO",
       "clue": "Organismo capaz de causar doenças em animais.",
       "intersectionIndex": 1,
       "position": 0
     },
     {
-      "word": "IMUNIZAÇÃO",
+      "word": "IMUNIZACAO",
       "clue": "Processo de proteção contra doenças infecciosas.",
       "intersectionIndex": 3,
       "position": 1
@@ -37,13 +37,13 @@
       "position": 4
     },
     {
-      "word": "CONTÁGIO",
+      "word": "CONTAGIO",
       "clue": "Transmissão de doenças de um animal para outro.",
       "intersectionIndex": 2,
       "position": 5
     },
     {
-      "word": "VÍRUS",
+      "word": "VIRUS",
       "clue": "Organismo microscópico que pode causar doenças.",
       "intersectionIndex": 1,
       "position": 6
