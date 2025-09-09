@@ -23,19 +23,22 @@ export class GameEngine {
   private autoAdvanceDelayMs = 0;
   private boundKeyDown = this.handleKeyDown.bind(this);
   private boundResize = this.handleResize.bind(this);
-  private options: GameEngineOptions | undefined;
+  private options: GameEngineOptions;
   private rowsSolved = new Set<number>(); // tracks horizontals solved
 
-constructor(container: HTMLElement, level: Level, opts?: GameEngineOptions) {
+constructor(container: HTMLElement, level: Level, options: Partial<GameEngineOptions> = {}) {
   console.log("Inicializando GameEngine");
+
   this.container = container;
   this.level = level;
-  this.options = options;
 
-  // NEW: options
-  this.onComplete = opts?.onComplete;
-  this.autoAdvanceDelayMs = opts?.autoAdvanceDelayMs ?? 1000; // 1s by default
+  // Single source of truth for options
+  this.options = {
+    onComplete: options.onComplete,
+    autoAdvanceDelayMs: options.autoAdvanceDelayMs ?? 1000, // default 1s
+  };
 
+  // PIXI app
   console.log("Criando aplicação PIXI");
   this.app = new PIXI.Application({
     width: this.container.clientWidth || 800,
@@ -69,7 +72,6 @@ constructor(container: HTMLElement, level: Level, opts?: GameEngineOptions) {
   );
 
   console.log("Configurando eventos de teclado");
-  // USE STORED BOUND HANDLERS (so we can remove later)
   window.addEventListener('keydown', this.boundKeyDown);
 
   console.log("Configurando redimensionamento");
@@ -88,6 +90,7 @@ constructor(container: HTMLElement, level: Level, opts?: GameEngineOptions) {
 
   console.log("GameEngine inicializado com sucesso");
 }
+
 
   public startGame(): void {
     console.log("Iniciando jogo");
@@ -367,11 +370,9 @@ constructor(container: HTMLElement, level: Level, opts?: GameEngineOptions) {
     this.showGameCompleteMessage(score, timeRemaining);
 
     // NEW: auto-advance hook used by index.ts
-    const delay = this.options?.autoAdvanceDelayMs;
-    if (typeof delay === 'number' && delay >= 0) {
-      setTimeout(() => this.options?.onComplete?.(), delay);
-    } else if (delay === 0) {
-      // handled above; included for clarity
+    const delay = this.options.autoAdvanceDelayMs ?? 1000;
+    if (delay >= 0 && typeof this.options.onComplete === 'function') {
+      setTimeout(() => this.options.onComplete!(), delay);
     }
   }
 
@@ -490,12 +491,9 @@ constructor(container: HTMLElement, level: Level, opts?: GameEngineOptions) {
     });
 
     message.querySelector('#btn-next')?.addEventListener('click', () => {
-      // Cancel auto-advance and go immediately
-      this.onComplete?.();
-      // remove the popup if still present
+      this.options.onComplete?.();
       if (message.parentElement) this.container.removeChild(message);
     });
-
     this.container.appendChild(message);
   }
 
@@ -520,19 +518,20 @@ constructor(container: HTMLElement, level: Level, opts?: GameEngineOptions) {
 
   public destroy(): void {
     try {
-      window.removeEventListener('keydown', this.handleKeyDown as any);
-      window.removeEventListener('resize', this.handleResize as any);
-      if (this.timerInterval) clearInterval(this.timerInterval);
+      window.removeEventListener('keydown', this.boundKeyDown);
+      window.removeEventListener('resize', this.boundResize);
 
-      if (this.app?.view) {
-        const viewEl = this.app.view as unknown as Element;
-        if (this.container.contains(viewEl)) {
-          this.container.removeChild(viewEl);
-        }
+      if (this.timerInterval) {
+        clearInterval(this.timerInterval);
+        this.timerInterval = null;
       }
-      this.app?.destroy(true, { children: true, texture: true, baseTexture: true } as any);
-    } catch (e) {
-      console.warn('GameEngine destroy warning:', e);
+
+      const view = this.app.view as HTMLCanvasElement;
+      view.parentElement?.removeChild(view);
+
+      this.app.destroy(true, { children: true, texture: true, baseTexture: true });
+    } catch {
+      /* no-op */
     }
   }
 }

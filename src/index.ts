@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
         (gameEngine as any)?.destroy?.();
 
         // Create engine with completion hook (auto-advance after 1s)
-        gameEngine = new GameEngine(root, level, {
+        gameEngine = new GameEngine(root, level, {   // <- was `container`
           onComplete: () => {
             const next = index + 1;
             if (next < LEVELS.length) {
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
               showEndGame();
             }
           },
-          autoAdvanceDelayMs: 1000, // adjust: 0 = immediate; -1 = no auto
+          autoAdvanceDelayMs: 1000,
         });
 
         // Wire buttons to this instance
@@ -275,14 +275,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Start level
         gameEngine.startGame();
 
-        // Optional: focus keyboard shortly after start on mobile
         setTimeout(() => { if (isTouch) focusIME(); }, 300);
       })
       .catch(error => {
         console.error('Erro ao inicializar o jogo:', error);
-        // ✅ use the already-narrowed root here
-        root.innerHTML = `<div class="error-message">Erro ao carregar o jogo: ${error.message}</div>`;
+        root.innerHTML = `<div class="error-message">Erro ao carregar o jogo: ${error.message}</div>`; // <- was `container`
       });
+
   }
 
   // Kick off with saved or first level
