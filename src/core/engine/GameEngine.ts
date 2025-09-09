@@ -4,7 +4,7 @@ import { CrosswordRenderer } from './CrosswordRenderer';
 import { WordValidator } from './WordValidator';
 import { GameStore } from '../services/GameStore';
 
-type EngineOptions = {
+type GameEngineOptions = {
   onComplete?: () => void;      // called when the level is fully solved
   autoAdvanceDelayMs?: number;  // optional delay before auto-calling onComplete
 };
@@ -23,11 +23,14 @@ export class GameEngine {
   private autoAdvanceDelayMs = 0;
   private boundKeyDown = this.handleKeyDown.bind(this);
   private boundResize = this.handleResize.bind(this);
+  private options: GameEngineOptions | undefined;
+  private rowsSolved = new Set<number>(); // tracks horizontals solved
 
-constructor(container: HTMLElement, level: Level, opts?: EngineOptions) {
+constructor(container: HTMLElement, level: Level, opts?: GameEngineOptions) {
   console.log("Inicializando GameEngine");
   this.container = container;
   this.level = level;
+  this.options = options;
 
   // NEW: options
   this.onComplete = opts?.onComplete;
@@ -93,6 +96,7 @@ constructor(container: HTMLElement, level: Level, opts?: EngineOptions) {
     this.renderer.clearHighlights();
     this.hintsUsed = 0;
     this.isGameComplete = false;
+    this.rowsSolved.clear();
     
     // Atualizar o estado global
     this.gameStore.setState({
@@ -314,9 +318,13 @@ constructor(container: HTMLElement, level: Level, opts?: EngineOptions) {
     console.log(`Palavra na linha ${row} validada, correta: ${isCorrect}`);
     if (isCorrect) {
       this.renderer.highlightWord(row, true);
-      
-      // Atualizar a exibição da palavra vertical
+      this.rowsSolved.add(row);          // NEW
+
+      // keep your vertical-word display update
       this.updateVerticalWordDisplay();
+
+      // NEW: completion fallback if all horizontals are solved
+      this.checkCompletionFallback();
     }
   }
 
@@ -327,38 +335,43 @@ constructor(container: HTMLElement, level: Level, opts?: EngineOptions) {
       
       // Atualizar a exibição da palavra vertical
       this.updateVerticalWordDisplay();
+      this.checkCompletionFallback();
+    }
+  }
+
+  private checkCompletionFallback(): void {
+    if (this.isGameComplete) return;
+
+    const totalRows = this.level.horizontalWords.length;
+    const allHorizontalsSolved = this.rowsSolved.size >= totalRows;
+
+    // If there is a vertical word, validator may finish the game anyway.
+    // If it's empty OR even if validator didn't emit, we finish here.
+    const hasVertical = !!(this.level.verticalWord?.word && this.level.verticalWord.word.trim().length > 0);
+
+    if (allHorizontalsSolved && !hasVertical) {
+      this.handleGameCompleted(); // triggers the same flow as validator
     }
   }
 
   private handleGameCompleted(): void {
-    console.log("Jogo completado!");
+    if (this.isGameComplete) return; // guard against double fire
     this.isGameComplete = true;
-    this.pauseGame();
 
-    // Calcular pontuação
+    this.pauseGame();
     const timeRemaining = this.gameStore.getState().timeRemaining;
     const score = this.calculateScore(timeRemaining);
 
-    // Atualizar estado
-    this.gameStore.setState({
-      isGameComplete: true,
-      score: score
-    });
-
-    // Atualizar UI
+    this.gameStore.setState({ isGameComplete: true, score });
     this.updateScoreDisplay();
-
-    // Exibir mensagem de conclusão com botão "Próximo nível"
     this.showGameCompleteMessage(score, timeRemaining);
 
-    // Auto-advance (optional delay)
-    if (this.onComplete && this.autoAdvanceDelayMs >= 0) {
-      setTimeout(() => {
-        // If message still present, remove it to avoid stacking
-        const msg = this.container.querySelector('.game-complete-message');
-        msg?.parentElement?.removeChild(msg);
-        this.onComplete?.();
-      }, this.autoAdvanceDelayMs);
+    // NEW: auto-advance hook used by index.ts
+    const delay = this.options?.autoAdvanceDelayMs;
+    if (typeof delay === 'number' && delay >= 0) {
+      setTimeout(() => this.options?.onComplete?.(), delay);
+    } else if (delay === 0) {
+      // handled above; included for clarity
     }
   }
 
@@ -506,29 +519,20 @@ constructor(container: HTMLElement, level: Level, opts?: EngineOptions) {
   }
 
   public destroy(): void {
-  try {
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval);
-      this.timerInterval = null;
-    }
-    window.removeEventListener('keydown', this.boundKeyDown);
-    window.removeEventListener('resize', this.boundResize);
+    try {
+      window.removeEventListener('keydown', this.handleKeyDown as any);
+      window.removeEventListener('resize', this.handleResize as any);
+      if (this.timerInterval) clearInterval(this.timerInterval);
 
-    // Remove any overlay messages we created
-    const messages = this.container.querySelectorAll('.game-complete-message');
-    messages.forEach((n) => n.parentElement?.removeChild(n));
-
-    // Remove PIXI canvas
-    if (this.app?.view) {
-      const viewEl = this.app.view as unknown as Element; // canvas element
-      if (this.container.contains(viewEl)) {
-        this.container.removeChild(viewEl);
+      if (this.app?.view) {
+        const viewEl = this.app.view as unknown as Element;
+        if (this.container.contains(viewEl)) {
+          this.container.removeChild(viewEl);
+        }
       }
+      this.app?.destroy(true, { children: true, texture: true, baseTexture: true } as any);
+    } catch (e) {
+      console.warn('GameEngine destroy warning:', e);
     }
-    // Destroy PIXI application
-    this.app?.destroy(true, { children: true, texture: true, baseTexture: true } as any);
-  } catch (e) {
-    console.warn('GameEngine destroy() warning:', e);
   }
-}
 }
