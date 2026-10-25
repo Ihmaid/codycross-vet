@@ -1,0 +1,256 @@
+{
+  "intro": {
+    "pages": [
+      5,
+      6
+    ],
+    "images": [
+      "study_pages/intro_5.webp",
+      "study_pages/intro_6.webp"
+    ],
+    "text": "Capítulo 1 - Introdução\n\n Você já parou para pensar que algo invisível a olho nu pode\nmudar completamente a saúde de um animal, de um rebanho\ninteiro — e até da população humana?\nEsse é o fascinante e desafiador mundo da virologia veterinária.\n\nA palavra virologia vem do latim virus, que significa “veneno”, e do\nsufixo logia, que quer dizer “estudo”. Ou seja, virologia é o estudo\ndos vírus, agentes microscópicos capazes de infectar praticamente\ntodos os seres vivos. Mesmo sendo tão pequenos e simples, os vírus\ntêm um enorme impacto na medicina veterinária, afetando tanto\nanimais de companhia quanto animais de produção e silvestres.\n\n Na prática veterinária, compreender os vírus é essencial. Eles são\nresponsáveis por algumas das principais doenças infecciosas dos\nanimais — muitas delas sem cura específica, o que torna a\nprevenção e o diagnóstico precoce fundamentais. Além disso,\ndiversas viroses têm potencial zoonótico, ou  seja, podem ser\ntransmitidas aos humanos,  reforçando o  papel do médico-\nveterinário como agente de saúde única (One Health).\n\n Mas aprender virologia não precisa ser algo complicado ou\ndistante da realidade!\n\n Neste e-book, você vai explorar o universo dos vírus de forma\ninterativa e divertida, por meio de jogos, desafios e conteúdos\ndinâmicos que facilitam o aprendizado. Aqui, a virologia ganha\nvida — você vai entender desde a estrutura viral até o impacto das\ndoenças no campo e nas clínicas, de um jeito leve e prático.\nAfinal, conhecer os vírus é o primeiro passo para combatê-los.\n\n  E, com conhecimento,  curiosidade e  tecnologia, é  possível\ntransformar o estudo da virologia veterinária em uma jornada\nenvolvente, que une ciência, inovação e aprendizado ativo.\n\n                                                                                1\n\nReprodução viral\nNo processo de reprodução viral, os vírus apresentam dois ciclos, o\nlítico e o lisogênico, visto que alguns vírus só apresentam um ciclo\nou ambos.\n\n\n\n\n\n               Lítico\n                                          Lisogênico  1.Adsorção: O vírus se liga à\n                              Adsorção    e    Penetração:    superfície    da     célula\n                             Semelhante ao  ciclo  lítico, o   hospedeira;\n                                      vírus se liga à célula e injeta seu  2.Penetração:  O   material\n                                  material genético.   genético do vírus é injetado\n                                  Integração: O  DNA   viral  se   na célula hospedeira;\n                                   integra  ao  DNA  da  célula  3.Replicação e Síntese: O DNA\n                                 hospedeira,   formando  um   ou  RNA   viral  assume  o\n                                  profago.   controle  da   maquinaria\n                                  Replicação: Cada  vez que a    celular,   direcionando   a\n                                   célula hospedeira se divide, ela    célula     a       produzir\n                                    replica o DNA  viral junto com   componentes virais;\n                              seu próprio DNA. 4.Montagem: Os novos  vírus\n                                 Indução: Em resposta a certos   são montados a partir dos\n                                   estímulos, o DNA viral pode ser   componentes      recém-\n                                   ativado, saindo do genoma da    sintetizados;\n                                   célula hospedeira e iniciando o  5.Liberação:    A      célula\n                                      ciclo lítico, onde novos vírus são   hospedeira   é   destruída,\n                                produzidos e liberados.   liberando novos  vírus que\n  podem    infectar    outras\n    células.\n\n                                                           2"
+  },
+  "coronavirus_canino": {
+    "pages": [
+      8
+    ],
+    "images": [
+      "study_pages/coronavirus_canino_8.webp"
+    ],
+    "text": "Cornavírus canino\n\n  O coronavírus canino mais comum é o Coronavírus Canino\nEntérico (CCoV), que afeta o  trato  gastrointestinal dos cães,\ncausando sintomas como  diarreia, vômitos  e, ocasionalmente,\ndesidratação.\n                                                 Envelope\n                                                               RNA fita\n                                                                              simplesCaracterísticas:\n    Ciclo: Lítico;\n   Localização:\n   Cosmopolita;\n   Vacinação: presente;\n   Notificação: ausente.\n\n  O  CCoV  é  altamente\ncontagioso entre os cães e é\ntransmitido  principalmente\npor meio do contato direto    Nucleocapsídeo\n                                                                  Glicoproteína de\ncom fezes contaminadas.                                                                         superfície\n                                              Fonte: Arquivo pessoal, 2024\n\n  É importante observar que o coronavírus canino não é o mesmo\nque o coronavírus humano SARS-CoV-2, que causa a COVID-19.\n Os cães podem contrair outros tipos de coronavírus, mas não há\nevidências de que os cães desempenhem um papel significativo\nna propagação do vírus que causa a COVID-19 em humanos.\n\n\n\n\n\n                                                           4"
+  },
+  "pif": {
+    "pages": [
+      9
+    ],
+    "images": [
+      "study_pages/pif_9.webp"
+    ],
+    "text": "Peritonite Infecciosa Felina (PIF)\n\n A Peritonite Infecciosa Felina (PIF) é uma doença viral complexa e\nmuitas vezes fatal que afeta gatos.\n\n                                    Nucleocapsídeo\nCaracterísticas:\n    Ciclo: Lítico;\n    Localização:                                                      Envelope\n   Cosmopolita\n   Vacinação: ausente;\n    Notificação: ausente.\n\n   Essa   enfermidade   é\ncausada por uma mutação\ndo coronavírus felino (FCoV),\num   vírus  comum  que\ngeralmente causa infecções\n                                                     RNA fita simplesassintomáticas ou leves.\n                                      Glicoproteína de superfície\n                                            Fonte: Arquivo pessoal, 2024.\n\n A PIF ocorre quando o vírus sofre mutação no organismo do gato,\ntransformando-se em uma forma patogênica capaz de causar a\ndoença.\n Os sintomas podem variar amplamente e incluem perda de peso,\nfebre, letargia, icterícia e distúrbios gastrointestinais.\n  A transmissão do coronavírus felino ocorre principalmente por\ncontato direto entre gatos, especialmente em ambientes com\ngrande concentração de felinos, como abrigos ou criadouros.\n  A predisposição genética, o estresse e o sistema imunológico\nenfraquecido   são   fatores   que  podem    influenciar   o\ndesenvolvimento da PIF. Infelizmente, não há cura para a PIF, e o\ntratamento é direcionado ao alívio dos sintomas.\n\n\n\n\n                                                           5"
+  },
+  "bvd": {
+    "pages": [
+      11
+    ],
+    "images": [
+      "study_pages/bvd_11.webp"
+    ],
+    "text": "Diarreia Viral\n                  Bovina (BVD)\n\n\n  A Diarreia Viral Bovina (BVD) é uma doença infecciosa que afeta\nbovinos em todo o mundo, causada pelo vírus da diarreia viral\nbovina (BVDV), que pertence à família Flaviviridae.\n\n\nCaracterísticas:                                               Glicoproteína de\n                                                                            superfície\n    Ciclo: Lítico;                   RNA\n   Localização:\n   Cosmopolita;\n   Vacinação: presente;\n   Notificação: presente.\n\n\n  A  transmissão  da  BVD\nocorre       principalmente\natravés do  contato  direto                                  Nucleocapsídeo\nentre  animais  infectados,       Envelope\nseja por meio de secreções\n                                             Fonte: Arquivo pessoal, 2024.\nnasais, saliva, fezes ou urina.\n\n\n  A infecção também pode ser transmitida verticalmente, de uma\nvaca gestante infectada para o feto em desenvolvimento.\n Os  animais  persistentemente  infectados, que  resultam de\ninfecções durante a gestação, são uma fonte significativa de\ndisseminação do vírus.\n  Os sintomas da BVD variam e podem incluir febre, depressão,\nperda de apetite, diarreia e problemas respiratórios. Além disso, a\ninfecção por BVD durante a gestação pode levar a abortos,\nnascimentos de bezerros fracos e anomalias congênitas.\n\n\n\n\n                                                           7"
+  },
+  "febre_amarela": {
+    "pages": [
+      12
+    ],
+    "images": [
+      "study_pages/febre_amarela_12.webp"
+    ],
+    "text": "Febre Amarela\n\n A febre amarela é uma doença viral aguda que afeta humanos e\nprimatas, causada  pelo  vírus da  febre  amarela, da  família\nFlaviridae.\n\nCaracterísticas:                                                 Glicoproteína de\n                                                                             superfície\n    Ciclo: Lítico;\n   Localização:                RNA\n   Cosmopolita\n   Vacinação: presente;\n   Notificação: presente.\n\n A transmissão da febre\namarela            ocorre\nprincipalmente através da\npicada   de   mosquitos     Envelope\ninfectados,  especialmente                                    Nucleocapsídeo\ndo gênero Aedes na área\nurbana e Haemagogus e          Fonte: Arquivo pessoal, 2024.\nSabethes em  ambientes\nsilvestres.\n\n Os seres humanos são considerados os principais hospedeiros, e\nos mosquitos atuam como vetores na transmissão entre humanos\ne primatas.\n  A febre amarela tem uma distribuição geográfica específica,\nsendo endêmica em algumas regiões tropicais e subtropicais da\nÁfrica e da América do Sul.\n A vacinação é a principal medida de prevenção contra a febre\namarela em áreas de risco, e a eliminação de criadouros de\nmosquitos também desempenha um papel importante na redução\nda propagação do vírus.\n\n\n\n\n                                                           8"
+  },
+  "peste_suina": {
+    "pages": [
+      13
+    ],
+    "images": [
+      "study_pages/peste_suina_13.webp"
+    ],
+    "text": "Peste suína\n\n A peste  suína é um  vírus da  família  Flaviviridae, também\nconhecida como cólera dos porcos.\n\n\n                                                         Envelope\nCaracterísticas:                                                    Capsídeo                                    DNA\n    Ciclo: Lítico;                                                                        interior\n   Localização:\n   Cosmopolita\n   Vacinação: presente;\n   Notificação: ausente.\n\n\n\n\n\n                                                                       Capsídeo                                     Membrana\n                                                                                        exterior                                                           interior\n\n                                             Fonte: Arquivo pessoal, 2024.\n\n Os sintomas incluem febre, letargia, perda de apetite, vômitos,\ndiarreia e hemorragias nas mucosas, com alta mortalidade em\ncasos agudos.\n Altamente contagiosa e é transmitida principalmente por contato\ndireto entre suínos, bem como por meio de fômites contaminados.\n\n\n\n\n\n                                                           9"
+  },
+  "aujeszky": {
+    "pages": [
+      15
+    ],
+    "images": [
+      "study_pages/aujeszky_15.webp"
+    ],
+    "text": "Doença de Aujeszky\n\n  A Doença de Aujeszky, também conhecida como pseudoraiva, é\numa enfermidade viral que afeta suínos, causada pelo vírus do\nherpes suíno (SuHV-1).\n                                                            Envelope\n\nCaracterísticas:\n    Ciclo: Lítico;\n   Localização:\n   Cosmopolita;\n   Vacinação: presente;\n   Notificação: presente.\n\n                                                           DNA\n Essa doença é altamente\ncontagiosa  e  pode   ter\nimpactos significativos na\nprodução suína.                 Nucleocapsídeo\n                                                                  Glicoproteína de\n                                                                         superfície\n                                           Fonte: Arquivo pessoal, 2024.\n\n\n O vírus da pseudoraiva provoca uma variedade de sintomas em\nsuínos, incluindo febre, dificuldades respiratórias, incoordenação\nmotora, convulsões e, em muitos casos, a morte dos animais.\n Além  disso, o  vírus pode causar complicações reprodutivas,\nresultando em abortos e nascimentos de leitões fracos.\n A transmissão da Doença de Aujeszky ocorre principalmente pelo\ncontato direto entre suínos infectados, seja por meio de secreções\nrespiratórias ou de fluidos corporais contaminados.\n A disseminação do vírus pode também ocorrer através de\nfômites, como equipamentos agrícolas e roupas contaminadas.\n\n\n\n\n\n                                                                               11"
+  },
+  "marek": {
+    "pages": [
+      16
+    ],
+    "images": [
+      "study_pages/marek_16.webp"
+    ],
+    "text": "Doença de Marek\n\n\n  A Doença de Marek é uma doença viral altamente contagiosa\nque afeta aves, principalmente galinhas e perus.\n\n\nCaracterísticas:\n    Ciclo: Lítico;                  DNA                               Nucleocapsídeo\n   Localização:\n   Cosmopolita;\n   Vacinação: presente;\n   Notificação: presente.\n\n Causada pelo vírus da\nDoença de Marek (MDV),                                             Envelope\num   herpesvírus,   essa\nenfermidade          é\ncaracterizada por afetar o                                Glicoproteínasuperfície de\nsistema          nervoso,\ncausando  tumores  nos               Fonte: Arquivo pessoal, 2024.\nnervos periféricos, na pele\ne em órgãos internos.\n\n  A transmissão da Doença de Marek ocorre através de partículas\nvirais liberadas pelas aves doentes e contaminam o ambiente,\nincluindo poeira e penas.\n  A infecção geralmente ocorre em aves jovens, e o vírus pode\npermanecer latente nos nervos por longos períodos sem causar\nsintomas visíveis.\n Os  sinais  clínicos da Doença de Marek podem  variar, mas\nfrequentemente incluem paralisia das pernas, asas e pescoço,\nbem como mudanças no padrão de penas.\n A doença pode ter impactos significativos na produção avícola,\nresultando em perdas econômicas devido à mortalidade e à\nredução na qualidade das aves.\n\n                                                                   12"
+  },
+  "bohv": {
+    "pages": [
+      17
+    ],
+    "images": [
+      "study_pages/bohv_17.webp"
+    ],
+    "text": "Herpesvírus Bovino (BoHV)\n\n  Refere-se  a um  grupo  de  vírus  pertencentes  à  família\nHerpesviridae que  afeta  bovinos.  Existem  diferentes  tipos de\nherpesvírus bovino, sendo o BoHV-1 e o BoHV-5 os mais notáveis.\n\n\n                                                     Glicoproteína de superfície        EnvelopeCaracterísticas:\n    Ciclo: Lítico e\n   lisogênico;\n   Localização:\n   Cosmopolita\n   Vacinação: presente;\n   Notificação: presente.\n\n  A infecção por herpesvírus\nbovino  pode   resultar  em\ndiversas       manifestações\n                                                               DNA\nclínicas,            afetando         Nucleocapsídeo\nprincipalmente   o   sistema                                             Fonte: Arquivo pessoal, 2024.\nrespiratório e reprodutivo do\ngado.\n\n\n O BoHV-1 é conhecido por causar infecções respiratórias, como\nrinotraqueíte infecciosa bovina (IBR), que se manifesta através de\nsintomas como febre, corrimento nasal, tosse e conjuntivite. Além\ndisso, o vírus pode causar distúrbios reprodutivos, como aborto e\ninfertilidade.\n   Por sua vez, o BoHV-5 está associado à meningoencefalite\ninfecciosa bovina (MIB), uma doença neurológica que afeta o\nsistema nervoso central dos bovinos, podendo  levar a  sinais\nclínicos  graves, como  depressão,  cegueira, incoordenação e\nconvulsões.\n\n\n\n\n                                                                   13"
+  },
+  "fhv": {
+    "pages": [
+      18
+    ],
+    "images": [
+      "study_pages/fhv_18.webp"
+    ],
+    "text": "Herpesvírus Felino\n\n\n O Herpesvírus Felino (FHV-1) é um vírus que afeta gatos e é uma\ndas  principais causas de  infecções  respiratórias em  felinos\ndomésticos.\n\nCaracterísticas:                                Envelope\n    Ciclo: Lítico e\n                                                                                   Nucleocapsídeo   lisogênico;\n   Localização:\n   Cosmopolita\n   Vacinação: presente;\n   Notificação: ausente.\n\n                                       DNA\n   Pertencente  à   família\nHerpesviridae,  o  FHV-1  é\n                                                                              Glicoproteína de superfíciealtamente   contagioso  e\npode causar uma variedade                                             Fonte: Arquivo pessoal, 2024.\nde  sintomas,  sendo  mais\ncomumente  associado  a\ninfecções     do      trato\nrespiratório superior.\n\n  A transmissão do Herpesvírus Felino ocorre por contato direto\nentre gatos, especialmente através de secreções nasais e oculares.\nGatos infectados podem eliminar o vírus no ambiente, tornando\npossível a contaminação de objetos e superfícies.\n Os sintomas da infecção por Herpesvírus Felino incluem espirros,\ncorrimento nasal, conjuntivite, febre, falta de apetite e ulcerações\nna  língua. Em casos mais  graves, a infecção pode  levar a\ncomplicações oculares, como úlceras na córnea.\n Embora a infecção por FHV-1 não tenha uma cura definitiva, os\nsintomas podem ser tratados e controlados.\n\n\n\n                                                                   14"
+  },
+  "influenza": {
+    "pages": [
+      20
+    ],
+    "images": [
+      "study_pages/influenza_20.webp"
+    ],
+    "text": "Influenza\n\n  A influenza, comumente conhecida como gripe, é uma doença\nrespiratória aguda.\n\nCaracterísticas:                    Glicoproteína de superfície                                                                         Nucleocapsídeo\n    Ciclo: Lítico e\n    lisogênico;\n    Localização:\n   Cosmopolita\n   Vacinação: presente;\n    Notificação: presente.\n\n  Essa infecção  viral afeta\nseres  humanos  e  vários\nanimais,  sendo  conhecida       RNA                                                                          Neuramidase\npor  sua  capacidade  de                   Envelope\ncausar  surtos  sazonais  e,\nocasionalmente, pandemias                                              Fonte: Arquivo pessoal, 2024.\nmais extensas.\n\n Os vírus influenza pertencem à família Orthomyxoviridae.\n Os sintomas comuns da gripe incluem febre, dores musculares,\ndor de cabeça, fadiga, tosse e congestão nasal.\n  A transmissão ocorre principalmente por meio de gotículas\nrespiratórias produzidas por pessoas infectadas durante a fala,\ntosse  ou  espirro.  A  gripe  pode  se  espalhar  rapidamente,\nespecialmente em ambientes fechados e populações densas.\n\n\n\n\n\n                                                                    16"
+  },
+  "papiloma_bovino": {
+    "pages": [
+      22
+    ],
+    "images": [
+      "study_pages/papiloma_bovino_22.webp"
+    ],
+    "text": "Papilomavírus bovino\n\n\n  O Papilomavírus Bovino (BPV) é um vírus que afeta bovinos,\ncausando infecções nas células epiteliais da pele e mucosas.\n\nCaracterísticas:\n    Ciclo: Lítico e                      Nucleocapsídeo\n   lisogênico;\n   Localização:\n   Cosmopolita\n   Vacinação: ausente;\n   Notificação: ausente.\n\n  Essas  infecções  podem\nresultar no desenvolvimento\nde    lesões    verrucosas,\n                                                               DNA\nconhecidas        como\npapilomas,   que  podem\nvariar  em  tamanho   e                                            Fonte: Arquivo pessoal, 2024.\naparência.\n\n  Existem diferentes tipos de Papilomavírus Bovino, sendo o BPV-1,\nBPV-2 e BPV-4 os mais comuns. Esses tipos específicos de vírus\nestão associados a diferentes formas de papilomatose em bovinos.\n  A transmissão do Papilomavírus Bovino geralmente ocorre por\ncontato direto entre animais infectados e sadios, principalmente\nem áreas onde há lesões  presentes. Fatores como  estresse,\nabrasões na pele e condições ambientais  favoráveis podem\naumentar a susceptibilidade dos bovinos à infecção.\n  Os papilomas podem  surgir em diversas partes do corpo,\nincluindo pele, boca, língua e trato digestivo, causando desconforto\ne, em alguns casos, prejudicando a alimentação.\n Em geral, as lesões regredirão naturalmente ao longo do tempo,\nmas em casos mais graves, podem ser necessárias intervenções\nveterinárias.\n\n                                                                   18"
+  },
+  "papiloma_canino": {
+    "pages": [
+      23
+    ],
+    "images": [
+      "study_pages/papiloma_canino_23.webp"
+    ],
+    "text": "Papilomavírus canino\n\n\n O Papilomavírus canino (CPV) refere-se a uma família de vírus\nque afeta cães, causando lesões  epiteliais, conhecidas como\npapilomas ou verrugas, na pele e nas membranas mucosas.\n\n\nCaracterísticas:                                                         DNA\n    Ciclo: Lítico e\n    lisogênico;\n    Localização:\n   Cosmopolita\n   Vacinação: ausente;\n    Notificação: ausente.\n\n   Esses   papilomas   são\ngeralmente benignos, mas\n                                       Nucleocapsídeo\nem alguns casos, podem se\ntornar malignos.\n                                            Fonte: Arquivo pessoal, 2024.\n\n Existem  diferentes  tipos de Papilomavírus  canino, cada um\nassociado a certos tipos de lesões.\n A transmissão do Papilomavírus canino ocorre geralmente por\ncontato direto com cães infectados ou com objetos contaminados.\n Os cães mais jovens, em particular, são suscetíveis a desenvolver\nverrugas, e o sistema imunológico desempenha um papel crucial\nna resposta e na resolução da infecção.\n\n\n\n\n\n                                                                   19"
+  },
+  "cinomose": {
+    "pages": [
+      25
+    ],
+    "images": [
+      "study_pages/cinomose_25.webp"
+    ],
+    "text": "Cinomose\n\n A cinomose é uma doença viral altamente contagiosa que afeta\nprincipalmente  cães, embora também  possa  atingir  outros\nmembros da família dos canídeos, como raposas e lobos. O vírus\nresponsável pela cinomose é o vírus da cinomose canina (CDV),\nque pertence à família Paramyxoviridae.\n\nCaracterísticas:                  Glicoproteína de superfície\n    Ciclo: Lítico;\n   Localização:\n   Cosmopolita;\n                                                                        Nucleocapsídeo   Vacinação: presente;\n   Notificação: presente.\n\n\n  Esta  enfermidade  afeta\ndiversos    sistemas   do\norganismo,    incluindo   o\n                                              Envelope\nrespiratório,            o\ngastrointestinal e o nervoso.           Fonte: Arquivo pessoal, 2024.\n\n  A transmissão da cinomose ocorre principalmente através do\ncontato direto com secreções respiratórias ou urina de animais\ninfectados.\n  Os sintomas iniciais incluem febre, secreção nasal, tosse e falta\nde apetite, progredindo para estágios mais avançados com sinais\nneurológicos, como convulsões, descoordenação e paralisia.\n   Infelizmente, a cinomose pode ser  fatal e não possui cura\nespecífica, tornando a prevenção por meio da vacinação crucial\npara proteger os animais de estimação.\n\n\n\n\n\n                                                                   21"
+  },
+  "newcastle": {
+    "pages": [
+      26
+    ],
+    "images": [
+      "study_pages/newcastle_26.webp"
+    ],
+    "text": "Doença de Newcastle\n\n\n A Doença de Newcastle é uma doença viral altamente contagiosa\nque afeta aves, principalmente aves domésticas como galinhas,\nperus e patos.\n                                          Proteína de superfície\nCaracterísticas:                                      RNA\n    Ciclo: Lítico;          Nucleocapsídeo\n   Localização:\n   Cosmopolita;\n   Vacinação: presente;\n   Notificação: presente.\n\n  Causada  pelo  vírus da\nDoença de Newcastle (NDV),\num paramixovírus, que pode\nvariar a  gravidade, desde\nformas    brandas     até                                       Envelope\nvariantes  mais   virulentas\nque     causam       alta\nmortalidade nas aves.                          Proteína matriz\n                                              Fonte: Arquivo pessoal, 2024.\n\n A transmissão da Doença de Newcastle ocorre através do contato\ndireto com aves infectadas, bem como por meio de excreções\ncontaminadas, como fezes e secreções respiratórias.\n O vírus pode se disseminar rapidamente em populações de aves\ndensamente povoadas, como as encontradas em granjas avícolas.\n Os sintomas da Doença de Newcastle incluem sinais respiratórios,\ncomo  espirros,  tosse e  corrimento  nasal, bem como  sinais\nnervosos, como torcicolo, tremores e convulsões.\n Em casos graves, a doença pode levar à morte das aves afetadas.\n\n\n\n\n                                                          22"
+  },
+  "panleucopenia": {
+    "pages": [
+      28
+    ],
+    "images": [
+      "study_pages/panleucopenia_28.webp"
+    ],
+    "text": "Panleucopenia felina\n\n\n A Panleucopenia Felina é uma doença viral altamente contagiosa\nque afeta gatos.\n\n                                   DNA\n\nCaracterísticas:\n    Ciclo: Lítico;\n    Localização:\n   Cosmopolita\n   Vacinação: presente;\n    Notificação: ausente.\n\n  O agente causador é o\nvírus  da   panleucopenia\nfelina (FPV), que pertence à\nfamília Parvoviridae.\n\n                                                          Nucleocapsídeo\n\n                                              Fonte: Arquivo pessoal, 2024.\n\n A doença é caracterizada por uma rápida replicação do vírus em\ntecidos de rápida divisão celular, como a medula óssea, intestino\ndelgado, linfonodos e, ocasionalmente, o cérebro.\n Os sintomas da panleucopenia felina incluem febre, depressão,\nfalta de apetite, vômitos e diarreia grave.\n  A doença pode ser especialmente perigosa para felinos não\nvacinados, gestantes e imunossuprimidos.\n A transmissão ocorre principalmente através do contato direto\ncom fluidos corporais contaminados ou objetos infectados, como\ntigelas de comida, caixas de areia e superfícies.\n\n\n\n\n                                                           24"
+  },
+  "parvo_canino": {
+    "pages": [
+      29
+    ],
+    "images": [
+      "study_pages/parvo_canino_29.webp"
+    ],
+    "text": "Parvovírus canino\n\n\n O parvovírus canino, conhecido como parvovirose, é uma doença\nviral altamente  contagiosa que  afeta  cães, porém algumas\nmutações afetam também os  felinos, especialmente filhotes e\ncães não vacinados.\n\n\nCaracterísticas:\n                                                           DNA    Ciclo: Lítico;\n    Localização:\n   Cosmopolita\n   Vacinação: presente;\n    Notificação: ausente.\n\n\n  O agente etiológico é o\nvírus da parvovirose canina\n(CPV), pertencente à família\nParvoviridae.\n\n                                    Nucleocapsídeo\n                                             Fonte: Arquivo pessoal, 2024.\n\n  Essa doença é reconhecida por sua rápida disseminação e por\ncausar sintomas graves, principalmente gastrointestinais.\n A transmissão do parvovírus ocorre principalmente através do\ncontato direto com fezes contaminadas.\n  Os  sintomas  comuns  incluem  vômitos,   diarreia  grave,\ndesidratação e depressão. Filhotes são particularmente suscetíveis,\ne a doença pode ser fatal se não for tratada adequadamente.\n  A prevenção é fundamental, e a vacinação é uma maneira eficaz\nde proteger os cães contra a parvovirose.\n\n\n\n                                                          25"
+  },
+  "parvo_suino": {
+    "pages": [
+      30
+    ],
+    "images": [
+      "study_pages/parvo_suino_30.webp"
+    ],
+    "text": "Parvovírus suíno\n\n\n O Parvovírus Suíno, também conhecido como Parvovirose Suína, é\numa doença viral que afeta suínos, causando perdas significativas\nna indústria suína em todo o mundo.\n\n\n                                 Nucleocapsídeo\nCaracterísticas:\n    Ciclo: Lítico;\n    Localização:\n   Cosmopolita\n   Vacinação: presente;\n    Notificação: ausente.\n\n\n  O agente etiológico é o\nvírus da parvovirose suína\n(PPV),  que   pertence  à\nfamília Parvoviridae.\n                                                 DNA\n                                           Fonte: Arquivo pessoal, 2024.\n\n Diferentemente do parvovírus canino, que afeta cães, o PPV causa\nprincipalmente problemas reprodutivos em suínos.\n A infecção pelo Parvovírus Suíno resulta em perdas reprodutivas,\ncomo abortos, natimortos e nascimento de leitões fracos.\n A transmissão ocorre principalmente através da ingestão de\nmaterial contaminado, como fezes, urina ou saliva infectada.\n Suínos infectados geralmente não exibem sintomas  clínicos\nóbvios, o que torna a detecção da doença desafiadora.\n No  entanto, as consequências podem  ser  graves, afetando\ndiretamente a produtividade das criações.\n\n\n\n\n                                                          26"
+  },
+  "estomatite": {
+    "pages": [
+      32
+    ],
+    "images": [
+      "study_pages/estomatite_32.webp"
+    ],
+    "text": "Estomatite Vesicular Bovina\n\n\n A Estomatite Vesicular Bovina (EVB) é uma doença viral que afeta\nprincipalmente bovinos, embora também possa  afetar outros\nanimais de casco fendido, como suínos e ovinos.\n\nCaracterísticas:\n    Ciclo: Lítico;                                        RNA\n   Localização: Regiões\n    tropicais e subtropicais;\n   Vacinação: presente;\n   Notificação: presente.\n\nA doença é causada pelo   Envelope\nvírus    da     estomatite\nvesicular, que  pertence à\nfamília Picornaviridae e ao\ngênero Vesiculovirus. A EVB é\ncaracterizada          pelo\naparecimento de vesículas\nou bolhas na boca, lábios,       Glicoproteína de      Nucleocapsídeo\n                                              superfície\nlíngua, cascos e  tetos de\nbovinos.                                    Fonte: Arquivo pessoal, 2024.\n\n Essas vesículas podem causar dor, salivação excessiva, perda de\napetite e, em alguns casos, claudicação devido à presença das\nlesões nos cascos.\n A transmissão da estomatite vesicular ocorre principalmente por\ncontato  direto entre animais infectados e sadios, bem como\natravés de fômites contaminados, como utensílios de alimentação\ne equipamentos de manejo.\n Além disso, insetos, especialmente mosquitos e moscas, podem\ndesempenhar um papel na disseminação do  vírus. Embora a\nestomatite  vesicular  seja geralmente uma doença de  baixa\nmortalidade, ela pode causar perdas econômicas significativas\ndevido à redução na produção de  leite, perda de peso e\ndesvalorização de animais afetados.                                                          28"
+  },
+  "aftosa": {
+    "pages": [
+      33
+    ],
+    "images": [
+      "study_pages/aftosa_33.webp"
+    ],
+    "text": "Febre Aftosa\n\n\n  A febre aftosa é uma doença viral altamente contagiosa que\nafeta animais de casco fendido, principalmente bovinos, ovinos,\ncaprinos e suínos.\n\nCaracterísticas:\n    Ciclo: Lítico;                                                                 Envelope\n   Localização:\n   Cosmopolita\n   Vacinação: presente;  Nucleocapsídeo\n   Notificação: presente.\n\n  Causada pelo  vírus da\nfebre aftosa, pertencente à\nfamília Picornaviridae, essa\nenfermidade  é  conhecida\npor causar febre, vesículas                                                            RNA\nnas mucosas orais, patas e\núberes,    resultando  em\ngraves              prejuízos\neconômicos  na  produção Glicoproteína de superfície\npecuária.                                   Fonte: Arquivo pessoal, 2024.\n\n A transmissão da febre aftosa ocorre principalmente pelo contato\ndireto entre animais infectados, mas também pode ocorrer por\nmeio de produtos contaminados, como  carne,  leite,  saliva e\nexcrementos. Além disso, o vírus pode ser transportado pelo vento,\nfacilitando sua propagação a longas distâncias.\n  Os sintomas clínicos incluem salivação excessiva, claudicação\ndevido à dor nas patas, perda de apetite, febre e, em casos graves,\na formação de vesículas na boca, língua, cascos e tetas.\n  A doença não apenas compromete o bem-estar animal, mas\ntambém  resulta em  restrições ao comércio  internacional de\nanimais e seus produtos.\n\n                                                          29"
+  },
+  "bouba": {
+    "pages": [
+      35
+    ],
+    "images": [
+      "study_pages/bouba_35.webp"
+    ],
+    "text": "Bouba Aviária\n\n\n\n A Bouba Aviária, também conhecida como Varíola Aviária, é uma\ndoença viral que afeta aves, incluindo galinhas, perus e outras\nespécies. Causada por diferentes vírus da família Poxviridae.\n\n\nCaracterísticas:\n    Ciclo: Lítico;                              Nucleocapsideo                                                        DNA fita dupla\n   Localização:\n   Cosmopolita;\n   Vacinação: presente;\n   Notificação: presente.\n\n Sendo caracterizada pelo\naparecimento  de   lesões\ncutâneas    e    mucosas,\npodendo   afetar  a   pele,                                                           Envelope\nolhos,    bico   e    trato\n                                             Fonte: Arquivo pessoal, 2024.respiratório das aves.\n\n A transmissão ocorre principalmente através do contato direto\nentre aves infectadas e saudáveis, bem como por meio de\nmosquitos e outros artrópodes vetores.\n As lesões podem variar de pequenas pápulas a grandes nódulos,\ncausando desconforto, dificuldades respiratórias e, em casos mais\ngraves, resultando na diminuição da produção de ovos e até\nmesmo na mortalidade das aves.\n A Bouba Aviária é uma preocupação significativa na avicultura,\npois pode impactar negativamente a produção de carne e ovos,\nresultando em perdas econômicas para a indústria avícola.\n\n\n\n\n\n                                                          32"
+  },
+  "rotavirose": {
+    "pages": [
+      37
+    ],
+    "images": [
+      "study_pages/rotavirose_37.webp"
+    ],
+    "text": "Rotavirose\n\n A rotavirose é uma doença viral que afeta diversas espécies de\nanimais, incluindo aves, mamíferos e humanos.\n\n                                       VP\nCaracterísticas:                              7                                                                VP1/VP\n    Ciclo: Lítico;                                                 3\n    Localização:\n   Cosmopolita\n   Vacinação: presente;\n    Notificação: presente.\n\n Na medicina veterinária, a\nrotavirose é particularmente\nrelevante   em    animais                                                                  VP\njovens,  especialmente em                                          6\ncriações de gado, suínos e\naves,  onde  pode  causar\nsurtos de diarreia aguda e\ndesidratação.                                           VP                                  RNA                                                                   2\n                                             Fonte: Arquivo pessoal, 2024.\n\n O vírus da rotavirose pertence à família Reoviridae e é classificado\nem diferentes grupos e subgrupos, sendo capaz de infectar células\ndo epitélio intestinal, resultando em danos significativos ao trato\ngastrointestinal.\n A transmissão ocorre principalmente por via fecal-oral, e os\nanimais podem contrair a doença ao ingerir água ou alimentos\ncontaminados.\n Os sintomas da rotavirose em animais jovens incluem diarreia\nlíquida, desidratação, letargia, perda de apetite e, em casos graves,\nmortalidade.\n A gravidade da doença pode variar dependendo da idade dos\nanimais, do tipo de hospedeiro e da virulência da cepa do vírus.\n\n\n                                                          34"
+  },
+  "aie": {
+    "pages": [
+      39
+    ],
+    "images": [
+      "study_pages/aie_39.webp"
+    ],
+    "text": "Anemia Infecciosa\n                  Equina (AIE)\n\n A Anemia Infecciosa Equina (AIE) é uma doença viral que afeta\ncavalos,  asininos  e  mulas, causada  pelo  Vírus da Anemia\nInfecciosa  Equina  (EIAV), da  família das  retrovírus, também\nconhecida como “febre dos pântanos” e “AIDS equina”.\n\n                                                            RNA fita\nCaracterísticas:                                 Envelope            simples\n    Ciclo: Lítico e Lisogênico;\n   Localização: Brasil;\n   Vacinação: ausente;\n   Notificação: presente.\n\n   Esta   enfermidade   é\ncaracterizada   por  uma\nanemia  crônica  e  pode\nvariar   de  uma   forma                                          Transcripitase\nassintomática a uma forma      reversa                      Nucleocapsídeo\naguda   e   grave,  com                   Glicoproteína de                                                               superfície\ncomplicações\n                                              Fonte: Arquivo pessoal, 2024.potencialmente fatais.\n\n  A principal forma de transmissão da AIE é através de insetos\nhematófagos, como mosquitos, que se alimentam do sangue de\num equino infectado e, subsequentemente, picam outro animal,\ntransmitindo o vírus.\n Além disso, a transmissão pode ocorrer por meio de instrumentos\ncontaminados, como agulhas e seringas, ou através do contato\ndireto com sangue infectado.\n  Os sintomas da AIE podem incluir febre intermitente, perda de\npeso, fraqueza, anemia, icterícia e, em casos graves, hemorragias.\nNão há cura para a AIE, e os cavalos infectados geralmente se\ntornam portadores crônicos do vírus.\n\n\n\n                                                          36"
+  },
+  "leucose": {
+    "pages": [
+      40
+    ],
+    "images": [
+      "study_pages/leucose_40.webp"
+    ],
+    "text": "Leucose bovina\n\n\n A Leucose Bovina, também conhecida como Leucemia Enzoótica\nBovina, é uma doença viral que afeta bovinos. O agente causador é\no vírus BLV, que pertence à família Retroviridae.\n\n                                                      Glicoproteína de superfície\nCaracterísticas:\n    Ciclo: Lítico e              Envelope\n    lisogênico;                                                  Nucleocapsídeo\n    Localização:\n   Cosmopolita\n   Vacinação: ausente;\n    Notificação: presente.\n\n  A  infecção  por  BLV  é\ncaracterizada  por  causar\ndistúrbios  linfoproliferativos,\nincluindo  a  formação  de\ntumores      linfoides       e,\neventualmente,  resultando\nem    uma     condição                           RNA fita\n                                         Transcripitase              simplesconhecida como leucose.                                          reversa\n                                            Fonte: Arquivo pessoal, 2024.\n\n A transmissão do BLV geralmente ocorre através do contato direto\n entre animais, principalmente através do compartilhamento de\n agulhas,  instrumentos  cirúrgicos  contaminados  e  durante a\n amamentação.\n O vírus pode também ser transmitido verticalmente, da mãe para\n o bezerro durante o parto ou através do  leite. A maioria dos\n animais infectados com o BLV não apresenta sintomas imediatos, e\n a leucose pode permanecer latente por longos períodos.\n  No  entanto, em  alguns  casos, a  infecção pode  levar ao\n desenvolvimento de  linfomas, comprometendo a saúde e a\n produtividade do rebanho.\n\n                                                           37"
+  },
+  "felv": {
+    "pages": [
+      41
+    ],
+    "images": [
+      "study_pages/felv_41.webp"
+    ],
+    "text": "Vírus da Leucemia Felina\n                    (FeLV)\n\n O Vírus da Leucemia Felina (FELV) é um retrovírus que afeta gatos,\nsendo uma das principais causas de doenças graves e fatais\nnesses animais.\n\nCaracterísticas:\n    Ciclo: Lítico e                                       RNA fita simples\n   lisogênico;         Transcripitase reversa\n   Localização:\n   Cosmopolita\n   Vacinação: presente;\n   Notificação: presente.\n\n A leucemia  felina é uma\ninfecção crônica que pode\nlevar  a  uma   série  de\ncomplicações,     incluindo\ndoenças    do    sistema Envelope\nimunológico,       anemia,\n                                                            Nucleocapsídeo\nlinfomas    e     distúrbios\n                                       Glicoproteína de superfíciehematopoiéticos.\n                                             Fonte: Arquivo pessoal, 2024.\n A transmissão do FELV ocorre principalmente através do contato\ndireto entre gatos, seja por meio de mordidas, lambeduras ou\ncompartilhamento de tigelas de comida e caixas de areia.\n  Gatos jovens e gatos que vivem ao ar livre têm maior risco de\ncontrair o vírus.\n Os sintomas da leucemia felina podem variar e incluem perda de\npeso,   letargia,  anemia,  problemas   respiratórios,  infecções\nrecorrentes e aumento dos gânglios linfáticos. No entanto, alguns\ngatos podem ser portadores assintomáticos.\n\n\n\n\n                                                          38"
+  },
+  "fiv": {
+    "pages": [
+      42
+    ],
+    "images": [
+      "study_pages/fiv_42.webp"
+    ],
+    "text": "Vírus da Imunodeficiência\n                   Felina (FIV)\n\n O Vírus da Imunodeficiência Felina (FIV) é um retrovírus que afeta\ngatos, comprometendo o sistema imunológico e tornando os\nanimais mais suscetíveis a infecções oportunistas.\n\nCaracterísticas:            Nucleocapsídeo               Transcripitase reversa\n    Ciclo: Lítico e\n   lisogênico;\n   Localização:\n   Cosmopolita\n   Vacinação: ausente;\n   Notificação: ausente.\n\n O FIV é semelhante ao vírus\nda        imunodeficiência\nhumana (HIV) em humanos,\nmas  é   específico  para\nfelinos.      E  como  seu\nsemelhante,    atualmente,\n                                                     RNA fita simplesnão há cura para a infecção     Envelope\n                                                Glicoproteína de superfíciepor FIV.\n                                              Fonte: Arquivo pessoal, 2024.\n A transmissão do FIV ocorre principalmente por meio de mordidas\nprofundas durante brigas entre gatos territorialmente agressivos. A\ntransmissão vertical da mãe para os filhotes também é possível,\nseja durante a gestação, o parto ou a amamentação.\n  Os gatos infectados pelo FIV podem não apresentar sintomas\nimediatos, e muitos permanecem clinicamente saudáveis durante\nanos. No entanto, ao longo do tempo, o sistema imunológico\nenfraquecido  pode  levar  a uma  variedade  de  infecções\nsecundárias, bem como a condições mais graves, como doenças\nrenais e câncer.\n  A conscientização sobre o FIV é essencial para promover a\ntestagem, a prevenção e o manejo adequado, contribuindo para o\nbem-estar dos gatos domésticos e de comunidades felina.\n                                                          39"
+  },
+  "raiva": {
+    "pages": [
+      44
+    ],
+    "images": [
+      "study_pages/raiva_44.webp"
+    ],
+    "text": "Raiva\n\n A raiva é uma doença viral aguda e fatal que afeta mamíferos,\nincluindo seres humanos.\n                               Glicoproteína de\nCaracterísticas:              superfície G     Proteína de matriz\n    Ciclo: Lítico;\n    Localização:\n   Cosmopolita                                               Envelope\n   Vacinação: presente;\n    Notificação: presente.\n\n  Causada  pelo  vírus da\nraiva,  um  Lyssavirus  da\nfamília   Rhabdoviridae,  a\ndoença   é    transmitida\nprincipalmente        pela\nmordida  ou  arranhão  de\n                                     RNA de fita simples\nanimais  infectados,  sendo\n                                                   RNA polimerase\nos morcegos os  principais    Nucleocapsídeo                                                                   (proteína L e P)\nvetores.\n                                            Fonte: Arquivo pessoal, 2024.\n  O vírus da raiva ataca o sistema nervoso central, levando a\nsintomas  que  incluem   agitação,  ansiedade,   alucinações,\ndificuldade de deglutição, convulsões e paralisia. Uma vez que os\nsintomas aparecem, a raiva é quase sempre fatal, tornando-a uma\ndas doenças mais temidas.\n   A prevenção da  raiva  envolve a vacinação de  animais\ndomésticos, como cães e gatos, e a pronta administração de\ntratamento pós-exposição em casos de mordidas ou arranhões\nsuspeitos de  animais  infectados. Além  disso, o  controle da\npopulação de morcegos e a educação pública sobre medidas\npreventivas são essenciais para reduzir a incidência da doença.\n   A raiva é uma zoonose, ou seja, pode ser transmitida de animais\npara humanos. Portanto, a conscientização sobre os  riscos, a\nimportância da vacinação e o tratamento imediato em caso de\nexposição são fundamentais para prevenir a disseminação dessa\ngrave doença.\n                                                          42"
+  },
+  "prion": {
+    "pages": [
+      46
+    ],
+    "images": [
+      "study_pages/prion_46.webp"
+    ],
+    "text": "Mal da Vaca Louca\n\n O  Mal  da  Vaca  Louca,  cientificamente  conhecido como\nEncefalopatia  Espongiforme  Bovina   (EEB),  é  uma  doença\nneurodegenerativa que afeta bovinos, causado por um príon.\n\nCaracterísticas:\n   Genoma: ausente;\n                                                      Príons    Ciclo: ausente;\n   Localização: Cosmopolita\n   Vacinação: ausente;\n   Notificação: presente.\n\n     Essa    condição    é\ncaracterizada          pela\nformação   de   proteínas\nanormais, chamadas príons,\nque   se  acumulam  no\ncérebro   e  no   sistema\nnervoso central dos animais,\nlevando     a     danos\nprogressivos.                                               Fonte: Arquivo pessoal, 2024.\n\n  A EEB está associada à ingestão de rações contaminadas com\npartículas do sistema nervoso  central de animais  infectados.\nEmbora a transmissão mais comum seja alimentar, também é\npossível a transmissão vertical, da mãe para o filhote.\n A doença tem uma longa incubação, podendo levar anos até que\nos  sintomas  se  manifestem. Os  sintomas da  EEB  incluem\nmudanças de comportamento, dificuldades motoras, perda de\npeso, dificuldades de locomoção e, eventualmente, a morte do\nanimal.\n A descoberta da EEB levou a importantes medidas de controle e\nrestrições no comércio de produtos derivados de bovinos em\nmuitos países.\n O controle eficaz da EEB é crucial não apenas para a saúde do\ngado, mas também para proteger a segurança alimentar e a\nsaúde pública, uma vez que a EEB está associada a formas\nvariantes da doença de Creutzfeldt-Jakob em seres humanos.                                                           44"
+  }
+}
