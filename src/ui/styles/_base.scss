@@ -1,0 +1,128 @@
+@use 'variables' as *;
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  font-family: $font-body;
+  font-size: 16px;
+  line-height: 1.5;
+  color: $ink;
+  background:
+    radial-gradient(1100px 500px at 100% -10%, rgba($bordo, 0.1), transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, rgba($gray-warm, 0.18), transparent 60%),
+    linear-gradient(180deg, $bordo-wash 0%, #f4efed 100%);
+  background-attachment: fixed;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+:focus-visible {
+  outline: 3px solid rgba($gold, 0.9);
+  outline-offset: 2px;
+}
+
+// Botões
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 46px;
+  padding: 0.65rem 1.3rem;
+  border: 2px solid transparent;
+  border-radius: $radius-pill;
+  font-weight: 800;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(1px) scale(0.98);
+  }
+}
+
+.btn-primary {
+  color: $white;
+  background: linear-gradient(180deg, $bordo-light 0%, $bordo 55%, $bordo-dark 100%);
+  box-shadow: 0 4px 0 $bordo-deep, $shadow-sm;
+
+  &:hover {
+    box-shadow: 0 6px 0 $bordo-deep, $shadow-md;
+  }
+
+  &:active {
+    box-shadow: 0 2px 0 $bordo-deep;
+  }
+}
+
+.btn-secondary {
+  color: $ink;
+  background: linear-gradient(180deg, #fbe7b6 0%, $gold 100%);
+  box-shadow: 0 4px 0 #a97b25, $shadow-sm;
+
+  &:hover {
+    box-shadow: 0 6px 0 #a97b25, $shadow-md;
+  }
+
+  &:active {
+    box-shadow: 0 2px 0 #a97b25;
+  }
+}
+
+.btn-ghost {
+  color: $bordo;
+  background: $white;
+  border-color: rgba($bordo, 0.25);
+  box-shadow: $shadow-sm;
+
+  &:hover {
+    border-color: $bordo;
+    background: $bordo-wash;
+  }
+}
+
+.btn-badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.4rem;
+  border-radius: $radius-pill;
+  background: rgba($ink, 0.14);
+  font-size: 0.8rem;
+}
+
+.error-message {
+  margin: 2rem auto;
+  max-width: 520px;
+  padding: 1rem 1.25rem;
+  border-radius: $radius-md;
+  border: 1px solid rgba($danger, 0.3);
+  background: #fdecea;
+  color: $danger;
+  white-space: pre-line;
+}
+
+.app-footer {
+  padding: 1.25rem 1rem 1.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+  color: $gray-dark;
+}

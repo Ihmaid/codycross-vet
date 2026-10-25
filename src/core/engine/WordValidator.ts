@@ -37,6 +37,15 @@ export class WordValidator {
     return this.solved[row] ?? false;
   }
 
+  /** Todas as células da linha preenchidas (certas ou não). */
+  public isRowFilled(row: number): boolean {
+    return !!this.level.horizontalWords[row] && !this.readRow(row).includes(' ');
+  }
+
+  public solvedCount(): number {
+    return this.solved.filter(Boolean).length;
+  }
+
   /** Células (colunas) ocupadas pela palavra da linha. */
   public isInWord(row: number, col: number): boolean {
     const word = this.level.horizontalWords[row];
