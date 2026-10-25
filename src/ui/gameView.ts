@@ -158,6 +158,7 @@ export class GameView {
       )}`;
     };
     setHtml(this.clues, html`${group('H', 'Horizontais')}${group('V', 'Verticais')}`);
+    this.board.style.setProperty('--cols', String(cw.width));
     this.board.style.gridTemplateColumns = `repeat(${cw.width}, var(--cell))`;
     this.board.style.gridTemplateRows = `repeat(${cw.height}, var(--cell))`;
     // As casas são criadas uma vez; paintCross só atualiza (assim as animações não são interrompidas).
