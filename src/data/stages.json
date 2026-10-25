@@ -6,6 +6,7 @@
     "tag": "Bases da disciplina",
     "image": "intro",
     "description": "Reconheça a estrutura dos vírus, o papel da célula hospedeira e as etapas gerais de multiplicação viral.",
+    "intro": "Virologia é o estudo dos vírus, agentes microscópicos capazes de infectar praticamente todos os seres vivos.",
     "review": "Vírus são agentes infecciosos acelulares que dependem da maquinaria de células hospedeiras. O genoma é formado por DNA ou RNA, envolvido por um capsídeo; alguns vírus também possuem envelope.",
     "source": "E-book: Introdução e reprodução viral (páginas 5–6).",
     "cross": [
@@ -84,6 +85,7 @@
     "tag": "Coronaviridae",
     "image": "pif",
     "description": "Uma doença com nome curto, mas com um tabuleiro completo: oito pistas independentes da sigla PIF.",
+    "intro": "A Peritonite Infecciosa Felina (PIF) é uma doença viral complexa e muitas vezes fatal que afeta gatos.",
     "review": "A PIF é uma doença associada ao coronavírus felino e pode apresentar efusão abdominal, febre, icterícia e manifestações oculares. A transmissão do coronavírus felino é favorecida pelo convívio próximo entre gatos.",
     "source": "E-book: Peritonite Infecciosa Felina (página 9).",
     "cross": [
@@ -158,6 +160,7 @@
     "tag": "Retroviridae",
     "image": "felv",
     "description": "Explore características estruturais, transmissão e manifestações da infecção pelo FeLV.",
+    "intro": "O Vírus da Leucemia Felina (FELV) é um retrovírus que afeta gatos, sendo uma das principais causas de doenças graves e fatais nesses animais.",
     "review": "FeLV é um retrovírus envelopado de RNA, transmitido principalmente no contato próximo entre gatos. A infecção pode estar associada à anemia, linfomas e alterações imunológicas.",
     "source": "E-book: Vírus da Leucemia Felina (página 41).",
     "cross": [
@@ -232,6 +235,7 @@
     "tag": "Rhabdoviridae",
     "image": "raiva",
     "description": "Investigue a transmissão, o tropismo neurológico, as manifestações e a prevenção dessa zoonose.",
+    "intro": "A raiva é uma doença viral aguda e fatal que afeta mamíferos, incluindo seres humanos.",
     "review": "A raiva é causada por um Lyssavirus da família Rhabdoviridae. Afeta mamíferos e compromete o sistema nervoso. O e-book destaca a vacinação e a conduta imediata após exposição suspeita.",
     "source": "E-book: Raiva (página 44).",
     "cross": [
@@ -306,6 +310,7 @@
     "tag": "Paramyxoviridae",
     "image": "cinomose",
     "description": "Relacione as manifestações respiratórias, gastrointestinais e neurológicas com o agente viral.",
+    "intro": "A cinomose é uma doença viral altamente contagiosa que afeta principalmente cães, embora também possa atingir outros membros da família dos canídeos, como raposas e lobos.",
     "review": "A cinomose é uma infecção multissistêmica de canídeos. O material descreve sinais respiratórios, gastrointestinais e neurológicos e destaca a vacinação como forma de prevenção.",
     "source": "E-book: Cinomose (página 25).",
     "cross": [
@@ -380,6 +385,7 @@
     "tag": "Encefalopatia espongiforme bovina",
     "image": "prion",
     "description": "Um tema integrante do projeto que permite comparar agentes proteicos infecciosos e vírus.",
+    "intro": "O Mal da Vaca Louca, cientificamente conhecido como Encefalopatia Espongiforme Bovina (EEB), é uma doença neurodegenerativa que afeta bovinos, causado por um príon.",
     "review": "A encefalopatia espongiforme bovina (EEB) é uma doença causada por príons — agentes proteicos infecciosos, sem genoma viral. O material a relaciona a exposição alimentar e comprometimento do sistema nervoso.",
     "source": "E-book: Mal da Vaca Louca (página 46).",
     "cross": [
@@ -454,6 +460,7 @@
     "tag": "Coronaviridae",
     "image": "coronavirus_canino",
     "description": "Entenda a transmissão entérica, os sinais gastrointestinais e a estrutura do coronavírus canino.",
+    "intro": "O coronavírus canino mais comum é o Coronavírus Canino Entérico (CCoV), que afeta o trato gastrointestinal dos cães, causando sintomas como diarreia, vômitos e, ocasionalmente, desidratação.",
     "review": "O e-book apresenta o coronavírus canino entérico (CCoV), sua relação com gastroenterite e a transmissão pelo contato com fezes contaminadas. A ilustração mostra RNA, envelope e nucleocapsídeo.",
     "source": "E-book: Coronavírus Canino (página 8 do PDF).",
     "cross": [
@@ -529,6 +536,7 @@
     "tag": "Flaviviridae",
     "image": "bvd",
     "description": "Investigue transmissão vertical, persistência da infecção e consequências reprodutivas.",
+    "intro": "A Diarreia Viral Bovina (BVD) é uma doença infecciosa que afeta bovinos em todo o mundo, causada pelo vírus da diarreia viral bovina (BVDV), que pertence à família Flaviviridae.",
     "review": "O material destaca infecção de bovinos, contato com secreções e possibilidade de transmissão da vaca gestante para o feto. Animais persistentemente infectados participam da disseminação.",
     "source": "E-book: Diarreia Viral Bovina (página 11 do PDF).",
     "cross": [
@@ -608,6 +616,7 @@
     "tag": "Flaviviridae",
     "image": "febre_amarela",
     "description": "Explore hospedeiros, mosquitos vetores e medidas preventivas.",
+    "intro": "A febre amarela é uma doença viral aguda que afeta humanos e primatas, causada pelo vírus da febre amarela, da família Flaviridae.",
     "review": "O e-book apresenta a febre amarela entre humanos e primatas, com transmissão por mosquitos. Cita Aedes no ciclo urbano e Haemagogus e Sabethes em ambientes silvestres.",
     "source": "E-book: Febre Amarela (página 12 do PDF).",
     "cross": [
@@ -683,6 +692,7 @@
     "tag": "Flaviviridae",
     "image": "peste_suina",
     "description": "Reconheça a espécie acometida, os sinais e a transmissão da peste suína descrita no e-book.",
+    "intro": "A peste suína é um vírus da família Flaviviridae, também conhecida como cólera dos porcos.",
     "review": "O capítulo descreve a peste suína clássica, da família Flaviviridae, com febre, sinais digestivos e hemorragias. O material menciona disseminação por contato e objetos contaminados.",
     "source": "E-book: Peste Suína (página 13 do PDF).",
     "cross": [
@@ -758,6 +768,7 @@
     "tag": "Herpesviridae",
     "image": "aujeszky",
     "description": "Associe o herpesvírus suíno às manifestações respiratórias, nervosas e reprodutivas.",
+    "intro": "A Doença de Aujeszky, também conhecida como pseudoraiva, é uma enfermidade viral que afeta suínos, causada pelo vírus do herpes suíno (SuHV-1).",
     "review": "Também denominada pseudoraiva, a doença de Aujeszky afeta suínos. O e-book menciona transmissão por secreções e fômites, além de febre, convulsões e abortos.",
     "source": "E-book: Doença de Aujeszky (página 15 do PDF).",
     "cross": [
@@ -833,6 +844,7 @@
     "tag": "Herpesviridae",
     "image": "marek",
     "description": "Estude disseminação ambiental, alterações nervosas e tumores associados à doença.",
+    "intro": "A Doença de Marek é uma doença viral altamente contagiosa que afeta aves, principalmente galinhas e perus.",
     "review": "O livro relaciona a doença de Marek a aves, à dispersão por penas e poeira e a manifestações como paralisia e tumores em nervos periféricos e outros tecidos.",
     "source": "E-book: Doença de Marek (página 16 do PDF).",
     "cross": [
@@ -908,6 +920,7 @@
     "tag": "Herpesviridae",
     "image": "bohv",
     "description": "Compare as manifestações respiratórias e reprodutivas do BoHV-1 com as neurológicas do BoHV-5.",
+    "intro": "O Herpesvírus Bovino (BoHV) refere-se a um grupo de vírus pertencentes à família Herpesviridae que afeta bovinos.",
     "review": "No e-book, BoHV-1 está ligado à rinotraqueíte infecciosa bovina e alterações reprodutivas; BoHV-5 é associado à meningoencefalite bovina.",
     "source": "E-book: Herpesvírus Bovino (página 17 do PDF).",
     "cross": [
@@ -983,6 +996,7 @@
     "tag": "Herpesviridae",
     "image": "fhv",
     "description": "Identifique as vias de transmissão e as manifestações respiratórias e oculares nos gatos.",
+    "intro": "O Herpesvírus Felino (FHV-1) é um vírus que afeta gatos e é uma das principais causas de infecções respiratórias em felinos domésticos.",
     "review": "O material apresenta FHV-1 em felinos e destaca secreções nasais e oculares, espirros, conjuntivite e, em casos graves, alterações na córnea.",
     "source": "E-book: Herpesvírus Felino (página 18 do PDF).",
     "cross": [
@@ -1058,6 +1072,7 @@
     "tag": "Orthomyxoviridae",
     "image": "influenza",
     "description": "Revise família, estrutura e manifestações respiratórias da influenza.",
+    "intro": "A influenza, comumente conhecida como gripe, é uma doença respiratória aguda.",
     "review": "O e-book descreve influenza como doença respiratória causada por vírus da família Orthomyxoviridae, transmitida por gotículas e associada a febre, tosse e congestão nasal.",
     "source": "E-book: Influenza (página 20 do PDF).",
     "cross": [
@@ -1133,6 +1148,7 @@
     "tag": "Papillomaviridae",
     "image": "papiloma_bovino",
     "description": "Relacione tropismo epitelial, lesões verrucosas e transmissão por contato.",
+    "intro": "O Papilomavírus Bovino (BPV) é um vírus que afeta bovinos, causando infecções nas células epiteliais da pele e mucosas.",
     "review": "O e-book relaciona papilomavírus bovino a células epiteliais da pele e mucosas e ao desenvolvimento de papilomas, que podem regredir naturalmente.",
     "source": "E-book: Papilomavírus Bovino (página 22 do PDF).",
     "cross": [
@@ -1208,6 +1224,7 @@
     "tag": "Papillomaviridae",
     "image": "papiloma_canino",
     "description": "Explore a localização dos papilomas e as vias de disseminação entre cães.",
+    "intro": "O Papilomavírus canino (CPV) refere-se a uma família de vírus que afeta cães, causando lesões epiteliais, conhecidas como papilomas ou verrugas, na pele e nas membranas mucosas.",
     "review": "O material apresenta papilomas em pele e mucosas dos cães, sobretudo jovens, com transmissão por contato direto ou objetos contaminados.",
     "source": "E-book: Papilomavírus Canino (página 23 do PDF).",
     "cross": [
@@ -1283,6 +1300,7 @@
     "tag": "Paramyxoviridae",
     "image": "newcastle",
     "description": "Associe manifestações respiratórias e nervosas às vias de transmissão em aves.",
+    "intro": "A Doença de Newcastle é uma doença viral altamente contagiosa que afeta aves, principalmente aves domésticas como galinhas, perus e patos.",
     "review": "O e-book apresenta Newcastle em aves, com transmissão por excreções e secreções e sinais como tosse, torcicolo, tremores e convulsões.",
     "source": "E-book: Doença de Newcastle (página 26 do PDF).",
     "cross": [
@@ -1358,6 +1376,7 @@
     "tag": "Parvoviridae",
     "image": "panleucopenia",
     "description": "Reconheça tecidos de multiplicação rápida e manifestações gastrointestinais.",
+    "intro": "A Panleucopenia Felina é uma doença viral altamente contagiosa que afeta gatos.",
     "review": "O e-book destaca acometimento de medula óssea, intestino delgado e linfonodos, além de febre, vômitos, diarreia e transmissão por objetos contaminados.",
     "source": "E-book: Panleucopenia Felina (página 28 do PDF).",
     "cross": [
@@ -1433,6 +1452,7 @@
     "tag": "Parvoviridae",
     "image": "parvo_canino",
     "description": "Estude a transmissão fecal e as manifestações da enterite por parvovírus canino.",
+    "intro": "O parvovírus canino, conhecido como parvovirose, é uma doença viral altamente contagiosa que afeta cães, porém algumas mutações afetam também os felinos, especialmente filhotes e cães não vacinados.",
     "review": "O texto destaca filhotes, contato com fezes contaminadas, diarreia grave, vômitos, desidratação e vacinação.",
     "source": "E-book: Parvovírus Canino (página 29 do PDF).",
     "cross": [
@@ -1508,6 +1528,7 @@
     "tag": "Parvoviridae",
     "image": "parvo_suino",
     "description": "Reveja as repercussões reprodutivas do parvovírus em suínos.",
+    "intro": "O Parvovírus Suíno, também conhecido como Parvovirose Suína, é uma doença viral que afeta suínos, causando perdas significativas na indústria suína em todo o mundo.",
     "review": "No e-book, o parvovírus suíno está relacionado a perdas reprodutivas, incluindo abortos e natimortos, e pode ocorrer em animais sem sinais clínicos evidentes.",
     "source": "E-book: Parvovírus Suíno (página 30 do PDF).",
     "cross": [
@@ -1583,6 +1604,7 @@
     "tag": "Vesiculovirus",
     "image": "estomatite",
     "description": "Identifique lesões vesiculares, transmissão e efeitos sobre a locomoção e alimentação.",
+    "intro": "A Estomatite Vesicular Bovina (EVB) é uma doença viral que afeta principalmente bovinos, embora também possa afetar outros animais de casco fendido, como suínos e ovinos.",
     "review": "O capítulo descreve vesículas na boca e cascos, dor, salivação e claudicação. Observação editorial: o e-book e o TCC I apresentam classificação familiar divergente para Vesiculovirus; a família não é cobrada nesta fase até revisão da equipe.",
     "source": "E-book: Estomatite Vesicular Bovina (página 32 do PDF).",
     "cross": [
@@ -1658,6 +1680,7 @@
     "tag": "Picornaviridae",
     "image": "aftosa",
     "description": "Investigue hospedeiros de casco fendido e manifestações vesiculares.",
+    "intro": "A febre aftosa é uma doença viral altamente contagiosa que afeta animais de casco fendido, principalmente bovinos, ovinos, caprinos e suínos.",
     "review": "O e-book cita bovinos, suínos, ovinos e caprinos, com vesículas em boca, língua, cascos e tetas. Também destaca salivação, claudicação e impacto sobre a produção.",
     "source": "E-book: Febre Aftosa (página 33 do PDF).",
     "cross": [
@@ -1733,6 +1756,7 @@
     "tag": "Poxviridae",
     "image": "bouba",
     "description": "Reconheça as lesões cutâneas e mucosas e as possíveis vias de transmissão.",
+    "intro": "A Bouba Aviária, também conhecida como Varíola Aviária, é uma doença viral que afeta aves, incluindo galinhas, perus e outras espécies.",
     "review": "O e-book associa bouba aviária à família Poxviridae, a lesões em pele e mucosas e à participação de mosquitos e outros artrópodes na transmissão.",
     "source": "E-book: Bouba Aviária (página 35 do PDF).",
     "cross": [
@@ -1808,6 +1832,7 @@
     "tag": "Reoviridae",
     "image": "rotavirose",
     "description": "Estude o tropismo intestinal, a via fecal-oral e os sinais em animais jovens.",
+    "intro": "A rotavirose é uma doença viral que afeta diversas espécies de animais, incluindo aves, mamíferos e humanos.",
     "review": "O texto apresenta o rotavírus como agente entérico de aves e mamíferos, transmitido por via fecal-oral e associado à diarreia e desidratação em animais jovens.",
     "source": "E-book: Rotavirose (página 37 do PDF).",
     "cross": [
@@ -1883,6 +1908,7 @@
     "tag": "Retroviridae",
     "image": "aie",
     "description": "Investigue transmissão por sangue, sinais clínicos e persistência da infecção.",
+    "intro": "A Anemia Infecciosa Equina (AIE) é uma doença viral que afeta cavalos, asininos e mulas, causada pelo Vírus da Anemia Infecciosa Equina (EIAV), da família das retrovírus, também conhecida como “febre dos pântanos” e “AIDS equina”.",
     "review": "O e-book destaca equinos, vetores hematófagos e materiais perfurocortantes contaminados, além de anemia, febre intermitente e possibilidade de infecção crônica.",
     "source": "E-book: Anemia Infecciosa Equina (página 39 do PDF).",
     "cross": [
@@ -1958,6 +1984,7 @@
     "tag": "Retroviridae",
     "image": "leucose",
     "description": "Relacione transmissão por material contaminado e alterações linfoproliferativas.",
+    "intro": "A Leucose Bovina, também conhecida como Leucemia Enzoótica Bovina, é uma doença viral que afeta bovinos.",
     "review": "O e-book descreve infecção pelo BLV, compartilhamento de agulhas e possível transmissão pelo leite, além de distúrbios linfoproliferativos e linfomas.",
     "source": "E-book: Leucose Bovina (página 40 do PDF).",
     "cross": [
@@ -2033,6 +2060,7 @@
     "tag": "Retroviridae",
     "image": "fiv",
     "description": "Estude transmissão por mordidas e repercussões sobre a defesa imunológica.",
+    "intro": "O Vírus da Imunodeficiência Felina (FIV) é um retrovírus que afeta gatos, comprometendo o sistema imunológico e tornando os animais mais suscetíveis a infecções oportunistas.",
     "review": "O capítulo apresenta FIV como retrovírus felino e destaca mordidas profundas entre gatos e maior suscetibilidade a infecções secundárias ao longo do tempo.",
     "source": "E-book: Vírus da Imunodeficiência Felina (página 42 do PDF).",
     "cross": [

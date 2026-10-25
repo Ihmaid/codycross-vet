@@ -18,6 +18,8 @@ describe('normalize', () => {
 describe('conteúdo', () => {
   it.each(STAGES.map((s) => [s.id, s] as const))('%s tem dados, revisão e arquivos', (_, s) => {
     expect(s.title && s.short && s.tag && s.description && s.review).toBeTruthy();
+    // Frase de abertura: uma frase completa, tirada do texto do e-book.
+    expect(s.intro).toMatch(/^[A-ZÁÉÍÓÚ].+\.$/);
     expect(s.cross.length).toBeGreaterThanOrEqual(5);
     expect(s.hunt.length).toBeGreaterThanOrEqual(5);
     expect(existsSync(join(publicDir, 'assets', `${s.image}.webp`))).toBe(true);
