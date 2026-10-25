@@ -1,0 +1,479 @@
+// Página da fase: palavras-cruzadas de revista e caça-palavras com marca-texto.
+
+.stage-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 200px;
+  gap: 32px;
+  align-items: center;
+
+  img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+  }
+}
+
+.stage-meta,
+.stage-status {
+  font-size: 14px;
+  color: var(--tinta-suave);
+}
+
+#stage-title {
+  margin: 4px 0 12px;
+  font: 600 44px/1.1 var(--texto);
+  color: var(--moldura);
+
+  i {
+    display: block;
+    margin-top: 6px;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--tinta-suave);
+  }
+}
+
+.stage-intro {
+  max-width: 40em;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.mode-tabs {
+  display: flex;
+  gap: 28px;
+  margin: 36px 0 24px;
+  border-bottom: 2px solid var(--linha);
+
+  button {
+    margin-bottom: -2px;
+    padding: 10px 0;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    background: none;
+    color: var(--tinta-suave);
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &[aria-selected='true'] {
+      color: var(--moldura);
+      border-bottom-color: var(--moldura);
+    }
+  }
+}
+
+.done-flag {
+  color: var(--moldura);
+}
+
+.play {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+  gap: 40px;
+  align-items: start;
+}
+
+// Folha branca onde fica o jogo.
+.sheet {
+  padding: 20px 22px 26px;
+  border-radius: 4px;
+  background: var(--branco);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.12), 0 10px 26px rgba(40, 30, 10, 0.12);
+}
+
+.sheet-progress {
+  height: 4px;
+  background: #ece8de;
+
+  div {
+    width: 0;
+    height: 100%;
+    background: var(--moldura);
+    transition: width 0.3s ease;
+  }
+}
+
+.hint-text {
+  margin: 14px 0 16px;
+  font-size: 14px;
+  color: var(--tinta-suave);
+}
+
+// Palavras-cruzadas
+.cross-scroll {
+  overflow: auto;
+  padding: 2px;
+}
+
+#cross-board {
+  --cell: 34px;
+  display: grid;
+  gap: 0;
+  width: max-content;
+  margin: 0 auto;
+}
+
+.cw-cell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--cell);
+  height: var(--cell);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--branco);
+  // Linha de 1px compartilhada entre casas vizinhas.
+  box-shadow: 0 0 0 1px var(--tinta);
+  font: 600 calc(var(--cell) * 0.5) / 1 var(--texto);
+  color: var(--tinta);
+  cursor: pointer;
+
+  small {
+    position: absolute;
+    top: 2px;
+    left: 3px;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  &.active {
+    background: #fbe3da;
+  }
+
+  &.solved {
+    color: var(--moldura);
+  }
+
+  &.has-error {
+    background: #f9dcd6;
+    color: var(--vermelho);
+  }
+
+  // Palavra que acabou de ficar certa: as letras "secam" uma a uma.
+  &.ink {
+    animation: ink 0.5s ease both;
+    animation-delay: calc(var(--i, 0) * 60ms);
+  }
+}
+
+@keyframes ink {
+  from {
+    background: #d9ead7;
+    color: transparent;
+  }
+}
+
+// Caça-palavras
+#hunt-board {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  max-width: 560px;
+  margin: 0 auto;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+
+.hunt-cell {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  font-size: clamp(12px, 2.1vw, 19px);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.hunt-marks {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+
+  line {
+    stroke-width: 0.78;
+    stroke-linecap: round;
+  }
+
+  .mark {
+    stroke: rgba(224, 104, 72, 0.38);
+  }
+
+  .mark.is-new {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: draw 0.45s ease forwards;
+  }
+
+  .selecting {
+    stroke: rgba(3, 96, 42, 0.22);
+  }
+
+  .hint-ring {
+    fill: none;
+    stroke: var(--vermelho);
+    stroke-width: 0.07;
+    stroke-dasharray: 0.16 0.1;
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+// Pistas
+.clues-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--moldura);
+  }
+
+  span {
+    font-size: 14px;
+    color: var(--tinta-suave);
+  }
+}
+
+.clues-list {
+  max-height: 640px;
+  margin-top: 6px;
+  padding-right: 6px;
+  overflow: auto;
+}
+
+.clue-group {
+  margin: 18px 0 4px;
+  font: 700 22px/1.2 var(--titulo);
+  color: var(--moldura);
+}
+
+.clue {
+  padding: 10px 0 12px;
+  border-top: 1px solid var(--linha);
+
+  label {
+    display: block;
+    font-size: 15px;
+    line-height: 1.45;
+    cursor: pointer;
+  }
+
+  &.active {
+    padding-left: 10px;
+    box-shadow: inset 3px 0 0 var(--coral);
+  }
+
+  &.solved label,
+  &.solved .hunt-clue {
+    color: var(--tinta-suave);
+  }
+
+  &.shake {
+    animation: shake 0.4s ease;
+  }
+}
+
+.clue-num {
+  margin-right: 2px;
+  font-weight: 700;
+  color: var(--moldura);
+}
+
+.clue-len {
+  font-size: 13px;
+  color: var(--tinta-suave);
+}
+
+.clue-input {
+  width: 100%;
+  max-width: calc(var(--len) * 1.45em + 16px);
+  margin-top: 8px;
+  padding: 4px 2px;
+  border: 0;
+  border-bottom: 2px solid var(--tinta);
+  border-radius: 0;
+  background: transparent;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+
+  &:focus {
+    outline: none;
+    border-bottom-color: var(--coral);
+    background: rgba(224, 104, 72, 0.08);
+  }
+
+  .solved & {
+    color: var(--moldura);
+    border-bottom-color: var(--moldura);
+  }
+
+  .wrong & {
+    color: var(--vermelho);
+    border-bottom-color: var(--vermelho);
+  }
+}
+
+.hunt-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  .clue {
+    font-size: 15px;
+    line-height: 1.45;
+    cursor: pointer;
+  }
+
+  .solved .hunt-clue {
+    text-decoration: line-through;
+  }
+}
+
+.hunt-word {
+  margin-left: 6px;
+  color: var(--moldura);
+  letter-spacing: 0.12em;
+}
+
+.fallback {
+  margin-top: 16px;
+  font-size: 14px;
+
+  div {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  button {
+    padding: 0 16px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--moldura);
+    color: var(--branco);
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+.feedback {
+  min-height: 1.6em;
+  margin: 14px 0;
+  font-size: 15px;
+
+  &.good {
+    color: var(--moldura);
+  }
+
+  &.bad {
+    color: var(--vermelho);
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  padding-top: 16px;
+  border-top: 2px solid var(--linha);
+}
+
+// Revisão (como o bloco "Características:" do e-book)
+.review {
+  max-width: 46em;
+  margin-top: 48px;
+
+  h2 {
+    margin-bottom: 6px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--moldura);
+  }
+}
+
+.review-source {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--tinta-suave);
+}
+
+@keyframes shake {
+  25%,
+  75% {
+    transform: translateX(-5px);
+  }
+
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+@media (max-width: 900px) {
+  .play {
+    grid-template-columns: 1fr;
+  }
+
+  .clues-list {
+    max-height: none;
+  }
+
+  .stage-head {
+    grid-template-columns: 1fr 110px;
+    gap: 16px;
+
+    img {
+      width: 110px;
+      height: 110px;
+    }
+  }
+
+  #stage-title {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 560px) {
+  #cross-board {
+    --cell: 26px;
+  }
+
+  .sheet {
+    padding: 14px 12px 18px;
+  }
+
+  .stage-intro {
+    font-size: 16px;
+  }
+
+  #stage-title {
+    font-size: 28px;
+  }
+
+  .mode-tabs {
+    gap: 20px;
+
+    button {
+      font-size: 15px;
+    }
+  }
+}

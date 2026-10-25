@@ -1,33 +1,14 @@
-import { assetPath, STAGES } from '../core/content';
-import { buildCrossword, Crossword, CrossEntry, positionIn } from '../core/crossword';
-import { Progress, starsFor } from '../core/progress';
+import { assetPath, STAGES, STUDY } from '../core/content';
+import { buildCrossword, Crossword, positionIn } from '../core/crossword';
+import { Progress } from '../core/progress';
 import { normalize } from '../core/text';
 import { Mode, Stage } from '../core/types';
 import { buildWordSearch, linePath, matchSelection, WordSearch } from '../core/wordSearch';
-import { $, html, replayAnimation, setHtml, show } from './dom';
+import { $, html, Html, replayAnimation, setHtml, show } from './dom';
 import { navigate } from './router';
 import { WinModal } from './winModal';
 
 type FeedbackKind = '' | 'good' | 'bad';
-
-const MODE_TEXT = {
-  cross: {
-    kicker: 'CONEXÕES LIVRES',
-    title: 'Palavras-cruzadas',
-    icon: '✣',
-    desc: 'As palavras se cruzam em diferentes pontos. O nome da doença não limita a quantidade de questões.',
-    clues: 'Responda às perguntas',
-    check: 'Conferir respostas',
-  },
-  hunt: {
-    kicker: 'ENCONTRE OS TERMOS',
-    title: 'Caça-palavras',
-    icon: '▦',
-    desc: 'Procure os termos relacionados ao tema e marque cada palavra no tabuleiro.',
-    clues: 'Encontre as palavras',
-    check: 'Conferir progresso',
-  },
-};
 
 /** Tela de uma fase: palavras-cruzadas e caça-palavras. */
 export class GameView {
@@ -47,14 +28,13 @@ export class GameView {
   private readonly board = $('cross-board');
   private readonly huntBoard = $('hunt-board');
   private readonly clues = $('clues-list');
-  private readonly modal: WinModal;
+  private readonly modal = new WinModal();
 
   constructor(
     private readonly progress: Progress,
-    /** Avisa o app que o progresso mudou (cabeçalho, mapa). */
+    /** Avisa o app que o progresso mudou (cabeçalho, sumário). */
     private readonly onProgress: (unlockedIndex?: number) => void
   ) {
-    this.modal = new WinModal();
     $('tab-cross').addEventListener('click', () => this.switchMode('cross'));
     $('tab-hunt').addEventListener('click', () => this.switchMode('hunt'));
     $('check-btn').addEventListener('click', () => this.check());
@@ -84,17 +64,19 @@ export class GameView {
 
   private renderStage(): void {
     const s = this.stage;
+    const page = STUDY[s.id]?.pages[0];
     $('crumb-stage').textContent = s.short;
-    $('stage-badge').textContent = `FASE ${String(this.index + 1).padStart(2, '0')} · ${s.tag.toUpperCase()}`;
-    $('stage-title').textContent = s.title;
-    $('stage-desc').textContent = s.description;
+    $('stage-badge').textContent = `Fase ${this.index + 1} de ${STAGES.length}`;
+    setHtml($('stage-title'), html`${s.title} <i>${s.tag}</i>`);
+    $('stage-desc').textContent = s.intro;
     const art = $<HTMLImageElement>('stage-art');
     art.src = assetPath(s.image);
-    art.alt = `Ilustração autoral: ${s.title}`;
-    $('review-title').textContent = `O que revisar: ${s.short}`;
+    art.alt = `Ilustração da equipe: ${s.title}`;
+    $('review-title').textContent = `Para revisar: ${s.short}`;
     $('review-body').textContent = s.review;
-    $('source-note').textContent = s.source;
+    $('source-note').textContent = page ? `Capítulo na página ${page} do e-book.` : '';
     $<HTMLAnchorElement>('study-current-btn').href = `#/biblioteca/${s.id}`;
+    $('stage-page-number').textContent = page ? String(page) : '';
   }
 
   private switchMode(mode: Mode): void {
@@ -108,24 +90,14 @@ export class GameView {
     this.dragStart = this.dragEnd = this.hintCell = null;
     this.selection = [];
     const s = this.stage;
-    const text = MODE_TEXT[mode];
 
     $('tab-cross').setAttribute('aria-selected', String(mode === 'cross'));
     $('tab-hunt').setAttribute('aria-selected', String(mode === 'hunt'));
     show($('cross-view'), mode === 'cross');
     show($('hunt-view'), mode === 'hunt');
     show($('fallback'), mode === 'hunt');
-    $('mode-kicker').textContent = text.kicker;
-    $('mode-title').textContent = text.title;
-    $('mode-icon').textContent = text.icon;
-    $('mode-desc').textContent = text.desc;
-    $('clues-title').textContent = text.clues;
-    $('check-btn').textContent = text.check;
-    this.announce(
-      this.progress.isDone(s, mode)
-        ? 'Você já concluiu esta modalidade. Pode revisá-la ou reiniciar para jogar novamente.'
-        : 'Selecione uma pista e comece a jogar.'
-    );
+    $('clues-title').textContent = mode === 'cross' ? 'Pistas' : 'Palavras escondidas';
+    this.announce(this.progress.isDone(s, mode) ? 'Você já terminou este jogo. Pode jogar de novo se quiser.' : '');
 
     if (mode === 'cross') {
       this.cross = buildCrossword(s.cross);
@@ -141,7 +113,9 @@ export class GameView {
 
   private updateStageStats(): void {
     const s = this.stage;
-    $('stage-progress').textContent = `${this.progress.modesDone(s)} / 2 modalidades`;
+    const modes = this.progress.modesDone(s);
+    $('stage-progress').textContent =
+      modes === 0 ? 'Nenhum jogo concluído' : modes === 1 ? '1 de 2 jogos concluído' : 'Os 2 jogos concluídos';
     $('stage-points').textContent = `${this.progress.stagePoints(s)} pontos`;
     $('cross-flag').textContent = this.progress.isDone(s, 'cross') ? '✓' : '';
     $('hunt-flag').textContent = this.progress.isDone(s, 'hunt') ? '✓' : '';
@@ -154,7 +128,7 @@ export class GameView {
   }
 
   private setProgressBar(done: number, total: number): void {
-    $('solved-count').textContent = `${done} / ${total}`;
+    $('solved-count').textContent = `${done} de ${total}`;
     $('progress-bar').style.width = `${(done / total) * 100}%`;
     $('progress-bar').parentElement!.setAttribute('aria-valuenow', String(Math.round((done / total) * 100)));
   }
@@ -172,24 +146,38 @@ export class GameView {
 
   private renderCross(): void {
     const cw = this.cross!;
-    setHtml(
-      this.clues,
-      html`${cw.entries.map(
-        (e, i) => html`<div class="clue" data-clue="${i}">
-          <div class="clue-header"><span class="clue-num">${i + 1}</span><p class="clue-text">${e.clue}</p></div>
-          <div class="clue-meta">${e.d === 'H' ? '→ HORIZONTAL' : '↓ VERTICAL'} · ${e.word.length} letras</div>
+    const group = (d: 'H' | 'V', title: string): Html => {
+      const items = cw.entries.map((e, i) => ({ e, i })).filter(({ e }) => e.d === d);
+      if (!items.length) return html``;
+      return html`<h3 class="clue-group">${title}</h3>${items.map(
+        ({ e, i }) => html`<div class="clue" data-clue="${i}">
+          <label for="answer-${i}"><span class="clue-num">${i + 1}</span> ${e.clue} <span class="clue-len">(${e.word.length})</span></label>
           <input id="answer-${i}" class="clue-input" type="text" spellcheck="false" autocomplete="off" autocapitalize="characters"
-            maxlength="${e.word.length}" aria-label="Resposta da pista ${i + 1}" value="${this.inputs[i]}" placeholder="Digite a resposta">
+            maxlength="${e.word.length}" value="${this.inputs[i]}" style="--len:${e.word.length}">
         </div>`
-      )}`
-    );
+      )}`;
+    };
+    setHtml(this.clues, html`${group('H', 'Horizontais')}${group('V', 'Verticais')}`);
     this.board.style.gridTemplateColumns = `repeat(${cw.width}, var(--cell))`;
     this.board.style.gridTemplateRows = `repeat(${cw.height}, var(--cell))`;
+    // As casas são criadas uma vez; paintCross só atualiza (assim as animações não são interrompidas).
+    setHtml(
+      this.board,
+      html`${cw.cells.map((c) => {
+        const starts = c.belongs.filter((i) => cw.entries[i].x === c.x && cw.entries[i].y === c.y).map((i) => i + 1);
+        return html`<button type="button" class="cw-cell" data-x="${c.x}" data-y="${c.y}" style="grid-column:${c.x + 1};grid-row:${c.y + 1}">${
+          starts.length ? html`<small>${starts[0]}</small>` : ''
+        }<span></span></button>`;
+      })}`
+    );
+    this.cellEls = [...this.board.querySelectorAll<HTMLButtonElement>('.cw-cell')];
     this.paintCross();
   }
 
-  /** Atualiza grade e pistas. `celebrate` = índice da palavra que acabou de ficar correta. */
-  private paintCross(celebrate?: number): void {
+  private cellEls: HTMLButtonElement[] = [];
+
+  /** Atualiza grade e pistas. `inked` = palavra que acabou de ficar certa (as letras "secam" em sequência). */
+  private paintCross(inked?: number): void {
     const cw = this.cross!;
     const correct = cw.entries.map((_, i) => this.isCorrect(i));
     this.setProgressBar(correct.filter(Boolean).length, cw.entries.length);
@@ -202,43 +190,40 @@ export class GameView {
       item.classList.toggle('wrong', this.showErrors && !correct[i] && !!this.inputs[i]);
     });
 
-    setHtml(
-      this.board,
-      html`${cw.cells.map((c) => {
-        const relations = c.belongs.map((i) => cw.entries[i]);
-        const good = c.belongs.some((i) => correct[i]);
-        const chosen = c.belongs.includes(this.selected);
-        // Letra mostrada: prioriza a de uma palavra correta.
-        let letter = '';
-        for (const e of [...relations].sort((a, b) => Number(correct[b.index]) - Number(correct[a.index]))) {
-          const ch = this.inputs[e.index][positionIn(e, c.x, c.y)];
-          if (ch) {
-            letter = ch;
-            break;
-          }
+    cw.cells.forEach((c, k) => {
+      const el = this.cellEls[k];
+      const relations = c.belongs.map((i) => cw.entries[i]);
+      // Letra mostrada: prioriza a de uma palavra correta.
+      let letter = '';
+      for (const e of [...relations].sort((a, b) => Number(correct[b.index]) - Number(correct[a.index]))) {
+        const ch = this.inputs[e.index][positionIn(e, c.x, c.y)];
+        if (ch) {
+          letter = ch;
+          break;
         }
-        const bad =
-          this.showErrors &&
-          relations.some((e) => {
-            const pos = positionIn(e, c.x, c.y);
-            const ch = this.inputs[e.index][pos];
-            return ch && ch !== e.word[pos];
-          });
-        const starts = relations.filter((e) => e.x === c.x && e.y === c.y).map((e) => e.index + 1);
-        const pop = celebrate !== undefined && c.belongs.includes(celebrate);
-        const order = pop ? positionIn(cw.entries[celebrate!], c.x, c.y) : 0;
-        const classes = [
-          'cw-cell',
-          good ? 'solved' : letter ? 'has-letter' : '',
-          chosen && 'active',
-          bad && 'has-error',
-          pop && 'pop',
-        ].filter(Boolean).join(' ');
-        return html`<button type="button" class="${classes}" data-x="${c.x}" data-y="${c.y}"
-          aria-label="Casa ${c.y + 1}, ${c.x + 1}${letter ? `, letra ${letter}` : ''}"
-          style="grid-column:${c.x + 1};grid-row:${c.y + 1};--i:${order}">${starts.length ? html`<small>${starts[0]}</small>` : ''}${letter}</button>`;
-      })}`
-    );
+      }
+      const bad =
+        this.showErrors &&
+        relations.some((e) => {
+          const pos = positionIn(e, c.x, c.y);
+          const ch = this.inputs[e.index][pos];
+          return !!ch && ch !== e.word[pos];
+        });
+      el.classList.toggle('solved', c.belongs.some((i) => correct[i]));
+      el.classList.toggle('active', c.belongs.includes(this.selected));
+      el.classList.toggle('has-error', bad);
+      // A animação fica na palavra recém-acertada até a próxima ser acertada.
+      if (inked !== undefined) {
+        if (c.belongs.includes(inked)) {
+          el.style.setProperty('--i', String(positionIn(cw.entries[inked], c.x, c.y)));
+          replayAnimation(el, 'ink');
+        } else {
+          el.classList.remove('ink');
+        }
+      }
+      el.lastElementChild!.textContent = letter;
+      el.setAttribute('aria-label', `Linha ${c.y + 1}, coluna ${c.x + 1}, ${letter ? `letra ${letter}` : 'vazia'}`);
+    });
   }
 
   private focusAnswer(i: number): void {
@@ -246,7 +231,7 @@ export class GameView {
   }
 
   private bindCrossword(): void {
-    // Clique numa casa: seleciona a pista (alternando entre as duas num cruzamento).
+    // Clique numa casa: seleciona a pista (num cruzamento, alterna entre as duas).
     this.board.addEventListener('click', (e) => {
       const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.cw-cell');
       if (!btn || !this.cross) return;
@@ -295,19 +280,19 @@ export class GameView {
     return el?.id?.startsWith('answer-') ? Number(el.id.slice(7)) : null;
   }
 
-  /** Depois de digitar ou revelar letra: comemora a palavra certa e conclui se tudo estiver certo. */
+  /** Depois de digitar ou revelar letra: marca a palavra certa e conclui se tudo estiver certo. */
   private afterCrossChange(i: number, wasCorrect: boolean): void {
     const nowCorrect = this.isCorrect(i);
     this.paintCross(nowCorrect && !wasCorrect ? i : undefined);
     if (!nowCorrect || wasCorrect) return;
 
-    const entry: CrossEntry = this.cross!.entries[i];
-    const clue = this.clues.querySelector(`.clue[data-clue="${i}"]`);
-    if (clue) replayAnimation(clue, 'pop');
     if (this.cross!.entries.every((_, j) => this.isCorrect(j))) {
       this.finish('cross');
     } else {
-      this.announce(`✓ ${entry.word} — resposta correta!`, 'good');
+      this.announce(`${this.cross!.entries[i].word} está certa.`, 'good');
+      // Vai para a próxima pista sem resposta certa.
+      const next = this.cross!.entries.findIndex((_, j) => j > i && !this.isCorrect(j));
+      if (next >= 0 && document.activeElement?.id === `answer-${i}`) this.focusAnswer(next);
     }
   }
 
@@ -317,45 +302,49 @@ export class GameView {
     return this.progress.state.huntFound[this.stage.id] ?? [];
   }
 
-  private renderHunt(celebrate?: number): void {
+  private renderHunt(justFound?: number): void {
     const ws = this.hunt!;
     const found = this.huntFound();
     this.huntBoard.style.setProperty('--n', String(ws.n));
     setHtml(
       this.clues,
-      html`${ws.placed.map((w, i) => {
+      html`<ol class="hunt-list">${ws.placed.map((w, i) => {
         const ok = found.includes(i);
-        return html`<div class="clue ${ok ? 'solved' : ''}" data-hunt="${i}">
-          <div class="hunt-row" role="button" tabindex="0" data-pick="${i}"><span class="clue-num">${i + 1}</span>
-            <div class="clue-text">${w.clue}<div class="hunt-answer">
-              <span class="hunt-word ${ok ? '' : 'hidden-word'}">${ok ? w.word : '• '.repeat(w.word.length)}</span>
-              <span class="found-check">${ok ? '✓' : ''}</span></div></div>
-          </div></div>`;
-      })}`
+        return html`<li class="clue ${ok ? 'solved' : ''}" data-hunt="${i}" data-pick="${i}" tabindex="0">
+          <span class="clue-num">${i + 1}</span> <span class="hunt-clue">${w.clue}</span>
+          ${ok ? html`<b class="hunt-word">${w.word}</b>` : html`<span class="clue-len">(${w.word.length})</span>`}
+        </li>`;
+      })}</ol>`
     );
-    this.paintHunt(celebrate);
+    this.paintHunt(justFound);
   }
 
-  private paintHunt(celebrate?: number): void {
+  /** Letras + traços de marca-texto (SVG) sobre as palavras encontradas, a seleção e a dica. */
+  private paintHunt(justFound?: number): void {
     const ws = this.hunt!;
     const found = this.huntFound();
-    const foundCells = new Set(found.flatMap((i) => ws.placed[i].coords));
-    const popCells = celebrate !== undefined ? ws.placed[celebrate].coords : [];
     this.setProgressBar(found.length, ws.placed.length);
+
+    const center = (i: number) => ({ x: (i % ws.n) + 0.5, y: Math.floor(i / ws.n) + 0.5 });
+    const stroke = (coords: number[], cls: string) => {
+      const a = center(coords[0]);
+      const b = center(coords[coords.length - 1]);
+      return html`<line class="${cls}" x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" pathLength="1"></line>`;
+    };
+    const marks = [
+      ...found.map((i) => stroke(ws.placed[i].coords, i === justFound ? 'mark is-new' : 'mark')),
+      this.selection.length ? stroke(this.selection, 'selecting') : '',
+      this.hintCell !== null
+        ? html`<circle class="hint-ring" cx="${center(this.hintCell).x}" cy="${center(this.hintCell).y}" r="0.42"></circle>`
+        : '',
+    ];
+
     setHtml(
       this.huntBoard,
-      html`${ws.grid.map((ch, i) => {
-        const pop = popCells.indexOf(i);
-        const classes = [
-          'hunt-cell',
-          foundCells.has(i) && 'found',
-          this.selection.includes(i) && 'path',
-          this.hintCell === i && 'hinted',
-          pop >= 0 && 'pop',
-        ].filter(Boolean).join(' ');
-        return html`<div class="${classes}" data-i="${i}" role="gridcell" style="--i:${Math.max(0, pop)}"
-          aria-label="Linha ${Math.floor(i / ws.n) + 1}, coluna ${(i % ws.n) + 1}, letra ${ch}">${ch}</div>`;
-      })}`
+      html`${ws.grid.map(
+        (ch, i) => html`<div class="hunt-cell" data-i="${i}" role="gridcell"
+          aria-label="Linha ${Math.floor(i / ws.n) + 1}, coluna ${(i % ws.n) + 1}, letra ${ch}">${ch}</div>`
+      )}<svg class="hunt-marks" viewBox="0 0 ${ws.n} ${ws.n}" preserveAspectRatio="none" aria-hidden="true">${marks}</svg>`
     );
   }
 
@@ -363,7 +352,7 @@ export class GameView {
     const s = this.stage;
     const found = this.huntFound();
     if (found.includes(index)) {
-      this.announce('Essa palavra já foi encontrada.');
+      this.announce('Essa você já tinha achado.');
       return;
     }
     this.progress.state.huntFound[s.id] = [...found, index];
@@ -371,10 +360,8 @@ export class GameView {
     this.selection = [];
     this.hintCell = null;
     this.renderHunt(index);
-    const clue = this.clues.querySelector(`.clue[data-hunt="${index}"]`);
-    if (clue) replayAnimation(clue, 'pop');
     if (this.huntFound().length === this.hunt!.placed.length) this.finish('hunt');
-    else this.announce(`✓ Palavra encontrada: ${this.hunt!.placed[index].word}!`, 'good');
+    else this.announce(`Achou ${this.hunt!.placed[index].word}.`, 'good');
   }
 
   private bindWordSearch(): void {
@@ -418,13 +405,13 @@ export class GameView {
       this.paintHunt();
     });
 
-    // Tocar numa pista mostra a definição completa.
+    // Tocar numa pista mostra o tamanho da palavra.
     this.clues.addEventListener('click', (e) => {
       const row = (e.target as HTMLElement).closest<HTMLElement>('[data-pick]');
       if (!row || this.mode !== 'hunt') return;
       const i = Number(row.dataset.pick);
       const w = this.hunt!.placed[i];
-      this.announce(`Pista ${i + 1}: ${w.clue} · ${w.word.length} letras.`);
+      if (!this.huntFound().includes(i)) this.announce(`Pista ${i + 1}: ${w.clue} Tem ${w.word.length} letras.`);
     });
     this.clues.addEventListener('keydown', (e) => {
       const row = (e.target as HTMLElement).closest<HTMLElement>('[data-pick]');
@@ -434,7 +421,7 @@ export class GameView {
       }
     });
 
-    // Alternativa acessível: digitar a palavra encontrada.
+    // Alternativa sem arrastar: escrever a palavra encontrada.
     $<HTMLFormElement>('fallback-form').addEventListener('submit', (e) => {
       e.preventDefault();
       if (this.mode !== 'hunt') return;
@@ -442,7 +429,7 @@ export class GameView {
       const guess = normalize(input.value);
       const i = this.hunt!.placed.findIndex((w, j) => w.word === guess && !this.huntFound().includes(j));
       if (i < 0) {
-        this.announce('Palavra não encontrada ou já marcada. Confira as pistas e tente novamente.', 'bad');
+        this.announce('Essa palavra não está na lista, ou já foi marcada.', 'bad');
         return;
       }
       input.value = '';
@@ -455,17 +442,16 @@ export class GameView {
     if (this.selection.length < 2) {
       this.selection = [];
       this.paintHunt();
-      this.announce('Arraste da primeira até a última letra da palavra, em linha reta.');
+      this.announce('Arraste da primeira até a última letra.');
       return;
     }
     const hit = matchSelection(this.hunt!, this.selection, this.huntFound());
     if (hit >= 0) {
       this.addFound(hit);
     } else {
-      this.announce('Essa sequência não corresponde a uma das palavras procuradas. Tente outra direção.', 'bad');
+      this.announce('Essa sequência não é nenhuma das palavras.', 'bad');
       this.selection = [];
       this.paintHunt();
-      replayAnimation(this.huntBoard, 'shake');
     }
   }
 
@@ -480,7 +466,7 @@ export class GameView {
         this.selected = cw.entries.findIndex((_, i) => !this.isCorrect(i));
         if (this.selected < 0) {
           this.selected = 0;
-          this.announce('Todas as respostas já estão corretas.');
+          this.announce('Todas as respostas já estão certas.');
           return;
         }
       }
@@ -493,21 +479,21 @@ export class GameView {
       this.inputs[i] = word.slice(0, k + 1);
       $<HTMLInputElement>(`answer-${i}`).value = this.inputs[i];
       this.saveDraft();
-      this.announce(`Dica: uma letra da pista ${i + 1} foi revelada.`);
+      this.announce(`Revelamos uma letra da pista ${i + 1}.`);
       this.afterCrossChange(i, wasCorrect);
       if (!this.modal.isOpen()) this.focusAnswer(i);
     } else {
       const ws = this.hunt!;
       const i = ws.placed.findIndex((_, j) => !this.huntFound().includes(j));
       if (i < 0) {
-        this.announce('Você já encontrou todas as palavras.');
+        this.announce('Você já achou todas as palavras.');
         return;
       }
       const start = ws.placed[i].coords[0];
       this.hintCell = start;
       this.paintHunt();
       this.announce(
-        `Dica: a palavra da pista ${i + 1} começa na linha ${Math.floor(start / ws.n) + 1}, coluna ${(start % ws.n) + 1}.`
+        `A palavra da pista ${i + 1} começa na letra circulada (linha ${Math.floor(start / ws.n) + 1}, coluna ${(start % ws.n) + 1}).`
       );
     }
   }
@@ -523,51 +509,50 @@ export class GameView {
         return;
       }
       this.progress.addMistake(this.stage, 'cross');
-      this.announce(`${correct} de ${cw.entries.length} respostas corretas. Revise as pistas e tente novamente.`, 'bad');
+      this.announce(
+        `${correct} de ${cw.entries.length} certas. As letras erradas ficaram em vermelho (conferir com erro custa 3 pontos).`,
+        'bad'
+      );
       this.clues.querySelectorAll('.clue.wrong').forEach((el) => replayAnimation(el, 'shake'));
       const i = cw.entries.findIndex((_, j) => !this.isCorrect(j));
       if (i >= 0) this.focusAnswer(i);
     } else {
-      const n = this.huntFound().length;
-      const total = this.hunt!.placed.length;
-      if (n === total) this.finish('hunt');
-      else this.announce(`Você encontrou ${n} de ${total} palavras. Continue procurando!`);
+      const left = this.hunt!.placed.length - this.huntFound().length;
+      if (left === 0) this.finish('hunt');
+      else this.announce(left === 1 ? 'Falta 1 palavra.' : `Faltam ${left} palavras.`);
     }
   }
 
   private finish(mode: Mode): void {
     const s = this.stage;
-    const nextUnlockedBefore = this.index + 1 < STAGES.length && this.progress.isAvailable(this.index + 1);
-    const { award, best, wasDone } = this.progress.finish(s, mode);
     const nextIndex = this.index + 1 < STAGES.length ? this.index + 1 : null;
-    const unlocked = nextIndex !== null && !nextUnlockedBefore && this.progress.isAvailable(nextIndex);
+    const wasOpen = nextIndex !== null && this.progress.isAvailable(nextIndex);
+    const { award, best, wasDone } = this.progress.finish(s, mode);
+    const unlocked = nextIndex !== null && !wasOpen && this.progress.isAvailable(nextIndex);
     this.updateStageStats();
     this.onProgress(unlocked ? nextIndex! : undefined);
 
     const other: Mode = mode === 'cross' ? 'hunt' : 'cross';
+    const otherDone = this.progress.isDone(s, other);
     this.modal.show({
-      title: `Você concluiu ${s.short}!`,
-      message:
-        mode === 'cross'
-          ? 'Todas as respostas foram resolvidas e conectadas corretamente.'
-          : 'Você encontrou todos os termos escondidos no tabuleiro.',
+      title: s.title,
+      message: mode === 'cross' ? 'Você completou as palavras-cruzadas.' : 'Você achou todas as palavras.',
       points: wasDone ? best : award,
-      pointsLabel: wasDone ? 'Recorde nesta modalidade' : 'Pontos conquistados',
-      stars: starsFor(award),
-      unlocked: unlocked ? STAGES[nextIndex!].title : undefined,
-      otherLabel: mode === 'cross' ? 'Experimentar caça-palavras' : 'Experimentar palavras-cruzadas',
-      nextLabel: nextIndex !== null ? 'Próxima fase →' : 'Voltar ao mapa →',
-      onOther: () => this.switchMode(other),
+      recordOnly: wasDone,
+      unlocked: unlocked ? `Fase ${nextIndex! + 1} liberada: ${STAGES[nextIndex!].title}.` : undefined,
+      nextLabel: nextIndex !== null ? 'Próxima fase' : 'Voltar ao sumário',
+      otherLabel: otherDone ? null : mode === 'cross' ? 'Jogar o caça-palavras' : 'Jogar as palavras-cruzadas',
       onNext: () =>
         nextIndex !== null ? navigate({ view: 'stage', id: STAGES[nextIndex].id, mode: 'cross' }) : navigate({ view: 'home' }),
+      onOther: () => this.switchMode(other),
       onMap: () => navigate({ view: 'home' }),
     });
   }
 
   private restart(): void {
-    if (!confirm('Limpar as respostas desta modalidade? A pontuação conquistada e o desbloqueio das fases serão mantidos.')) return;
+    if (!confirm('Apagar as respostas deste jogo? Seus pontos e as fases liberadas continuam.')) return;
     this.progress.restart(this.stage, this.mode);
     this.setMode(this.mode);
-    this.announce('Atividade reiniciada. Seu recorde anterior foi preservado.');
+    this.announce('Jogo recomeçado.');
   }
 }
