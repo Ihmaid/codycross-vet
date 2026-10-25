@@ -11,6 +11,8 @@ export interface Stage {
   /** Nome da ilustração em public/assets/<image>.webp */
   image: string;
   description: string;
+  /** Frase de abertura do capítulo no e-book (texto da equipe). */
+  intro: string;
   review: string;
   source: string;
   cross: QuestionPair[];
