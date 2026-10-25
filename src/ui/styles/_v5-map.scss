@@ -1,0 +1,106 @@
+// V5: busca, filtros e modo exploração do mapa de fases.
+.map-controls {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.2fr) minmax(180px, 1fr) minmax(230px, 1.25fr);
+  gap: 12px;
+  align-items: end;
+  padding: 16px;
+  margin: 12px 0 23px;
+  background: #f7faf4;
+  border: 1px solid #d9e7da;
+  border-radius: 18px;
+}
+
+.map-controls label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #3e664f;
+  display: flex;
+  gap: 7px;
+  flex-direction: column;
+}
+
+.map-controls input[type=search], .map-controls select {
+  width: 100%;
+  height: 43px;
+  padding: 10px 11px;
+  border: 1px solid #cadbcb;
+  border-radius: 9px;
+  background: #fff;
+  color: #193c2e;
+  font: inherit;
+  font-size: 12px;
+  outline-offset: 3px;
+}
+
+.free-mode {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 11px !important;
+  min-height: 43px;
+  background: #eaf3e9;
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.free-mode input {
+  accent-color: #236b4b;
+  width: 17px;
+  height: 17px;
+  flex: none;
+}
+
+.free-mode span {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.free-mode strong {
+  font-size: 12px;
+}
+
+.free-mode small {
+  font-size: 10px;
+  color: #66806b;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.filter-count {
+  grid-column: 1/-1;
+  text-align: right;
+  color: #6c8774;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.empty-state {
+  grid-column: 1/-1;
+  padding: 35px;
+  text-align: center;
+  color: #587465;
+}
+
+@media (max-width: 850px) {
+  .map-controls {
+    grid-template-columns: 1fr 1fr;
+  }
+  .free-mode {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 650px) {
+  .map-controls {
+    grid-template-columns: 1fr;
+    padding: 12px;
+  }
+  .free-mode {
+    grid-column: auto;
+  }
+  .filter-count {
+    text-align: left;
+  }
+}

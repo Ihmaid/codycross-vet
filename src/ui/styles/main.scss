@@ -1,8 +1,5 @@
-@use 'variables';
-@use 'reset';
-@use 'typography';
-@use 'layout';
-@use 'components';
-@use 'animations';
-@use 'responsive';
-@use 'game';
+@use 'v5-core';
+@use 'v5-map';
+@use 'v5-library';
+@use 'v5-notebook';
+@use 'extras';
