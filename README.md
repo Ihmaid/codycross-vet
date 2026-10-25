@@ -8,7 +8,9 @@ Jogo educacional de Virologia Veterinária — projeto acadêmico da Universidad
 - **caderno de estudos**: favoritos, revisados e anotações, com backup (exportar/importar);
 - **funciona offline** e pode ser instalado no celular (PWA).
 
-O conteúdo e o visual seguem o protótipo **V5 aprovado pela equipe** de estudantes; esta versão o reescreve em TypeScript com testes, mantendo as mesmas fases, grades e textos.
+O conteúdo segue o protótipo **V5 aprovado pela equipe** de estudantes (mesmas fases, perguntas e grades); esta versão o reescreve em TypeScript com testes.
+
+O visual segue o próprio e-book: moldura verde `#03602A`, página cor de papel `#DDD8CC`, texto preto, Comic Neue nos títulos de capítulo e Poppins no texto (cores medidas nas páginas do PDF; fontes servidas pelo site). As palavras-cruzadas imitam as de revista e o caça-palavras marca as palavras com "marca-texto". O sumário lista as fases como o sumário do livro. Os textos estão em `docs/textos-para-aprovacao.md`.
 
 ## Como rodar
 
@@ -53,12 +55,12 @@ src/
     progress.ts               progresso, pontuação e desbloqueio
     notebook.ts               caderno de estudos e backup
     content.ts, text.ts, types.ts
-  ui/                         telas: homeView (mapa), gameView (fase), libraryView (biblioteca), winModal, effects
-  ui/styles/                  estilos do V5 (_v5-*.scss) + _extras.scss (efeitos e ajustes)
+  ui/                         telas: homeView (sumário), gameView (fase), libraryView (biblioteca), winModal (carimbo)
+  ui/styles/                  _base (cores, fontes, moldura), _home, _game, _library, _modal
   sw.template.js              modo offline (o build gera dist/sw.js)
 public/                       ilustrações, páginas do e-book, ícones, manifesto e PDF (copiados como estão)
 tests/                        testes automatizados
-docs/                         anotações históricas da versão anterior (CodyCross)
+docs/                         textos para aprovação + anotações históricas da versão anterior (CodyCross)
 ```
 
 ## Como editar o conteúdo
