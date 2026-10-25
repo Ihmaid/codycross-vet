@@ -2,536 +2,249 @@ import * as PIXI from 'pixi.js';
 import { Level } from '../models/Level';
 import { CrosswordRenderer } from './CrosswordRenderer';
 import { WordValidator } from './WordValidator';
-import { GameStore } from '../services/GameStore';
+import { CountdownTimer } from './CountdownTimer';
+import { calculateScore } from '../scoring';
+import { normalizeLetter } from '../input';
+import { GameHud, formatTime } from '../../ui/GameHud';
 
-type GameEngineOptions = {
-  onComplete?: () => void;      // called when the level is fully solved
-  autoAdvanceDelayMs?: number;  // optional delay before auto-calling onComplete
+export type GameEngineOptions = {
+  /** Chamado para avançar ao próximo nível (automaticamente ou pelo botão). */
+  onComplete?: () => void;
+  /** Espera antes de avançar automaticamente. Negativo = não avança sozinho. */
+  autoAdvanceDelayMs?: number;
 };
 
+type Status = 'playing' | 'complete' | 'timeup';
+
+/** Regras de uma partida: liga o teclado, a grade (renderer), as respostas (validator) e o HUD. */
 export class GameEngine {
-  private app: PIXI.Application;
-  private level: Level;
-  private renderer: CrosswordRenderer;
-  private validator: WordValidator;
-  private container: HTMLElement;
-  private timerInterval: NodeJS.Timeout | null = null;
-  private gameStore = GameStore.getInstance();
-  private hintsUsed: number = 0;
-  private isGameComplete: boolean = false;
-  private onComplete?: () => void;
-  private autoAdvanceDelayMs = 0;
-  private boundKeyDown = this.handleKeyDown.bind(this);
-  private boundResize = this.handleResize.bind(this);
-  private options: GameEngineOptions;
-  private rowsSolved = new Set<number>(); // tracks horizontals solved
+  private readonly app: PIXI.Application;
+  private readonly renderer: CrosswordRenderer;
+  private readonly validator: WordValidator;
+  private readonly timer: CountdownTimer;
+  private readonly hud = new GameHud();
+  private readonly onComplete?: () => void;
+  private readonly autoAdvanceDelayMs: number;
+  private status: Status = 'playing';
+  private hintsUsed = 0;
+  private overlay: HTMLElement | null = null;
+  private advanceTimeout: ReturnType<typeof setTimeout> | null = null;
+  private readonly handleKeyDown = (event: KeyboardEvent) => this.onKeyDown(event);
+  private readonly handleResize = () => this.resize();
 
-constructor(container: HTMLElement, level: Level, options: Partial<GameEngineOptions> = {}) {
-  console.log("Inicializando GameEngine");
+  constructor(
+    private readonly container: HTMLElement,
+    private readonly level: Level,
+    options: GameEngineOptions = {}
+  ) {
+    this.onComplete = options.onComplete;
+    this.autoAdvanceDelayMs = options.autoAdvanceDelayMs ?? 1000;
 
-  this.container = container;
-  this.level = level;
-
-  // Single source of truth for options
-  this.options = {
-    onComplete: options.onComplete,
-    autoAdvanceDelayMs: options.autoAdvanceDelayMs ?? 1000, // default 1s
-  };
-
-  // PIXI app
-  console.log("Criando aplicação PIXI");
-  this.app = new PIXI.Application({
-    width: this.container.clientWidth || 800,
-    height: this.container.clientHeight || 600,
-    backgroundColor: 0xf8f9fa,
-    antialias: true,
-    resolution: window.devicePixelRatio || 1,
-    autoDensity: true
-  });
-
-  console.log(`Dimensões do container: ${this.container.clientWidth}x${this.container.clientHeight}`);
-  console.log(`Dimensões da aplicação PIXI: ${this.app.screen.width}x${this.app.screen.height}`);
-
-  console.log("Anexando canvas ao container");
-  this.container.appendChild(this.app.view as HTMLCanvasElement);
-
-  console.log("Inicializando renderer");
-  this.renderer = new CrosswordRenderer(
-    this.app,
-    level,
-    this.handleCellSelect.bind(this),
-    this.handleWordComplete.bind(this)
-  );
-
-  console.log("Inicializando validador");
-  this.validator = new WordValidator(
-    level,
-    this.handleWordValidated.bind(this),
-    this.handleVerticalWordValidated.bind(this),
-    this.handleGameCompleted.bind(this)
-  );
-
-  console.log("Configurando eventos de teclado");
-  window.addEventListener('keydown', this.boundKeyDown);
-
-  console.log("Configurando redimensionamento");
-  window.addEventListener('resize', this.boundResize);
-  this.handleResize();
-
-  console.log("Inicializando estado do jogo");
-  this.gameStore.setState({
-    currentLevel: level,
-    timeRemaining: level.timeLimit,
-    isGameActive: false,
-    isGameComplete: false,
-    selectedCell: null,
-    selectedClue: ''
-  });
-
-  console.log("GameEngine inicializado com sucesso");
-}
-
-
-  public startGame(): void {
-    console.log("Iniciando jogo");
-    // Resetar o estado do jogo
-    this.validator.reset();
-    this.renderer.clearHighlights();
-    this.hintsUsed = 0;
-    this.isGameComplete = false;
-    this.rowsSolved.clear();
-    
-    // Atualizar o estado global
-    this.gameStore.setState({
-      timeRemaining: this.level.timeLimit,
-      isGameActive: true,
-      isGameComplete: false,
-      score: 0,
-      hintsUsed: 0
+    this.app = new PIXI.Application({
+      width: container.clientWidth || 800,
+      height: container.clientHeight || 600,
+      backgroundColor: 0xf8f9fa,
+      antialias: true,
+      resolution: window.devicePixelRatio || 1,
+      autoDensity: true,
     });
-    
-    // Iniciar o temporizador
-    this.startTimer();
-    
-    // Atualizar a UI
-    this.updateTimerDisplay();
-    this.updateScoreDisplay();
-    this.updateHintButton();
-    
-    console.log("Jogo iniciado com sucesso");
+    container.appendChild(this.app.view as HTMLCanvasElement);
+
+    this.renderer = new CrosswordRenderer(this.app, level, (row) => this.onCellSelect(row));
+    this.validator = new WordValidator(level);
+    this.timer = new CountdownTimer(
+      (seconds) => this.hud.setTime(seconds),
+      () => this.onTimeUp()
+    );
+
+    window.addEventListener('keydown', this.handleKeyDown);
+    window.addEventListener('resize', this.handleResize);
+    this.resize();
+    this.hud.showLevel(level);
   }
 
-  public pauseGame(): void {
-    console.log("Pausando jogo");
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval);
-      this.timerInterval = null;
-    }
-    
-    this.gameStore.setState({ isGameActive: false });
+  /** Começa (ou recomeça do zero) o nível. */
+  public startGame(): void {
+    this.cancelAutoAdvance();
+    this.closeOverlay();
+    this.validator.reset();
+    this.renderer.reset();
+    this.hintsUsed = 0;
+    this.status = 'playing';
+
+    this.hud.setScore(0);
+    this.hud.setHintsUsed(0);
+    this.hud.setVerticalLetters(this.validator.getVerticalLetters());
+    this.timer.start(this.level.timeLimit);
   }
 
-  public resumeGame(): void {
-    console.log("Retomando jogo");
-    if (!this.timerInterval && !this.isGameComplete) {
-      this.startTimer();
-      this.gameStore.setState({ isGameActive: true });
-    }
-  }
-
+  /** Revela a palavra da linha selecionada (ou seleciona a primeira palavra ainda não resolvida). */
   public useHint(): void {
-    console.log("Usando dica");
-    const selectedCell = this.gameStore.getState().selectedCell;
-    if (!selectedCell) {
-      console.log("Nenhuma célula selecionada para usar dica");
-      
-      // Se nenhuma célula estiver selecionada, selecionar a primeira célula da primeira palavra
-      if (this.level.horizontalWords.length > 0) {
-        const firstWord = this.level.horizontalWords[0];
-        const row = firstWord.position;
-        const col = firstWord.intersectionIndex;
-        
-        console.log(`Selecionando primeira célula disponível: ${row}, ${col}`);
-        this.renderer.selectCell(row, col);
-        return;
-      }
+    if (this.status !== 'playing') return;
+
+    const selected = this.renderer.getSelectedCell();
+    if (!selected) {
+      const row = this.level.horizontalWords.findIndex((_, r) => !this.validator.isRowSolved(r));
+      if (row >= 0) this.renderer.selectCell(row, this.level.horizontalWords[row].intersectionIndex);
       return;
     }
-    
-    const { row } = selectedCell;
-    const horizontalWord = this.level.horizontalWords.find(w => w.position === row);
-    if (!horizontalWord) {
-      console.log(`Nenhuma palavra horizontal encontrada na linha ${row}`);
-      return;
-    }
-    
-    // Incrementar contador de dicas
+    if (this.validator.isRowSolved(selected.row)) return;
+
     this.hintsUsed++;
-    this.gameStore.setState({ hintsUsed: this.hintsUsed });
-    
-    // Preencher a palavra na grade
-    const word = horizontalWord.word.toUpperCase();
-    const wordStart = horizontalWord.intersectionIndex;
-    
-    console.log(`Preenchendo palavra "${word}" na linha ${row}`);
-    
+    this.hud.setHintsUsed(this.hintsUsed);
+
+    const { word, intersectionIndex } = this.level.horizontalWords[selected.row];
     for (let i = 0; i < word.length; i++) {
-      const col = wordStart + i;
-      const letter = word[i];
-      
-      this.renderer.setCellValue(row, col, letter);
-      this.validator.setLetter(row, col, letter);
+      this.placeLetter(selected.row, intersectionIndex + i, word[i]);
     }
-    
-    // Atualizar a UI
-    this.updateHintButton();
-    
-    // Validar a palavra
-    this.validator.validateHorizontalWord(row);
   }
 
-  public resize(width: number, height: number): void {
-    console.log(`Redimensionando para ${width}x${height}`);
+  public destroy(): void {
+    this.timer.stop();
+    this.cancelAutoAdvance();
+    this.closeOverlay();
+    window.removeEventListener('keydown', this.handleKeyDown);
+    window.removeEventListener('resize', this.handleResize);
+    this.app.destroy(true, { children: true, texture: true, baseTexture: true });
+  }
+
+  private resize(): void {
+    const width = this.container.clientWidth || 800;
+    const height = this.container.clientHeight || 600;
     this.app.renderer.resize(width, height);
     this.renderer.resize(width, height);
   }
 
-  private handleCellSelect(row: number, col: number): void {
-    console.log(`Célula selecionada: ${row}, ${col}`);
-    if (!this.gameStore.getState().isGameActive) {
-      console.log("Jogo não está ativo, ativando...");
-      this.gameStore.setState({ isGameActive: true });
-    }
-    
-    this.gameStore.setState({ selectedCell: { row, col } });
-    
-    // Atualizar a dica exibida
-    const horizontalWord = this.level.horizontalWords.find(word => word.position === row);
-    if (horizontalWord) {
-      const clueElement = document.querySelector('.clue-container');
-      if (clueElement) {
-        clueElement.innerHTML = `<p><strong>Dica:</strong> ${horizontalWord.clue}</p>`;
-        console.log(`Dica atualizada: ${horizontalWord.clue}`);
-      } else {
-        console.error("Elemento de dica não encontrado no DOM");
-      }
-      
-      this.gameStore.setState({ selectedClue: horizontalWord.clue });
-    }
+  private onCellSelect(row: number): void {
+    this.hud.showClue(this.level.horizontalWords[row].clue);
   }
 
-  private handleKeyDown(event: KeyboardEvent): void {
-    console.log(`Tecla pressionada: ${event.key}`);
-    const selectedCell = this.gameStore.getState().selectedCell;
-    if (!selectedCell) {
-      console.log("Nenhuma célula selecionada para processar entrada de teclado");
-      return;
-    }
-    
-    // Se o jogo não estiver ativo, ativá-lo
-    if (!this.gameStore.getState().isGameActive) {
-      console.log("Jogo não está ativo, ativando...");
-      this.gameStore.setState({ isGameActive: true });
-    }
-    
-    const { row, col } = selectedCell;
-    
-    if (/^[a-zA-Z]$/.test(event.key)) {
-      // Entrada de letra
-      console.log(`Inserindo letra: ${event.key.toUpperCase()}`);
-      this.renderer.setCellValue(row, col, event.key);
-      this.validator.setLetter(row, col, event.key);
-      
-      // Avançar para a próxima célula
-      const horizontalWord = this.level.horizontalWords.find(w => w.position === row);
-      if (horizontalWord) {
-        const wordStart = horizontalWord.intersectionIndex;
-        const wordEnd = wordStart + horizontalWord.word.length - 1;
-        
-        if (col < wordEnd) {
-          this.renderer.selectCell(row, col + 1);
-        }
+  private onKeyDown(event: KeyboardEvent): void {
+    // Atalhos do navegador (Ctrl+R, Ctrl+C...) não são jogadas.
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+    const selected = this.renderer.getSelectedCell();
+    if (this.status !== 'playing' || !selected) return;
+
+    const { row, col } = selected;
+    const word = this.level.horizontalWords[row];
+    const firstCol = word.intersectionIndex;
+    const lastCol = firstCol + word.word.length - 1;
+    const letter = normalizeLetter(event.key);
+
+    if (letter) {
+      this.placeLetter(row, col, letter);
+      if (col < lastCol) this.renderer.selectCell(row, col + 1);
+    } else if (event.key === 'Backspace') {
+      // Célula vazia: apaga a anterior, como em palavras cruzadas tradicionais.
+      if (!this.validator.getLetter(row, col) && col > firstCol) {
+        this.renderer.selectCell(row, col - 1);
+        this.placeLetter(row, col - 1, '');
+      } else {
+        this.placeLetter(row, col, '');
       }
-    } else if (event.key === 'Backspace' || event.key === 'Delete') {
-      // Apagar letra
-      console.log(`Apagando letra na célula ${row}, ${col}`);
-      this.renderer.setCellValue(row, col, '');
-      this.validator.setLetter(row, col, '');
+    } else if (event.key === 'Delete') {
+      this.placeLetter(row, col, '');
     } else if (event.key === 'ArrowRight') {
-      // Mover para a direita
-      const horizontalWord = this.level.horizontalWords.find(w => w.position === row);
-      if (horizontalWord) {
-        const wordStart = horizontalWord.intersectionIndex;
-        const wordEnd = wordStart + horizontalWord.word.length - 1;
-        
-        if (col < wordEnd) {
-          this.renderer.selectCell(row, col + 1);
-        }
-      }
+      this.renderer.selectCell(row, Math.min(col + 1, lastCol));
     } else if (event.key === 'ArrowLeft') {
-      // Mover para a esquerda
-      const horizontalWord = this.level.horizontalWords.find(w => w.position === row);
-      if (horizontalWord) {
-        const wordStart = horizontalWord.intersectionIndex;
-        
-        if (col > wordStart) {
-          this.renderer.selectCell(row, col - 1);
-        }
-      }
-    } else if (event.key === 'ArrowDown') {
-      // Mover para baixo
-      if (row < this.level.horizontalWords.length - 1) {
-        const nextWord = this.level.horizontalWords[row + 1];
-        if (nextWord) {
-          const isInRange = col >= nextWord.intersectionIndex && 
-                           col < nextWord.intersectionIndex + nextWord.word.length;
-          
-          if (isInRange) {
-            this.renderer.selectCell(row + 1, col);
-          } else {
-            this.renderer.selectCell(row + 1, nextWord.intersectionIndex);
-          }
-        }
-      }
-    } else if (event.key === 'ArrowUp') {
-      // Mover para cima
-      if (row > 0) {
-        const prevWord = this.level.horizontalWords[row - 1];
-        if (prevWord) {
-          const isInRange = col >= prevWord.intersectionIndex && 
-                           col < prevWord.intersectionIndex + prevWord.word.length;
-          
-          if (isInRange) {
-            this.renderer.selectCell(row - 1, col);
-          } else {
-            this.renderer.selectCell(row - 1, prevWord.intersectionIndex);
-          }
-        }
-      }
-    }
-  }
-
-  private handleWordComplete(row: number, isCorrect: boolean): void {
-    // Este método é chamado pelo renderer quando uma palavra é completada
-    console.log(`Palavra na linha ${row} completada, correta: ${isCorrect}`);
-    // A validação real é feita pelo validator
-  }
-
-  private handleWordValidated(row: number, isCorrect: boolean): void {
-    console.log(`Palavra na linha ${row} validada, correta: ${isCorrect}`);
-    if (isCorrect) {
-      this.renderer.highlightWord(row, true);
-      this.rowsSolved.add(row);          // NEW
-
-      // keep your vertical-word display update
-      this.updateVerticalWordDisplay();
-
-      // NEW: completion fallback if all horizontals are solved
-      this.checkCompletionFallback();
-    }
-  }
-
-  private handleVerticalWordValidated(isCorrect: boolean): void {
-    console.log(`Palavra vertical validada, correta: ${isCorrect}`);
-    if (isCorrect) {
-      this.renderer.highlightVerticalWord(true);
-      
-      // Atualizar a exibição da palavra vertical
-      this.updateVerticalWordDisplay();
-      this.checkCompletionFallback();
-    }
-  }
-
-  private checkCompletionFallback(): void {
-    if (this.isGameComplete) return;
-
-    const totalRows = this.level.horizontalWords.length;
-    const allHorizontalsSolved = this.rowsSolved.size >= totalRows;
-
-    // If there is a vertical word, validator may finish the game anyway.
-    // If it's empty OR even if validator didn't emit, we finish here.
-    const hasVertical = !!(this.level.verticalWord?.word && this.level.verticalWord.word.trim().length > 0);
-
-    if (allHorizontalsSolved && !hasVertical) {
-      this.handleGameCompleted(); // triggers the same flow as validator
-    }
-  }
-
-  private handleGameCompleted(): void {
-    if (this.isGameComplete) return; // guard against double fire
-    this.isGameComplete = true;
-
-    this.pauseGame();
-    const timeRemaining = this.gameStore.getState().timeRemaining;
-    const score = this.calculateScore(timeRemaining);
-
-    this.gameStore.setState({ isGameComplete: true, score });
-    this.updateScoreDisplay();
-    this.showGameCompleteMessage(score, timeRemaining);
-
-    // NEW: auto-advance hook used by index.ts
-    const delay = this.options.autoAdvanceDelayMs ?? 1000;
-    if (delay >= 0 && typeof this.options.onComplete === 'function') {
-      setTimeout(() => this.options.onComplete!(), delay);
-    }
-  }
-
-  private handleResize(): void {
-    const width = this.container.clientWidth || 800;
-    const height = this.container.clientHeight || 600;
-    
-    console.log(`Redimensionando para ${width}x${height}`);
-    this.resize(width, height);
-  }
-
-  private startTimer(): void {
-    console.log("Iniciando temporizador");
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval);
-    }
-    
-    this.timerInterval = setInterval(() => {
-      const currentTime = this.gameStore.getState().timeRemaining;
-      
-      if (currentTime > 0) {
-        const newTime = currentTime - 1;
-        this.gameStore.setState({ timeRemaining: newTime });
-        this.updateTimerDisplay();
-      } else {
-        // Tempo esgotado
-        console.log("Tempo esgotado!");
-        this.pauseGame();
-        this.showTimeUpMessage();
-      }
-    }, 1000);
-  }
-
-  private updateTimerDisplay(): void {
-    const timeRemaining = this.gameStore.getState().timeRemaining;
-    const minutes = Math.floor(timeRemaining / 60);
-    const seconds = timeRemaining % 60;
-    
-    const timerElement = document.querySelector('.timer');
-    if (timerElement) {
-      timerElement.textContent = `Tempo: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      this.renderer.selectCell(row, Math.max(col - 1, firstCol));
+    } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      const target = this.level.horizontalWords[row + (event.key === 'ArrowDown' ? 1 : -1)];
+      if (!target) return;
+      const targetRow = target.position;
+      this.renderer.selectCell(targetRow, this.validator.isInWord(targetRow, col) ? col : target.intersectionIndex);
     } else {
-      console.error("Elemento de temporizador não encontrado no DOM");
-    }
-  }
-
-  private updateScoreDisplay(): void {
-    const score = this.gameStore.getState().score;
-    
-    const scoreElement = document.querySelector('.score');
-    if (scoreElement) {
-      scoreElement.textContent = `Pontuação: ${score}`;
-    } else {
-      console.error("Elemento de pontuação não encontrado no DOM");
-    }
-  }
-
-  private updateHintButton(): void {
-    const hintButton = document.getElementById('hint-button');
-    if (hintButton) {
-      hintButton.textContent = `Usar Dica (${this.hintsUsed})`;
-    } else {
-      console.error("Botão de dica não encontrado no DOM");
-    }
-  }
-
-  private updateVerticalWordDisplay(): void {
-    const { word } = this.validator.getVerticalWordProgress();
-    const verticalWordElement = document.getElementById('vertical-word');
-    
-    if (!verticalWordElement) {
-      console.error("Elemento vertical-word não encontrado no DOM");
       return;
     }
-    
-    let html = '';
-    for (let i = 0; i < word.length; i++) {
-      const letter = word[i];
-      const className = letter !== ' ' ? 'letter filled' : 'letter empty';
-      html += `<span class="${className}" data-index="${i}">${letter !== ' ' ? letter : ''}</span>`;
+    event.preventDefault(); // evita rolar a página com as setas
+  }
+
+  /** Escreve uma letra na grade. Linhas já resolvidas ficam travadas. */
+  private placeLetter(row: number, col: number, letter: string): void {
+    if (this.validator.isRowSolved(row)) return;
+
+    this.renderer.setCellValue(row, col, letter);
+    if (this.validator.setLetter(row, col, letter)) {
+      this.renderer.markRowSolved(row);
+      this.hud.setVerticalLetters(this.validator.getVerticalLetters());
+      if (this.validator.isLevelComplete()) this.onLevelComplete();
     }
-    
-    verticalWordElement.innerHTML = html;
-    console.log(`Exibição da palavra vertical atualizada: ${word}`);
   }
 
-  private calculateScore(timeRemaining: number): number {
-    const { base, timeBonus, hintPenalty } = this.level.points;
-    
-    // Pontuação base + bônus de tempo - penalidade por dicas
-    let score = base + (timeRemaining * timeBonus) - (this.hintsUsed * hintPenalty);
-    
-    // Garantir que a pontuação não seja negativa
-    return Math.max(0, score);
-  }
+  private onLevelComplete(): void {
+    this.status = 'complete';
+    this.timer.stop();
+    const timeRemaining = this.timer.secondsLeft();
+    const score = calculateScore(this.level.points, timeRemaining, this.hintsUsed);
+    this.hud.setScore(score);
 
-  private showGameCompleteMessage(score: number, timeRemaining: number): void {
-    console.log("Exibindo mensagem de conclusão do jogo");
-    const message = document.createElement('div');
-    message.className = 'game-complete-message';
-    message.innerHTML = `
-      <h2>Parabéns!</h2>
-      <p>Você completou o nível!</p>
-      <p>Pontuação: ${score}</p>
-      <p>Tempo restante: ${Math.floor(timeRemaining / 60)}:${(timeRemaining % 60).toString().padStart(2, '0')}</p>
-      <p>Dicas usadas: ${this.hintsUsed}</p>
-      <div style="display:flex; gap:8px; justify-content:center; margin-top:12px;">
-        <button id="btn-replay" class="btn btn-primary">Jogar Novamente</button>
-        <button id="btn-next" class="btn btn-hint">Próximo Nível ▶</button>
-      </div>
-    `;
-
-    message.querySelector('#btn-replay')?.addEventListener('click', () => {
-      this.container.removeChild(message);
-      this.startGame();
-    });
-
-    message.querySelector('#btn-next')?.addEventListener('click', () => {
-      this.options.onComplete?.();
-      if (message.parentElement) this.container.removeChild(message);
-    });
-    this.container.appendChild(message);
-  }
-
-  private showTimeUpMessage(): void {
-    console.log("Exibindo mensagem de tempo esgotado");
-    const message = document.createElement('div');
-    message.className = 'game-complete-message';
-    message.innerHTML = `
-      <h2>Tempo Esgotado!</h2>
-      <p>Infelizmente o tempo acabou.</p>
-      <p>Pontuação: 0</p>
-      <button class="btn btn-primary">Tentar Novamente</button>
-    `;
-    
-    message.querySelector('button')?.addEventListener('click', () => {
-      this.container.removeChild(message);
-      this.startGame();
-    });
-    
-    this.container.appendChild(message);
-  }
-
-  public destroy(): void {
-    try {
-      window.removeEventListener('keydown', this.boundKeyDown);
-      window.removeEventListener('resize', this.boundResize);
-
-      if (this.timerInterval) {
-        clearInterval(this.timerInterval);
-        this.timerInterval = null;
+    const actions: OverlayAction[] = [{ label: 'Jogar Novamente', className: 'btn btn-primary', onClick: () => this.startGame() }];
+    if (this.onComplete) {
+      actions.push({ label: 'Próximo Nível ▶', className: 'btn btn-hint', onClick: () => this.advance() });
+      if (this.autoAdvanceDelayMs >= 0) {
+        this.advanceTimeout = setTimeout(() => this.advance(), this.autoAdvanceDelayMs);
       }
-
-      const view = this.app.view as HTMLCanvasElement;
-      view.parentElement?.removeChild(view);
-
-      this.app.destroy(true, { children: true, texture: true, baseTexture: true });
-    } catch {
-      /* no-op */
     }
+
+    this.showOverlay(
+      'Parabéns!',
+      ['Você completou o nível!', `Pontuação: ${score}`, `Tempo restante: ${formatTime(timeRemaining)}`, `Dicas usadas: ${this.hintsUsed}`],
+      actions
+    );
+  }
+
+  private onTimeUp(): void {
+    this.status = 'timeup';
+    this.showOverlay('Tempo Esgotado!', ['Infelizmente o tempo acabou.', 'Pontuação: 0'], [
+      { label: 'Tentar Novamente', className: 'btn btn-primary', onClick: () => this.startGame() },
+    ]);
+  }
+
+  private advance(): void {
+    this.cancelAutoAdvance();
+    this.closeOverlay();
+    this.onComplete?.();
+  }
+
+  private cancelAutoAdvance(): void {
+    if (this.advanceTimeout) clearTimeout(this.advanceTimeout);
+    this.advanceTimeout = null;
+  }
+
+  private showOverlay(title: string, lines: string[], actions: OverlayAction[]): void {
+    this.closeOverlay();
+    const overlay = document.createElement('div');
+    overlay.className = 'game-complete-message';
+    overlay.setAttribute('role', 'dialog');
+
+    const heading = document.createElement('h2');
+    heading.textContent = title;
+    overlay.append(heading);
+    for (const line of lines) {
+      const p = document.createElement('p');
+      p.textContent = line;
+      overlay.append(p);
+    }
+
+    const buttons = document.createElement('div');
+    buttons.className = 'overlay-actions';
+    for (const action of actions) {
+      const button = document.createElement('button');
+      button.className = action.className;
+      button.textContent = action.label;
+      button.addEventListener('click', action.onClick);
+      buttons.append(button);
+    }
+    overlay.append(buttons);
+
+    this.container.append(overlay);
+    this.overlay = overlay;
+  }
+
+  private closeOverlay(): void {
+    this.overlay?.remove();
+    this.overlay = null;
   }
 }
+
+type OverlayAction = { label: string; className: string; onClick: () => void };

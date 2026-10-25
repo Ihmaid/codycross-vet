@@ -1,4 +1,5 @@
 export interface VerticalWord {
+  /** Palavra formada pela primeira letra de cada palavra horizontal. Vazia = nível sem palavra vertical. */
   word: string;
   clue: string;
 }
@@ -6,7 +7,9 @@ export interface VerticalWord {
 export interface HorizontalWord {
   word: string;
   clue: string;
+  /** Coluna da grade onde a palavra começa (a letra dessa coluna compõe a palavra vertical). */
   intersectionIndex: number;
+  /** Linha da grade (0, 1, 2...). */
   position: number;
 }
 
@@ -24,12 +27,4 @@ export interface Level {
   difficulty: 'fácil' | 'médio' | 'difícil';
   timeLimit: number;
   points: PointsConfig;
-}
-
-export interface GameState {
-  currentLevelId: string;
-  score: number;
-  hintsUsed: number;
-  timeRemaining: number;
-  completedLevels: string[];
 }

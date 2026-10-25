@@ -1,22 +1,22 @@
 /* Layout */
-@import 'variables';
+@use 'variables';
 
 .container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 $spacing-md;
+  padding: 0 variables.$spacing-md;
 }
 
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 -$spacing-sm;
+  margin: 0 (-(variables.$spacing-sm));
 }
 
 .col {
   flex: 1 0 0%;
-  padding: 0 $spacing-sm;
+  padding: 0 variables.$spacing-sm;
 }
 
 .flex {
@@ -64,27 +64,27 @@
 }
 
 .mt-1 {
-  margin-top: $spacing-sm;
+  margin-top: variables.$spacing-sm;
 }
 
 .mt-2 {
-  margin-top: $spacing-md;
+  margin-top: variables.$spacing-md;
 }
 
 .mt-3 {
-  margin-top: $spacing-lg;
+  margin-top: variables.$spacing-lg;
 }
 
 .mb-1 {
-  margin-bottom: $spacing-sm;
+  margin-bottom: variables.$spacing-sm;
 }
 
 .mb-2 {
-  margin-bottom: $spacing-md;
+  margin-bottom: variables.$spacing-md;
 }
 
 .mb-3 {
-  margin-bottom: $spacing-lg;
+  margin-bottom: variables.$spacing-lg;
 }
 
 .p-0 {
@@ -92,15 +92,15 @@
 }
 
 .p-1 {
-  padding: $spacing-sm;
+  padding: variables.$spacing-sm;
 }
 
 .p-2 {
-  padding: $spacing-md;
+  padding: variables.$spacing-md;
 }
 
 .p-3 {
-  padding: $spacing-lg;
+  padding: variables.$spacing-lg;
 }
 
 .hidden {
@@ -111,9 +111,9 @@
   display: block !important;
 }
 
-@media (max-width: $breakpoint-md) {
+@media (max-width: variables.$breakpoint-md) {
   .container {
-    padding: 0 $spacing-sm;
+    padding: 0 variables.$spacing-sm;
   }
   
   .hidden-md {
@@ -125,7 +125,7 @@
   }
 }
 
-@media (max-width: $breakpoint-sm) {
+@media (max-width: variables.$breakpoint-sm) {
   .hidden-sm {
     display: none !important;
   }
