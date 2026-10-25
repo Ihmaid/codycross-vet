@@ -1,0 +1,13 @@
+# Texto com fim de linha normalizado (LF no repositório)
+* text=auto
+
+# Arquivos binários: nunca converter fim de linha nem tentar mostrar diff como texto
+*.pdf  binary
+*.webp binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.woff binary
+*.woff2 binary

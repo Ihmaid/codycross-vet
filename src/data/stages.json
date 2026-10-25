@@ -1,0 +1,2104 @@
+[
+  {
+    "id": "intro",
+    "short": "Fundamentos",
+    "title": "Introdução à Virologia",
+    "tag": "Bases da disciplina",
+    "image": "intro",
+    "description": "Reconheça a estrutura dos vírus, o papel da célula hospedeira e as etapas gerais de multiplicação viral.",
+    "review": "Vírus são agentes infecciosos acelulares que dependem da maquinaria de células hospedeiras. O genoma é formado por DNA ou RNA, envolvido por um capsídeo; alguns vírus também possuem envelope.",
+    "source": "E-book: Introdução e reprodução viral (páginas 5–6).",
+    "cross": [
+      [
+        "VIRUS",
+        "Agente infeccioso acelular que depende da célula hospedeira para se multiplicar."
+      ],
+      [
+        "GENOMA",
+        "Conjunto do material genético de um vírus."
+      ],
+      [
+        "CAPSIDE",
+        "Estrutura proteica que envolve e protege o material genético viral."
+      ],
+      [
+        "ENVELOPE",
+        "Revestimento lipídico externo presente em alguns vírus."
+      ],
+      [
+        "ADSORCAO",
+        "Etapa inicial na qual o vírus se liga à superfície da célula hospedeira."
+      ],
+      [
+        "REPLICACAO",
+        "Etapa em que o genoma viral é copiado no processo de multiplicação."
+      ],
+      [
+        "MONTAGEM",
+        "Etapa em que os novos componentes virais são reunidos em partículas."
+      ],
+      [
+        "LIBERACAO",
+        "Etapa em que as novas partículas deixam a célula infectada."
+      ],
+      [
+        "HOSPEDEIRO",
+        "Organismo ou célula que oferece condições para a multiplicação de um agente infeccioso."
+      ]
+    ],
+    "hunt": [
+      [
+        "VIRUS",
+        "Agente infeccioso acelular."
+      ],
+      [
+        "GENOMA",
+        "Material genético completo."
+      ],
+      [
+        "CAPSIDE",
+        "Invólucro proteico."
+      ],
+      [
+        "ENVELOPE",
+        "Revestimento lipídico."
+      ],
+      [
+        "ADSORCAO",
+        "Ligação à célula."
+      ],
+      [
+        "MONTAGEM",
+        "Formação dos vírions."
+      ],
+      [
+        "LIBERACAO",
+        "Saída de novas partículas."
+      ]
+    ]
+  },
+  {
+    "id": "pif",
+    "short": "PIF",
+    "title": "Peritonite Infecciosa Felina",
+    "tag": "Coronaviridae",
+    "image": "pif",
+    "description": "Uma doença com nome curto, mas com um tabuleiro completo: oito pistas independentes da sigla PIF.",
+    "review": "A PIF é uma doença associada ao coronavírus felino e pode apresentar efusão abdominal, febre, icterícia e manifestações oculares. A transmissão do coronavírus felino é favorecida pelo convívio próximo entre gatos.",
+    "source": "E-book: Peritonite Infecciosa Felina (página 9).",
+    "cross": [
+      [
+        "CORONAVIRUS",
+        "Grupo viral ao qual pertence o agente relacionado à PIF."
+      ],
+      [
+        "FELINOS",
+        "Grupo de animais acometidos pela PIF."
+      ],
+      [
+        "PERITONIO",
+        "Membrana serosa que reveste a cavidade abdominal."
+      ],
+      [
+        "ASCITE",
+        "Acúmulo de líquido na cavidade abdominal, possível na forma efusiva."
+      ],
+      [
+        "FEBRE",
+        "Elevação da temperatura corporal citada entre os sinais da PIF."
+      ],
+      [
+        "ICTERICIA",
+        "Coloração amarelada de mucosas e tecidos que pode ocorrer na PIF."
+      ],
+      [
+        "ENVELOPE",
+        "Revestimento lipídico presente no coronavírus felino."
+      ],
+      [
+        "RNA",
+        "Tipo de ácido nucleico que constitui o genoma do coronavírus."
+      ]
+    ],
+    "hunt": [
+      [
+        "CORONAVIRUS",
+        "Grupo do agente."
+      ],
+      [
+        "FELINOS",
+        "Animais acometidos."
+      ],
+      [
+        "PERITONIO",
+        "Membrana abdominal."
+      ],
+      [
+        "ASCITE",
+        "Efusão abdominal."
+      ],
+      [
+        "FEBRE",
+        "Sinal geral."
+      ],
+      [
+        "ICTERICIA",
+        "Coloração amarelada."
+      ],
+      [
+        "ENVELOPE",
+        "Revestimento do vírus."
+      ]
+    ]
+  },
+  {
+    "id": "felv",
+    "short": "FeLV",
+    "title": "Vírus da Leucemia Felina",
+    "tag": "Retroviridae",
+    "image": "felv",
+    "description": "Explore características estruturais, transmissão e manifestações da infecção pelo FeLV.",
+    "review": "FeLV é um retrovírus envelopado de RNA, transmitido principalmente no contato próximo entre gatos. A infecção pode estar associada à anemia, linfomas e alterações imunológicas.",
+    "source": "E-book: Vírus da Leucemia Felina (página 41).",
+    "cross": [
+      [
+        "RETROVIRIDAE",
+        "Família viral à qual pertence o FeLV."
+      ],
+      [
+        "FELINOS",
+        "Grupo de animais acometidos pela infecção."
+      ],
+      [
+        "ENVELOPE",
+        "Camada lipídica externa do FeLV."
+      ],
+      [
+        "ANEMIA",
+        "Alteração hematológica que pode ocorrer em gatos infectados."
+      ],
+      [
+        "LINFOMAS",
+        "Neoplasias que podem estar associadas à infecção pelo FeLV."
+      ],
+      [
+        "SALIVA",
+        "Secreção envolvida na transmissão por contato próximo e lambeduras."
+      ],
+      [
+        "VACINACAO",
+        "Medida de prevenção específica apresentada no material."
+      ],
+      [
+        "RNA",
+        "Ácido nucleico que constitui o genoma do retrovírus."
+      ]
+    ],
+    "hunt": [
+      [
+        "FELINOS",
+        "Animais suscetíveis."
+      ],
+      [
+        "ENVELOPE",
+        "Camada externa."
+      ],
+      [
+        "ANEMIA",
+        "Alteração hematológica."
+      ],
+      [
+        "LINFOMAS",
+        "Neoplasias relacionadas."
+      ],
+      [
+        "SALIVA",
+        "Via de contato."
+      ],
+      [
+        "VACINA",
+        "Prevenção específica."
+      ],
+      [
+        "RNA",
+        "Genoma viral."
+      ]
+    ]
+  },
+  {
+    "id": "raiva",
+    "short": "Raiva",
+    "title": "Raiva",
+    "tag": "Rhabdoviridae",
+    "image": "raiva",
+    "description": "Investigue a transmissão, o tropismo neurológico, as manifestações e a prevenção dessa zoonose.",
+    "review": "A raiva é causada por um Lyssavirus da família Rhabdoviridae. Afeta mamíferos e compromete o sistema nervoso. O e-book destaca a vacinação e a conduta imediata após exposição suspeita.",
+    "source": "E-book: Raiva (página 44).",
+    "cross": [
+      [
+        "RHABDOVIRIDAE",
+        "Família à qual pertence o agente causador da raiva."
+      ],
+      [
+        "LYSSAVIRUS",
+        "Gênero viral do agente causador da raiva."
+      ],
+      [
+        "MAMIFEROS",
+        "Grupo zoológico que pode ser acometido pela raiva."
+      ],
+      [
+        "MORCEGOS",
+        "Mamíferos de grande importância epidemiológica na transmissão."
+      ],
+      [
+        "VACINACAO",
+        "Medida de prevenção específica destacada para animais domésticos."
+      ],
+      [
+        "PARALISIA",
+        "Manifestação neurológica que pode ocorrer na doença."
+      ],
+      [
+        "ZOONOSE",
+        "Termo para doença transmissível entre animais e seres humanos."
+      ],
+      [
+        "RNA",
+        "Ácido nucleico que compõe o genoma do vírus da raiva."
+      ]
+    ],
+    "hunt": [
+      [
+        "RAIVA",
+        "Doença abordada."
+      ],
+      [
+        "SALIVA",
+        "Material frequentemente envolvido na transmissão."
+      ],
+      [
+        "MORCEGOS",
+        "Reservatórios relevantes."
+      ],
+      [
+        "LYSSAVIRUS",
+        "Gênero do agente."
+      ],
+      [
+        "PARALISIA",
+        "Sinal neurológico."
+      ],
+      [
+        "VACINA",
+        "Medida preventiva."
+      ],
+      [
+        "ZOONOSE",
+        "Relação animal-humano."
+      ]
+    ]
+  },
+  {
+    "id": "cinomose",
+    "short": "Cinomose",
+    "title": "Cinomose Canina",
+    "tag": "Paramyxoviridae",
+    "image": "cinomose",
+    "description": "Relacione as manifestações respiratórias, gastrointestinais e neurológicas com o agente viral.",
+    "review": "A cinomose é uma infecção multissistêmica de canídeos. O material descreve sinais respiratórios, gastrointestinais e neurológicos e destaca a vacinação como forma de prevenção.",
+    "source": "E-book: Cinomose (página 25).",
+    "cross": [
+      [
+        "PARAMYXOVIRIDAE",
+        "Família viral do agente da cinomose."
+      ],
+      [
+        "CANIDEOS",
+        "Família zoológica que inclui cães, raposas e lobos."
+      ],
+      [
+        "RESPIRATORIO",
+        "Sistema afetado por sinais como tosse e secreção nasal."
+      ],
+      [
+        "INTESTINO",
+        "Órgão gastrointestinal que pode ser acometido."
+      ],
+      [
+        "CONVULSOES",
+        "Manifestação neurológica possível em fases avançadas."
+      ],
+      [
+        "PARALISIA",
+        "Déficit motor grave que pode ocorrer na doença."
+      ],
+      [
+        "VACINACAO",
+        "Medida de prevenção específica destacada no e-book."
+      ],
+      [
+        "SECRECAO",
+        "Material eliminado pelas vias respiratórias de animais infectados."
+      ]
+    ],
+    "hunt": [
+      [
+        "CANIDEOS",
+        "Hospedeiros."
+      ],
+      [
+        "INTESTINO",
+        "Sistema digestório."
+      ],
+      [
+        "TOSSE",
+        "Sinal respiratório."
+      ],
+      [
+        "PARALISIA",
+        "Sinal neurológico."
+      ],
+      [
+        "VACINA",
+        "Prevenção."
+      ],
+      [
+        "SECRECAO",
+        "Via de eliminação."
+      ],
+      [
+        "CONVULSAO",
+        "Manifestação neurológica."
+      ]
+    ]
+  },
+  {
+    "id": "prion",
+    "short": "Príons",
+    "title": "Mal da Vaca Louca",
+    "tag": "Encefalopatia espongiforme bovina",
+    "image": "prion",
+    "description": "Um tema integrante do projeto que permite comparar agentes proteicos infecciosos e vírus.",
+    "review": "A encefalopatia espongiforme bovina (EEB) é uma doença causada por príons — agentes proteicos infecciosos, sem genoma viral. O material a relaciona a exposição alimentar e comprometimento do sistema nervoso.",
+    "source": "E-book: Mal da Vaca Louca (página 46).",
+    "cross": [
+      [
+        "PRION",
+        "Agente infeccioso proteico responsável pela EEB."
+      ],
+      [
+        "BOVINOS",
+        "Grupo de animais afetados pela encefalopatia espongiforme bovina."
+      ],
+      [
+        "PROTEINA",
+        "Natureza molecular do agente infeccioso da EEB."
+      ],
+      [
+        "CEREBRO",
+        "Órgão em que ocorre acúmulo de proteínas anormais e lesões progressivas."
+      ],
+      [
+        "ALIMENTAR",
+        "Via de exposição associada à ingestão de ração contaminada."
+      ],
+      [
+        "ESPONGIFORME",
+        "Palavra que integra o nome científico da doença, relacionada ao aspecto das lesões."
+      ],
+      [
+        "GENOMA",
+        "Componente genético que, diferentemente dos vírus, os príons não possuem."
+      ],
+      [
+        "INCUBACAO",
+        "Período entre a exposição e os primeiros sinais, que pode durar anos."
+      ]
+    ],
+    "hunt": [
+      [
+        "PRION",
+        "Agente proteico."
+      ],
+      [
+        "BOVINOS",
+        "Hospedeiros."
+      ],
+      [
+        "PROTEINA",
+        "Natureza do agente."
+      ],
+      [
+        "CEREBRO",
+        "Órgão atingido."
+      ],
+      [
+        "ALIMENTAR",
+        "Via de exposição."
+      ],
+      [
+        "GENOMA",
+        "Ausente no príon."
+      ],
+      [
+        "INCUBACAO",
+        "Pode durar anos."
+      ]
+    ]
+  },
+  {
+    "id": "coronavirus_canino",
+    "short": "Coronavírus Canino",
+    "title": "Coronavírus Canino",
+    "tag": "Coronaviridae",
+    "image": "coronavirus_canino",
+    "description": "Entenda a transmissão entérica, os sinais gastrointestinais e a estrutura do coronavírus canino.",
+    "review": "O e-book apresenta o coronavírus canino entérico (CCoV), sua relação com gastroenterite e a transmissão pelo contato com fezes contaminadas. A ilustração mostra RNA, envelope e nucleocapsídeo.",
+    "source": "E-book: Coronavírus Canino (página 8 do PDF).",
+    "cross": [
+      [
+        "CANINOS",
+        "Grupo de animais acometidos pelo coronavírus canino entérico."
+      ],
+      [
+        "DIARREIA",
+        "Sinal gastrointestinal destacado no quadro clínico do CCoV."
+      ],
+      [
+        "VOMITOS",
+        "Outro sinal gastrointestinal mencionado para esta infecção."
+      ],
+      [
+        "FEZES",
+        "Material contaminado envolvido na principal via de transmissão descrita."
+      ],
+      [
+        "ENVELOPE",
+        "Revestimento externo ilustrado na estrutura do CCoV."
+      ],
+      [
+        "RNA",
+        "Ácido nucleico presente no genoma do CCoV."
+      ],
+      [
+        "NUCLEOCAPSIDEO",
+        "Estrutura interna viral indicada na ilustração autoral."
+      ],
+      [
+        "INTESTINO",
+        "Órgão do trato digestório associado à doença entérica."
+      ]
+    ],
+    "hunt": [
+      [
+        "CANINOS",
+        "Grupo de animais acometidos pelo coronavírus canino entérico."
+      ],
+      [
+        "DIARREIA",
+        "Sinal gastrointestinal destacado no quadro clínico do CCoV."
+      ],
+      [
+        "VOMITOS",
+        "Outro sinal gastrointestinal mencionado para esta infecção."
+      ],
+      [
+        "FEZES",
+        "Material contaminado envolvido na principal via de transmissão descrita."
+      ],
+      [
+        "ENVELOPE",
+        "Revestimento externo ilustrado na estrutura do CCoV."
+      ],
+      [
+        "RNA",
+        "Ácido nucleico presente no genoma do CCoV."
+      ],
+      [
+        "NUCLEOCAPSIDEO",
+        "Estrutura interna viral indicada na ilustração autoral."
+      ]
+    ],
+    "pdfPage": 8
+  },
+  {
+    "id": "bvd",
+    "short": "Diarreia Viral Bovin",
+    "title": "Diarreia Viral Bovina",
+    "tag": "Flaviviridae",
+    "image": "bvd",
+    "description": "Investigue transmissão vertical, persistência da infecção e consequências reprodutivas.",
+    "review": "O material destaca infecção de bovinos, contato com secreções e possibilidade de transmissão da vaca gestante para o feto. Animais persistentemente infectados participam da disseminação.",
+    "source": "E-book: Diarreia Viral Bovina (página 11 do PDF).",
+    "cross": [
+      [
+        "BOVINOS",
+        "Grupo animal afetado pela diarreia viral bovina."
+      ],
+      [
+        "FLAVIVIRIDAE",
+        "Família à qual pertence o vírus da BVD no material."
+      ],
+      [
+        "GESTACAO",
+        "Período em que a transmissão vertical pode atingir o feto."
+      ],
+      [
+        "FETO",
+        "Indivíduo em desenvolvimento que pode ser infectado no útero."
+      ],
+      [
+        "PERSISTENTE",
+        "Como se denomina a infecção mantida em alguns animais desde a gestação?"
+      ],
+      [
+        "ABORTOS",
+        "Uma das consequências reprodutivas descritas para a doença."
+      ],
+      [
+        "DIARREIA",
+        "Manifestação gastrointestinal que integra o nome da enfermidade."
+      ],
+      [
+        "ENVELOPE",
+        "Camada externa indicada na representação estrutural do vírus."
+      ],
+      [
+        "RNA",
+        "Ácido nucleico identificado no esquema do BVDV."
+      ]
+    ],
+    "hunt": [
+      [
+        "BOVINOS",
+        "Grupo animal afetado pela diarreia viral bovina."
+      ],
+      [
+        "FLAVIVIRIDAE",
+        "Família à qual pertence o vírus da BVD no material."
+      ],
+      [
+        "GESTACAO",
+        "Período em que a transmissão vertical pode atingir o feto."
+      ],
+      [
+        "FETO",
+        "Indivíduo em desenvolvimento que pode ser infectado no útero."
+      ],
+      [
+        "PERSISTENTE",
+        "Como se denomina a infecção mantida em alguns animais desde a gestação?"
+      ],
+      [
+        "ABORTOS",
+        "Uma das consequências reprodutivas descritas para a doença."
+      ],
+      [
+        "DIARREIA",
+        "Manifestação gastrointestinal que integra o nome da enfermidade."
+      ]
+    ],
+    "pdfPage": 11
+  },
+  {
+    "id": "febre_amarela",
+    "short": "Febre Amarela",
+    "title": "Febre Amarela",
+    "tag": "Flaviviridae",
+    "image": "febre_amarela",
+    "description": "Explore hospedeiros, mosquitos vetores e medidas preventivas.",
+    "review": "O e-book apresenta a febre amarela entre humanos e primatas, com transmissão por mosquitos. Cita Aedes no ciclo urbano e Haemagogus e Sabethes em ambientes silvestres.",
+    "source": "E-book: Febre Amarela (página 12 do PDF).",
+    "cross": [
+      [
+        "PRIMATAS",
+        "Grupo de animais não humanos mencionado como hospedeiro desta doença."
+      ],
+      [
+        "MOSQUITOS",
+        "Insetos envolvidos na transmissão do vírus da febre amarela."
+      ],
+      [
+        "AEDES",
+        "Gênero de mosquito citado no contexto urbano."
+      ],
+      [
+        "HAEMAGOGUS",
+        "Gênero de mosquito citado em ambientes silvestres."
+      ],
+      [
+        "SABETHES",
+        "Outro gênero de mosquito associado ao ciclo silvestre."
+      ],
+      [
+        "VACINACAO",
+        "Medida preventiva destacada para a febre amarela em pessoas."
+      ],
+      [
+        "ENVELOPE",
+        "Camada externa ilustrada na partícula viral."
+      ],
+      [
+        "RNA",
+        "Ácido nucleico que compõe o genoma do agente."
+      ]
+    ],
+    "hunt": [
+      [
+        "PRIMATAS",
+        "Grupo de animais não humanos mencionado como hospedeiro desta doença."
+      ],
+      [
+        "MOSQUITOS",
+        "Insetos envolvidos na transmissão do vírus da febre amarela."
+      ],
+      [
+        "AEDES",
+        "Gênero de mosquito citado no contexto urbano."
+      ],
+      [
+        "HAEMAGOGUS",
+        "Gênero de mosquito citado em ambientes silvestres."
+      ],
+      [
+        "SABETHES",
+        "Outro gênero de mosquito associado ao ciclo silvestre."
+      ],
+      [
+        "VACINACAO",
+        "Medida preventiva destacada para a febre amarela em pessoas."
+      ],
+      [
+        "ENVELOPE",
+        "Camada externa ilustrada na partícula viral."
+      ]
+    ],
+    "pdfPage": 12
+  },
+  {
+    "id": "peste_suina",
+    "short": "Peste Suína",
+    "title": "Peste Suína",
+    "tag": "Flaviviridae",
+    "image": "peste_suina",
+    "description": "Reconheça a espécie acometida, os sinais e a transmissão da peste suína descrita no e-book.",
+    "review": "O capítulo descreve a peste suína clássica, da família Flaviviridae, com febre, sinais digestivos e hemorragias. O material menciona disseminação por contato e objetos contaminados.",
+    "source": "E-book: Peste Suína (página 13 do PDF).",
+    "cross": [
+      [
+        "SUINOS",
+        "Grupo animal acometido pela peste suína descrita no e-book."
+      ],
+      [
+        "FLAVIVIRIDAE",
+        "Família indicada para o agente dessa enfermidade."
+      ],
+      [
+        "FEBRE",
+        "Elevação da temperatura corporal relatada em casos agudos."
+      ],
+      [
+        "HEMORRAGIAS",
+        "Alterações nas mucosas mencionadas entre as manifestações clínicas."
+      ],
+      [
+        "FOMITES",
+        "Objetos contaminados que podem disseminar o agente."
+      ],
+      [
+        "DIARREIA",
+        "Sinal gastrointestinal citado junto com vômitos."
+      ],
+      [
+        "CONTATO",
+        "Modo direto de transmissão entre animais infectados e suscetíveis."
+      ],
+      [
+        "LETARGIA",
+        "Redução da atividade observada entre os sinais clínicos."
+      ]
+    ],
+    "hunt": [
+      [
+        "SUINOS",
+        "Grupo animal acometido pela peste suína descrita no e-book."
+      ],
+      [
+        "FLAVIVIRIDAE",
+        "Família indicada para o agente dessa enfermidade."
+      ],
+      [
+        "FEBRE",
+        "Elevação da temperatura corporal relatada em casos agudos."
+      ],
+      [
+        "HEMORRAGIAS",
+        "Alterações nas mucosas mencionadas entre as manifestações clínicas."
+      ],
+      [
+        "FOMITES",
+        "Objetos contaminados que podem disseminar o agente."
+      ],
+      [
+        "DIARREIA",
+        "Sinal gastrointestinal citado junto com vômitos."
+      ],
+      [
+        "CONTATO",
+        "Modo direto de transmissão entre animais infectados e suscetíveis."
+      ]
+    ],
+    "pdfPage": 13
+  },
+  {
+    "id": "aujeszky",
+    "short": "Doença de Aujeszky",
+    "title": "Doença de Aujeszky",
+    "tag": "Herpesviridae",
+    "image": "aujeszky",
+    "description": "Associe o herpesvírus suíno às manifestações respiratórias, nervosas e reprodutivas.",
+    "review": "Também denominada pseudoraiva, a doença de Aujeszky afeta suínos. O e-book menciona transmissão por secreções e fômites, além de febre, convulsões e abortos.",
+    "source": "E-book: Doença de Aujeszky (página 15 do PDF).",
+    "cross": [
+      [
+        "SUINOS",
+        "Grupo de animais indicado como hospedeiro da doença de Aujeszky."
+      ],
+      [
+        "PSEUDORAIVA",
+        "Nome pelo qual a doença de Aujeszky também é conhecida."
+      ],
+      [
+        "HERPESVIRIDAE",
+        "Família do agente etiológico descrito."
+      ],
+      [
+        "ABORTOS",
+        "Uma das consequências reprodutivas possíveis em fêmeas infectadas."
+      ],
+      [
+        "CONVULSOES",
+        "Manifestação neurológica mencionada no e-book."
+      ],
+      [
+        "SECRECOES",
+        "Material respiratório relacionado à disseminação do agente."
+      ],
+      [
+        "FOMITES",
+        "Equipamentos e roupas contaminados que podem transmitir o agente."
+      ],
+      [
+        "DNA",
+        "Ácido nucleico indicado na ilustração do vírus."
+      ]
+    ],
+    "hunt": [
+      [
+        "SUINOS",
+        "Grupo de animais indicado como hospedeiro da doença de Aujeszky."
+      ],
+      [
+        "PSEUDORAIVA",
+        "Nome pelo qual a doença de Aujeszky também é conhecida."
+      ],
+      [
+        "HERPESVIRIDAE",
+        "Família do agente etiológico descrito."
+      ],
+      [
+        "ABORTOS",
+        "Uma das consequências reprodutivas possíveis em fêmeas infectadas."
+      ],
+      [
+        "CONVULSOES",
+        "Manifestação neurológica mencionada no e-book."
+      ],
+      [
+        "SECRECOES",
+        "Material respiratório relacionado à disseminação do agente."
+      ],
+      [
+        "FOMITES",
+        "Equipamentos e roupas contaminados que podem transmitir o agente."
+      ]
+    ],
+    "pdfPage": 15
+  },
+  {
+    "id": "marek",
+    "short": "Doença de Marek",
+    "title": "Doença de Marek",
+    "tag": "Herpesviridae",
+    "image": "marek",
+    "description": "Estude disseminação ambiental, alterações nervosas e tumores associados à doença.",
+    "review": "O livro relaciona a doença de Marek a aves, à dispersão por penas e poeira e a manifestações como paralisia e tumores em nervos periféricos e outros tecidos.",
+    "source": "E-book: Doença de Marek (página 16 do PDF).",
+    "cross": [
+      [
+        "AVES",
+        "Grupo de animais acometido pela doença de Marek."
+      ],
+      [
+        "HERPESVIRIDAE",
+        "Família do agente causador da doença."
+      ],
+      [
+        "POEIRA",
+        "Material ambiental que pode participar da transmissão descrita."
+      ],
+      [
+        "PENAS",
+        "Estruturas das aves associadas à contaminação do ambiente."
+      ],
+      [
+        "PARALISIA",
+        "Manifestação motora descrita em membros e pescoço."
+      ],
+      [
+        "NERVOS",
+        "Estruturas periféricas que podem apresentar tumores."
+      ],
+      [
+        "TUMORES",
+        "Lesões proliferativas relacionadas à doença de Marek."
+      ],
+      [
+        "DNA",
+        "Tipo de ácido nucleico indicado na ilustração viral."
+      ]
+    ],
+    "hunt": [
+      [
+        "AVES",
+        "Grupo de animais acometido pela doença de Marek."
+      ],
+      [
+        "HERPESVIRIDAE",
+        "Família do agente causador da doença."
+      ],
+      [
+        "POEIRA",
+        "Material ambiental que pode participar da transmissão descrita."
+      ],
+      [
+        "PENAS",
+        "Estruturas das aves associadas à contaminação do ambiente."
+      ],
+      [
+        "PARALISIA",
+        "Manifestação motora descrita em membros e pescoço."
+      ],
+      [
+        "NERVOS",
+        "Estruturas periféricas que podem apresentar tumores."
+      ],
+      [
+        "TUMORES",
+        "Lesões proliferativas relacionadas à doença de Marek."
+      ]
+    ],
+    "pdfPage": 16
+  },
+  {
+    "id": "bohv",
+    "short": "Herpesvírus Bovino",
+    "title": "Herpesvírus Bovino",
+    "tag": "Herpesviridae",
+    "image": "bohv",
+    "description": "Compare as manifestações respiratórias e reprodutivas do BoHV-1 com as neurológicas do BoHV-5.",
+    "review": "No e-book, BoHV-1 está ligado à rinotraqueíte infecciosa bovina e alterações reprodutivas; BoHV-5 é associado à meningoencefalite bovina.",
+    "source": "E-book: Herpesvírus Bovino (página 17 do PDF).",
+    "cross": [
+      [
+        "BOVINOS",
+        "Grupo de animais afetado pelos herpesvírus bovinos."
+      ],
+      [
+        "HERPESVIRIDAE",
+        "Família à qual pertencem BoHV-1 e BoHV-5."
+      ],
+      [
+        "RINOTRAQUEITE",
+        "Doença respiratória infecciosa associada ao BoHV-1."
+      ],
+      [
+        "RESPIRATORIO",
+        "Sistema orgânico afetado na infecção respiratória por BoHV-1."
+      ],
+      [
+        "REPRODUTIVO",
+        "Sistema em que podem ocorrer aborto e infertilidade."
+      ],
+      [
+        "ABORTO",
+        "Uma das alterações reprodutivas descritas."
+      ],
+      [
+        "MENINGOENCEFALITE",
+        "Manifestação neurológica relacionada ao BoHV-5."
+      ],
+      [
+        "DNA",
+        "Material genético representado no esquema viral."
+      ]
+    ],
+    "hunt": [
+      [
+        "BOVINOS",
+        "Grupo de animais afetado pelos herpesvírus bovinos."
+      ],
+      [
+        "HERPESVIRIDAE",
+        "Família à qual pertencem BoHV-1 e BoHV-5."
+      ],
+      [
+        "RINOTRAQUEITE",
+        "Doença respiratória infecciosa associada ao BoHV-1."
+      ],
+      [
+        "RESPIRATORIO",
+        "Sistema orgânico afetado na infecção respiratória por BoHV-1."
+      ],
+      [
+        "REPRODUTIVO",
+        "Sistema em que podem ocorrer aborto e infertilidade."
+      ],
+      [
+        "ABORTO",
+        "Uma das alterações reprodutivas descritas."
+      ],
+      [
+        "DNA",
+        "Material genético representado no esquema viral."
+      ]
+    ],
+    "pdfPage": 17
+  },
+  {
+    "id": "fhv",
+    "short": "Herpesvírus Felino",
+    "title": "Herpesvírus Felino",
+    "tag": "Herpesviridae",
+    "image": "fhv",
+    "description": "Identifique as vias de transmissão e as manifestações respiratórias e oculares nos gatos.",
+    "review": "O material apresenta FHV-1 em felinos e destaca secreções nasais e oculares, espirros, conjuntivite e, em casos graves, alterações na córnea.",
+    "source": "E-book: Herpesvírus Felino (página 18 do PDF).",
+    "cross": [
+      [
+        "FELINOS",
+        "Grupo animal acometido pelo FHV-1."
+      ],
+      [
+        "HERPESVIRIDAE",
+        "Família do herpesvírus felino."
+      ],
+      [
+        "ESPIRROS",
+        "Sinal respiratório comum citado no e-book."
+      ],
+      [
+        "CONJUNTIVITE",
+        "Inflamação ocular observada na infecção."
+      ],
+      [
+        "CORNEA",
+        "Estrutura ocular que pode apresentar úlceras em casos graves."
+      ],
+      [
+        "SECRECOES",
+        "Material nasal e ocular envolvido na transmissão direta."
+      ],
+      [
+        "RESPIRATORIO",
+        "Trato orgânico superior frequentemente acometido."
+      ],
+      [
+        "DNA",
+        "Tipo de material genético indicado na imagem do vírus."
+      ]
+    ],
+    "hunt": [
+      [
+        "FELINOS",
+        "Grupo animal acometido pelo FHV-1."
+      ],
+      [
+        "HERPESVIRIDAE",
+        "Família do herpesvírus felino."
+      ],
+      [
+        "ESPIRROS",
+        "Sinal respiratório comum citado no e-book."
+      ],
+      [
+        "CONJUNTIVITE",
+        "Inflamação ocular observada na infecção."
+      ],
+      [
+        "CORNEA",
+        "Estrutura ocular que pode apresentar úlceras em casos graves."
+      ],
+      [
+        "SECRECOES",
+        "Material nasal e ocular envolvido na transmissão direta."
+      ],
+      [
+        "RESPIRATORIO",
+        "Trato orgânico superior frequentemente acometido."
+      ]
+    ],
+    "pdfPage": 18
+  },
+  {
+    "id": "influenza",
+    "short": "Influenza",
+    "title": "Influenza",
+    "tag": "Orthomyxoviridae",
+    "image": "influenza",
+    "description": "Revise família, estrutura e manifestações respiratórias da influenza.",
+    "review": "O e-book descreve influenza como doença respiratória causada por vírus da família Orthomyxoviridae, transmitida por gotículas e associada a febre, tosse e congestão nasal.",
+    "source": "E-book: Influenza (página 20 do PDF).",
+    "cross": [
+      [
+        "ORTHOMYXOVIRIDAE",
+        "Família à qual pertencem os vírus influenza."
+      ],
+      [
+        "RESPIRATORIO",
+        "Sistema principalmente acometido na influenza."
+      ],
+      [
+        "GOTICULAS",
+        "Partículas eliminadas pelas vias respiratórias relacionadas à transmissão."
+      ],
+      [
+        "TOSSE",
+        "Manifestação respiratória comum citada no texto."
+      ],
+      [
+        "FEBRE",
+        "Elevação da temperatura corporal descrita na doença."
+      ],
+      [
+        "ENVELOPE",
+        "Camada externa observada na ilustração do influenza."
+      ],
+      [
+        "RNA",
+        "Ácido nucleico indicado no esquema do agente viral."
+      ],
+      [
+        "CONGESTAO",
+        "Alteração nasal relatada entre os sintomas."
+      ]
+    ],
+    "hunt": [
+      [
+        "ORTHOMYXOVIRIDAE",
+        "Família à qual pertencem os vírus influenza."
+      ],
+      [
+        "RESPIRATORIO",
+        "Sistema principalmente acometido na influenza."
+      ],
+      [
+        "GOTICULAS",
+        "Partículas eliminadas pelas vias respiratórias relacionadas à transmissão."
+      ],
+      [
+        "TOSSE",
+        "Manifestação respiratória comum citada no texto."
+      ],
+      [
+        "FEBRE",
+        "Elevação da temperatura corporal descrita na doença."
+      ],
+      [
+        "ENVELOPE",
+        "Camada externa observada na ilustração do influenza."
+      ],
+      [
+        "RNA",
+        "Ácido nucleico indicado no esquema do agente viral."
+      ]
+    ],
+    "pdfPage": 20
+  },
+  {
+    "id": "papiloma_bovino",
+    "short": "Papilomavírus Bovino",
+    "title": "Papilomavírus Bovino",
+    "tag": "Papillomaviridae",
+    "image": "papiloma_bovino",
+    "description": "Relacione tropismo epitelial, lesões verrucosas e transmissão por contato.",
+    "review": "O e-book relaciona papilomavírus bovino a células epiteliais da pele e mucosas e ao desenvolvimento de papilomas, que podem regredir naturalmente.",
+    "source": "E-book: Papilomavírus Bovino (página 22 do PDF).",
+    "cross": [
+      [
+        "BOVINOS",
+        "Espécie animal acometida pelos papilomavírus deste tema."
+      ],
+      [
+        "PAPILOMAS",
+        "Nome das lesões verrucosas descritas no e-book."
+      ],
+      [
+        "VERRUGAS",
+        "Denominação comum das lesões por papilomavírus."
+      ],
+      [
+        "EPITELIO",
+        "Tecido infectado na pele e nas mucosas."
+      ],
+      [
+        "MUCOSAS",
+        "Superfícies, além da pele, onde podem surgir lesões."
+      ],
+      [
+        "CONTATO",
+        "Principal forma de transmissão descrita entre animais."
+      ],
+      [
+        "PELE",
+        "Revestimento corporal que pode apresentar as lesões."
+      ],
+      [
+        "DNA",
+        "Tipo de material genético indicado na imagem do vírus."
+      ]
+    ],
+    "hunt": [
+      [
+        "BOVINOS",
+        "Espécie animal acometida pelos papilomavírus deste tema."
+      ],
+      [
+        "PAPILOMAS",
+        "Nome das lesões verrucosas descritas no e-book."
+      ],
+      [
+        "VERRUGAS",
+        "Denominação comum das lesões por papilomavírus."
+      ],
+      [
+        "EPITELIO",
+        "Tecido infectado na pele e nas mucosas."
+      ],
+      [
+        "MUCOSAS",
+        "Superfícies, além da pele, onde podem surgir lesões."
+      ],
+      [
+        "CONTATO",
+        "Principal forma de transmissão descrita entre animais."
+      ],
+      [
+        "PELE",
+        "Revestimento corporal que pode apresentar as lesões."
+      ]
+    ],
+    "pdfPage": 22
+  },
+  {
+    "id": "papiloma_canino",
+    "short": "Papilomavírus Canino",
+    "title": "Papilomavírus Canino",
+    "tag": "Papillomaviridae",
+    "image": "papiloma_canino",
+    "description": "Explore a localização dos papilomas e as vias de disseminação entre cães.",
+    "review": "O material apresenta papilomas em pele e mucosas dos cães, sobretudo jovens, com transmissão por contato direto ou objetos contaminados.",
+    "source": "E-book: Papilomavírus Canino (página 23 do PDF).",
+    "cross": [
+      [
+        "CANINOS",
+        "Grupo animal acometido pelo papilomavírus canino."
+      ],
+      [
+        "VERRUGAS",
+        "Nome popular das lesões epiteliais observadas."
+      ],
+      [
+        "PAPILOMAS",
+        "Denominação das lesões associadas ao agente."
+      ],
+      [
+        "EPITELIO",
+        "Tecido atingido pelo papilomavírus canino."
+      ],
+      [
+        "MUCOSAS",
+        "Localização de possíveis lesões além da pele."
+      ],
+      [
+        "FOMITES",
+        "Objetos contaminados capazes de participar da transmissão."
+      ],
+      [
+        "JOVENS",
+        "Faixa etária canina descrita como particularmente suscetível."
+      ],
+      [
+        "DNA",
+        "Material genético representado na ilustração do agente."
+      ]
+    ],
+    "hunt": [
+      [
+        "CANINOS",
+        "Grupo animal acometido pelo papilomavírus canino."
+      ],
+      [
+        "VERRUGAS",
+        "Nome popular das lesões epiteliais observadas."
+      ],
+      [
+        "PAPILOMAS",
+        "Denominação das lesões associadas ao agente."
+      ],
+      [
+        "EPITELIO",
+        "Tecido atingido pelo papilomavírus canino."
+      ],
+      [
+        "MUCOSAS",
+        "Localização de possíveis lesões além da pele."
+      ],
+      [
+        "FOMITES",
+        "Objetos contaminados capazes de participar da transmissão."
+      ],
+      [
+        "JOVENS",
+        "Faixa etária canina descrita como particularmente suscetível."
+      ]
+    ],
+    "pdfPage": 23
+  },
+  {
+    "id": "newcastle",
+    "short": "Doença de Newcastle",
+    "title": "Doença de Newcastle",
+    "tag": "Paramyxoviridae",
+    "image": "newcastle",
+    "description": "Associe manifestações respiratórias e nervosas às vias de transmissão em aves.",
+    "review": "O e-book apresenta Newcastle em aves, com transmissão por excreções e secreções e sinais como tosse, torcicolo, tremores e convulsões.",
+    "source": "E-book: Doença de Newcastle (página 26 do PDF).",
+    "cross": [
+      [
+        "AVES",
+        "Grupo animal afetado pela doença de Newcastle."
+      ],
+      [
+        "PARAMYXOVIRIDAE",
+        "Família indicada no e-book para o vírus causador."
+      ],
+      [
+        "RESPIRATORIO",
+        "Sistema acometido por tosse e corrimento nasal."
+      ],
+      [
+        "TORCICOLO",
+        "Alteração da posição do pescoço citada entre os sinais neurológicos."
+      ],
+      [
+        "TREMORES",
+        "Movimentos involuntários relatados nas aves afetadas."
+      ],
+      [
+        "CONVULSOES",
+        "Outro sinal nervoso presente na descrição da doença."
+      ],
+      [
+        "FEZES",
+        "Excreção contaminada envolvida na disseminação."
+      ],
+      [
+        "RNA",
+        "Material genético representado na figura do agente."
+      ]
+    ],
+    "hunt": [
+      [
+        "AVES",
+        "Grupo animal afetado pela doença de Newcastle."
+      ],
+      [
+        "PARAMYXOVIRIDAE",
+        "Família indicada no e-book para o vírus causador."
+      ],
+      [
+        "RESPIRATORIO",
+        "Sistema acometido por tosse e corrimento nasal."
+      ],
+      [
+        "TORCICOLO",
+        "Alteração da posição do pescoço citada entre os sinais neurológicos."
+      ],
+      [
+        "TREMORES",
+        "Movimentos involuntários relatados nas aves afetadas."
+      ],
+      [
+        "CONVULSOES",
+        "Outro sinal nervoso presente na descrição da doença."
+      ],
+      [
+        "FEZES",
+        "Excreção contaminada envolvida na disseminação."
+      ]
+    ],
+    "pdfPage": 26
+  },
+  {
+    "id": "panleucopenia",
+    "short": "Panleucopenia Felina",
+    "title": "Panleucopenia Felina",
+    "tag": "Parvoviridae",
+    "image": "panleucopenia",
+    "description": "Reconheça tecidos de multiplicação rápida e manifestações gastrointestinais.",
+    "review": "O e-book destaca acometimento de medula óssea, intestino delgado e linfonodos, além de febre, vômitos, diarreia e transmissão por objetos contaminados.",
+    "source": "E-book: Panleucopenia Felina (página 28 do PDF).",
+    "cross": [
+      [
+        "FELINOS",
+        "Grupo animal acometido pela panleucopenia."
+      ],
+      [
+        "PARVOVIRIDAE",
+        "Família do vírus da panleucopenia felina."
+      ],
+      [
+        "MEDULA",
+        "Tecido ósseo associado à produção de células sanguíneas, citado entre os alvos."
+      ],
+      [
+        "INTESTINO",
+        "Órgão do trato digestório em que ocorre intensa replicação."
+      ],
+      [
+        "DIARREIA",
+        "Sinal gastrointestinal comum descrito no e-book."
+      ],
+      [
+        "VOMITOS",
+        "Outra manifestação gastrointestinal da enfermidade."
+      ],
+      [
+        "FOMITES",
+        "Objetos ou superfícies contaminadas que podem veicular o agente."
+      ],
+      [
+        "DNA",
+        "Material genético indicado na ilustração do vírus."
+      ]
+    ],
+    "hunt": [
+      [
+        "FELINOS",
+        "Grupo animal acometido pela panleucopenia."
+      ],
+      [
+        "PARVOVIRIDAE",
+        "Família do vírus da panleucopenia felina."
+      ],
+      [
+        "MEDULA",
+        "Tecido ósseo associado à produção de células sanguíneas, citado entre os alvos."
+      ],
+      [
+        "INTESTINO",
+        "Órgão do trato digestório em que ocorre intensa replicação."
+      ],
+      [
+        "DIARREIA",
+        "Sinal gastrointestinal comum descrito no e-book."
+      ],
+      [
+        "VOMITOS",
+        "Outra manifestação gastrointestinal da enfermidade."
+      ],
+      [
+        "FOMITES",
+        "Objetos ou superfícies contaminadas que podem veicular o agente."
+      ]
+    ],
+    "pdfPage": 28
+  },
+  {
+    "id": "parvo_canino",
+    "short": "Parvovírus Canino",
+    "title": "Parvovírus Canino",
+    "tag": "Parvoviridae",
+    "image": "parvo_canino",
+    "description": "Estude a transmissão fecal e as manifestações da enterite por parvovírus canino.",
+    "review": "O texto destaca filhotes, contato com fezes contaminadas, diarreia grave, vômitos, desidratação e vacinação.",
+    "source": "E-book: Parvovírus Canino (página 29 do PDF).",
+    "cross": [
+      [
+        "CANINOS",
+        "Grupo animal mais associado à parvovirose abordada."
+      ],
+      [
+        "PARVOVIRIDAE",
+        "Família do agente etiológico da parvovirose canina."
+      ],
+      [
+        "FILHOTES",
+        "Faixa etária especialmente suscetível às manifestações graves."
+      ],
+      [
+        "FEZES",
+        "Material contaminado envolvido na principal transmissão."
+      ],
+      [
+        "DIARREIA",
+        "Sinal intestinal grave descrito no material."
+      ],
+      [
+        "VOMITOS",
+        "Manifestação gastrointestinal que pode acompanhar a diarreia."
+      ],
+      [
+        "DESIDRATACAO",
+        "Consequência da perda de líquidos por vômitos e diarreia."
+      ],
+      [
+        "DNA",
+        "Material genético representado na ilustração viral."
+      ]
+    ],
+    "hunt": [
+      [
+        "CANINOS",
+        "Grupo animal mais associado à parvovirose abordada."
+      ],
+      [
+        "PARVOVIRIDAE",
+        "Família do agente etiológico da parvovirose canina."
+      ],
+      [
+        "FILHOTES",
+        "Faixa etária especialmente suscetível às manifestações graves."
+      ],
+      [
+        "FEZES",
+        "Material contaminado envolvido na principal transmissão."
+      ],
+      [
+        "DIARREIA",
+        "Sinal intestinal grave descrito no material."
+      ],
+      [
+        "VOMITOS",
+        "Manifestação gastrointestinal que pode acompanhar a diarreia."
+      ],
+      [
+        "DESIDRATACAO",
+        "Consequência da perda de líquidos por vômitos e diarreia."
+      ]
+    ],
+    "pdfPage": 29
+  },
+  {
+    "id": "parvo_suino",
+    "short": "Parvovírus Suíno",
+    "title": "Parvovírus Suíno",
+    "tag": "Parvoviridae",
+    "image": "parvo_suino",
+    "description": "Reveja as repercussões reprodutivas do parvovírus em suínos.",
+    "review": "No e-book, o parvovírus suíno está relacionado a perdas reprodutivas, incluindo abortos e natimortos, e pode ocorrer em animais sem sinais clínicos evidentes.",
+    "source": "E-book: Parvovírus Suíno (página 30 do PDF).",
+    "cross": [
+      [
+        "SUINOS",
+        "Grupo animal acometido pelo parvovírus deste tema."
+      ],
+      [
+        "PARVOVIRIDAE",
+        "Família do agente da parvovirose suína."
+      ],
+      [
+        "REPRODUCAO",
+        "Área fisiológica especialmente afetada nesta enfermidade."
+      ],
+      [
+        "ABORTOS",
+        "Uma das perdas gestacionais descritas."
+      ],
+      [
+        "NATIMORTOS",
+        "Como se denominam filhotes que já nascem mortos?"
+      ],
+      [
+        "LEITOES",
+        "Nome dos filhotes suínos que podem nascer fracos."
+      ],
+      [
+        "SALIVA",
+        "Fluido citado entre possíveis materiais contaminados."
+      ],
+      [
+        "DNA",
+        "Ácido nucleico representado na estrutura do agente."
+      ]
+    ],
+    "hunt": [
+      [
+        "SUINOS",
+        "Grupo animal acometido pelo parvovírus deste tema."
+      ],
+      [
+        "PARVOVIRIDAE",
+        "Família do agente da parvovirose suína."
+      ],
+      [
+        "REPRODUCAO",
+        "Área fisiológica especialmente afetada nesta enfermidade."
+      ],
+      [
+        "ABORTOS",
+        "Uma das perdas gestacionais descritas."
+      ],
+      [
+        "NATIMORTOS",
+        "Como se denominam filhotes que já nascem mortos?"
+      ],
+      [
+        "LEITOES",
+        "Nome dos filhotes suínos que podem nascer fracos."
+      ],
+      [
+        "SALIVA",
+        "Fluido citado entre possíveis materiais contaminados."
+      ]
+    ],
+    "pdfPage": 30
+  },
+  {
+    "id": "estomatite",
+    "short": "Estomatite Vesicular",
+    "title": "Estomatite Vesicular Bovina",
+    "tag": "Vesiculovirus",
+    "image": "estomatite",
+    "description": "Identifique lesões vesiculares, transmissão e efeitos sobre a locomoção e alimentação.",
+    "review": "O capítulo descreve vesículas na boca e cascos, dor, salivação e claudicação. Observação editorial: o e-book e o TCC I apresentam classificação familiar divergente para Vesiculovirus; a família não é cobrada nesta fase até revisão da equipe.",
+    "source": "E-book: Estomatite Vesicular Bovina (página 32 do PDF).",
+    "cross": [
+      [
+        "BOVINOS",
+        "Grupo animal central na enfermidade abordada."
+      ],
+      [
+        "VESICULAS",
+        "Lesões em forma de bolhas descritas na boca e nos cascos."
+      ],
+      [
+        "SALIVACAO",
+        "Produção excessiva associada à dor na cavidade oral."
+      ],
+      [
+        "CLAUDICACAO",
+        "Alteração da marcha decorrente de lesões nos cascos."
+      ],
+      [
+        "FOMITES",
+        "Utensílios e equipamentos contaminados que podem transmitir o agente."
+      ],
+      [
+        "INSETOS",
+        "Grupo de vetores que também pode participar da disseminação."
+      ],
+      [
+        "BOCA",
+        "Local onde podem surgir as lesões vesiculares."
+      ],
+      [
+        "CASCOS",
+        "Estruturas que, quando lesionadas, podem causar dificuldade de locomoção."
+      ]
+    ],
+    "hunt": [
+      [
+        "BOVINOS",
+        "Grupo animal central na enfermidade abordada."
+      ],
+      [
+        "VESICULAS",
+        "Lesões em forma de bolhas descritas na boca e nos cascos."
+      ],
+      [
+        "SALIVACAO",
+        "Produção excessiva associada à dor na cavidade oral."
+      ],
+      [
+        "CLAUDICACAO",
+        "Alteração da marcha decorrente de lesões nos cascos."
+      ],
+      [
+        "FOMITES",
+        "Utensílios e equipamentos contaminados que podem transmitir o agente."
+      ],
+      [
+        "INSETOS",
+        "Grupo de vetores que também pode participar da disseminação."
+      ],
+      [
+        "BOCA",
+        "Local onde podem surgir as lesões vesiculares."
+      ]
+    ],
+    "pdfPage": 32
+  },
+  {
+    "id": "aftosa",
+    "short": "Febre Aftosa",
+    "title": "Febre Aftosa",
+    "tag": "Picornaviridae",
+    "image": "aftosa",
+    "description": "Investigue hospedeiros de casco fendido e manifestações vesiculares.",
+    "review": "O e-book cita bovinos, suínos, ovinos e caprinos, com vesículas em boca, língua, cascos e tetas. Também destaca salivação, claudicação e impacto sobre a produção.",
+    "source": "E-book: Febre Aftosa (página 33 do PDF).",
+    "cross": [
+      [
+        "BOVINOS",
+        "Grupo de ruminantes domésticos especialmente citado neste tema."
+      ],
+      [
+        "SUINOS",
+        "Grupo de animais de casco fendido que também pode ser afetado."
+      ],
+      [
+        "OVINOS",
+        "Grupo de pequenos ruminantes citado entre os hospedeiros."
+      ],
+      [
+        "CAPRINOS",
+        "Outro grupo de pequenos ruminantes suscetíveis."
+      ],
+      [
+        "VESICULAS",
+        "Lesões em forma de bolhas características da enfermidade."
+      ],
+      [
+        "CLAUDICACAO",
+        "Dificuldade de locomoção associada à dor nas patas."
+      ],
+      [
+        "SALIVACAO",
+        "Sinal associado às lesões na boca e na língua."
+      ],
+      [
+        "PICORNAVIRIDAE",
+        "Família do agente causador da febre aftosa."
+      ]
+    ],
+    "hunt": [
+      [
+        "BOVINOS",
+        "Grupo de ruminantes domésticos especialmente citado neste tema."
+      ],
+      [
+        "SUINOS",
+        "Grupo de animais de casco fendido que também pode ser afetado."
+      ],
+      [
+        "OVINOS",
+        "Grupo de pequenos ruminantes citado entre os hospedeiros."
+      ],
+      [
+        "CAPRINOS",
+        "Outro grupo de pequenos ruminantes suscetíveis."
+      ],
+      [
+        "VESICULAS",
+        "Lesões em forma de bolhas características da enfermidade."
+      ],
+      [
+        "CLAUDICACAO",
+        "Dificuldade de locomoção associada à dor nas patas."
+      ],
+      [
+        "SALIVACAO",
+        "Sinal associado às lesões na boca e na língua."
+      ]
+    ],
+    "pdfPage": 33
+  },
+  {
+    "id": "bouba",
+    "short": "Bouba Aviária",
+    "title": "Bouba Aviária",
+    "tag": "Poxviridae",
+    "image": "bouba",
+    "description": "Reconheça as lesões cutâneas e mucosas e as possíveis vias de transmissão.",
+    "review": "O e-book associa bouba aviária à família Poxviridae, a lesões em pele e mucosas e à participação de mosquitos e outros artrópodes na transmissão.",
+    "source": "E-book: Bouba Aviária (página 35 do PDF).",
+    "cross": [
+      [
+        "AVES",
+        "Grupo animal acometido pela bouba aviária."
+      ],
+      [
+        "POXVIRIDAE",
+        "Família viral indicada para o agente desta doença."
+      ],
+      [
+        "MOSQUITOS",
+        "Insetos citados na transmissão da bouba aviária."
+      ],
+      [
+        "LESOES",
+        "Alterações que podem aparecer na pele e nas mucosas."
+      ],
+      [
+        "MUCOSAS",
+        "Revestimentos internos que podem apresentar alterações."
+      ],
+      [
+        "PELE",
+        "Superfície corporal em que podem surgir pápulas e nódulos."
+      ],
+      [
+        "BICO",
+        "Estrutura anatômica das aves mencionada como possível área afetada."
+      ],
+      [
+        "DNA",
+        "Material genético representado na ilustração do vírus."
+      ]
+    ],
+    "hunt": [
+      [
+        "AVES",
+        "Grupo animal acometido pela bouba aviária."
+      ],
+      [
+        "POXVIRIDAE",
+        "Família viral indicada para o agente desta doença."
+      ],
+      [
+        "MOSQUITOS",
+        "Insetos citados na transmissão da bouba aviária."
+      ],
+      [
+        "LESOES",
+        "Alterações que podem aparecer na pele e nas mucosas."
+      ],
+      [
+        "MUCOSAS",
+        "Revestimentos internos que podem apresentar alterações."
+      ],
+      [
+        "PELE",
+        "Superfície corporal em que podem surgir pápulas e nódulos."
+      ],
+      [
+        "BICO",
+        "Estrutura anatômica das aves mencionada como possível área afetada."
+      ]
+    ],
+    "pdfPage": 35
+  },
+  {
+    "id": "rotavirose",
+    "short": "Rotavirose",
+    "title": "Rotavirose",
+    "tag": "Reoviridae",
+    "image": "rotavirose",
+    "description": "Estude o tropismo intestinal, a via fecal-oral e os sinais em animais jovens.",
+    "review": "O texto apresenta o rotavírus como agente entérico de aves e mamíferos, transmitido por via fecal-oral e associado à diarreia e desidratação em animais jovens.",
+    "source": "E-book: Rotavirose (página 37 do PDF).",
+    "cross": [
+      [
+        "REOVIRIDAE",
+        "Família indicada no e-book para os rotavírus."
+      ],
+      [
+        "INTESTINO",
+        "Órgão com epitélio afetado pelo agente."
+      ],
+      [
+        "DIARREIA",
+        "Manifestação clínica intestinal frequente."
+      ],
+      [
+        "DESIDRATACAO",
+        "Consequência importante da perda hídrica na doença."
+      ],
+      [
+        "FECALORAL",
+        "Denominação da via de transmissão pela ingestão de material contaminado."
+      ],
+      [
+        "JOVENS",
+        "Faixa etária animal em que o e-book destaca maior relevância clínica."
+      ],
+      [
+        "RNA",
+        "Material genético indicado na ilustração do vírus."
+      ],
+      [
+        "BOVINOS",
+        "Grupo de animais de produção citado entre os acometidos."
+      ]
+    ],
+    "hunt": [
+      [
+        "REOVIRIDAE",
+        "Família indicada no e-book para os rotavírus."
+      ],
+      [
+        "INTESTINO",
+        "Órgão com epitélio afetado pelo agente."
+      ],
+      [
+        "DIARREIA",
+        "Manifestação clínica intestinal frequente."
+      ],
+      [
+        "DESIDRATACAO",
+        "Consequência importante da perda hídrica na doença."
+      ],
+      [
+        "FECALORAL",
+        "Denominação da via de transmissão pela ingestão de material contaminado."
+      ],
+      [
+        "JOVENS",
+        "Faixa etária animal em que o e-book destaca maior relevância clínica."
+      ],
+      [
+        "RNA",
+        "Material genético indicado na ilustração do vírus."
+      ]
+    ],
+    "pdfPage": 37
+  },
+  {
+    "id": "aie",
+    "short": "Anemia Infecciosa Eq",
+    "title": "Anemia Infecciosa Equina",
+    "tag": "Retroviridae",
+    "image": "aie",
+    "description": "Investigue transmissão por sangue, sinais clínicos e persistência da infecção.",
+    "review": "O e-book destaca equinos, vetores hematófagos e materiais perfurocortantes contaminados, além de anemia, febre intermitente e possibilidade de infecção crônica.",
+    "source": "E-book: Anemia Infecciosa Equina (página 39 do PDF).",
+    "cross": [
+      [
+        "EQUINOS",
+        "Grupo animal do qual fazem parte cavalos, asininos e mulas."
+      ],
+      [
+        "RETROVIRIDAE",
+        "Família do vírus responsável pela AIE."
+      ],
+      [
+        "ANEMIA",
+        "Alteração hematológica que compõe o nome da doença."
+      ],
+      [
+        "HEMATOFAGOS",
+        "Como se denominam insetos que se alimentam de sangue?"
+      ],
+      [
+        "SANGUE",
+        "Material biológico relacionado à transmissão."
+      ],
+      [
+        "AGULHAS",
+        "Instrumentos que podem veicular o agente se contaminados."
+      ],
+      [
+        "FEBRE",
+        "Manifestação que pode ocorrer de forma intermitente."
+      ],
+      [
+        "RNA",
+        "Ácido nucleico indicado no esquema do retrovírus."
+      ]
+    ],
+    "hunt": [
+      [
+        "EQUINOS",
+        "Grupo animal do qual fazem parte cavalos, asininos e mulas."
+      ],
+      [
+        "RETROVIRIDAE",
+        "Família do vírus responsável pela AIE."
+      ],
+      [
+        "ANEMIA",
+        "Alteração hematológica que compõe o nome da doença."
+      ],
+      [
+        "HEMATOFAGOS",
+        "Como se denominam insetos que se alimentam de sangue?"
+      ],
+      [
+        "SANGUE",
+        "Material biológico relacionado à transmissão."
+      ],
+      [
+        "AGULHAS",
+        "Instrumentos que podem veicular o agente se contaminados."
+      ],
+      [
+        "FEBRE",
+        "Manifestação que pode ocorrer de forma intermitente."
+      ]
+    ],
+    "pdfPage": 39
+  },
+  {
+    "id": "leucose",
+    "short": "Leucose Bovina",
+    "title": "Leucose Bovina",
+    "tag": "Retroviridae",
+    "image": "leucose",
+    "description": "Relacione transmissão por material contaminado e alterações linfoproliferativas.",
+    "review": "O e-book descreve infecção pelo BLV, compartilhamento de agulhas e possível transmissão pelo leite, além de distúrbios linfoproliferativos e linfomas.",
+    "source": "E-book: Leucose Bovina (página 40 do PDF).",
+    "cross": [
+      [
+        "BOVINOS",
+        "Grupo de animais afetado pela leucose bovina."
+      ],
+      [
+        "RETROVIRIDAE",
+        "Família à qual pertence o agente BLV."
+      ],
+      [
+        "LINFOMAS",
+        "Neoplasias que podem ocorrer em alguns animais infectados."
+      ],
+      [
+        "AGULHAS",
+        "Instrumentos compartilhados que podem participar da transmissão."
+      ],
+      [
+        "LEITE",
+        "Secreção materna citada como possível via de transmissão."
+      ],
+      [
+        "LINFOIDE",
+        "Tipo de tecido associado aos tumores descritos."
+      ],
+      [
+        "ENVELOPE",
+        "Revestimento externo representado na figura do vírus."
+      ],
+      [
+        "RNA",
+        "Material genético indicado no esquema do BLV."
+      ]
+    ],
+    "hunt": [
+      [
+        "BOVINOS",
+        "Grupo de animais afetado pela leucose bovina."
+      ],
+      [
+        "RETROVIRIDAE",
+        "Família à qual pertence o agente BLV."
+      ],
+      [
+        "LINFOMAS",
+        "Neoplasias que podem ocorrer em alguns animais infectados."
+      ],
+      [
+        "AGULHAS",
+        "Instrumentos compartilhados que podem participar da transmissão."
+      ],
+      [
+        "LEITE",
+        "Secreção materna citada como possível via de transmissão."
+      ],
+      [
+        "LINFOIDE",
+        "Tipo de tecido associado aos tumores descritos."
+      ],
+      [
+        "ENVELOPE",
+        "Revestimento externo representado na figura do vírus."
+      ]
+    ],
+    "pdfPage": 40
+  },
+  {
+    "id": "fiv",
+    "short": "Vírus da Imunodefici",
+    "title": "Vírus da Imunodeficiência Felina",
+    "tag": "Retroviridae",
+    "image": "fiv",
+    "description": "Estude transmissão por mordidas e repercussões sobre a defesa imunológica.",
+    "review": "O capítulo apresenta FIV como retrovírus felino e destaca mordidas profundas entre gatos e maior suscetibilidade a infecções secundárias ao longo do tempo.",
+    "source": "E-book: Vírus da Imunodeficiência Felina (página 42 do PDF).",
+    "cross": [
+      [
+        "FELINOS",
+        "Grupo animal acometido pelo FIV."
+      ],
+      [
+        "RETROVIRIDAE",
+        "Família à qual pertence o vírus da imunodeficiência felina."
+      ],
+      [
+        "MORDIDAS",
+        "Principal mecanismo de transmissão destacado no e-book."
+      ],
+      [
+        "IMUNIDADE",
+        "Sistema de defesa comprometido ao longo da infecção."
+      ],
+      [
+        "INFECCOES",
+        "Processos secundários que podem surgir com a redução da resposta imunológica."
+      ],
+      [
+        "ENVELOPE",
+        "Camada externa representada na ilustração do FIV."
+      ],
+      [
+        "RNA",
+        "Ácido nucleico que compõe o genoma deste retrovírus."
+      ],
+      [
+        "TRANSCRIPTASE",
+        "Enzima reversa indicada na ilustração dos retrovírus."
+      ]
+    ],
+    "hunt": [
+      [
+        "FELINOS",
+        "Grupo animal acometido pelo FIV."
+      ],
+      [
+        "RETROVIRIDAE",
+        "Família à qual pertence o vírus da imunodeficiência felina."
+      ],
+      [
+        "MORDIDAS",
+        "Principal mecanismo de transmissão destacado no e-book."
+      ],
+      [
+        "IMUNIDADE",
+        "Sistema de defesa comprometido ao longo da infecção."
+      ],
+      [
+        "INFECCOES",
+        "Processos secundários que podem surgir com a redução da resposta imunológica."
+      ],
+      [
+        "ENVELOPE",
+        "Camada externa representada na ilustração do FIV."
+      ],
+      [
+        "RNA",
+        "Ácido nucleico que compõe o genoma deste retrovírus."
+      ]
+    ],
+    "pdfPage": 42
+  }
+]
