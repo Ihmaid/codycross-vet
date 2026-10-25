@@ -78,6 +78,6 @@ describe('Notebook e backup', () => {
 
   it('recusa arquivos incompatíveis', () => {
     expect(() => parseBackup('não é json')).toThrow(/JSON/);
-    expect(() => parseBackup(JSON.stringify({ app: 'Outro', format: 1 }))).toThrow(/compatível/);
+    expect(() => parseBackup(JSON.stringify({ app: 'Outro', format: 1 }))).toThrow(/backup do Virologia/);
   });
 });

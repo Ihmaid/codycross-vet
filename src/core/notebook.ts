@@ -95,7 +95,7 @@ export function parseBackup(text: string): { game: ProgressState; caderno: Noteb
   try {
     payload = JSON.parse(text);
   } catch {
-    throw new Error('O arquivo não é um JSON válido.');
+    throw new Error('o arquivo não é um JSON válido.');
   }
   if (
     payload?.app !== 'Virologia em Jogo' ||
@@ -105,7 +105,7 @@ export function parseBackup(text: string): { game: ProgressState; caderno: Noteb
     typeof payload.game.done !== 'object' ||
     typeof payload.caderno.notes !== 'object'
   ) {
-    throw new Error('O arquivo não é um backup compatível desta versão.');
+    throw new Error('esse arquivo não é um backup do Virologia em Jogo.');
   }
   return {
     game: { ...emptyProgress(), ...payload.game },

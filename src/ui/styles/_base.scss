@@ -1,0 +1,287 @@
+// Identidade do e-book "Livro de Jogos — Virologia Veterinária":
+// moldura verde, página cor de papel, texto preto, títulos em verde,
+// Comic Neue nos títulos de capítulo e Poppins no texto. Cores medidas nas páginas do PDF.
+
+:root {
+  --moldura: #03602a;
+  --moldura-escura: #024a20;
+  --papel: #ddd8cc;
+  --papel-claro: #f4f1ea;
+  --branco: #ffffff;
+  --tinta: #000000;
+  --tinta-suave: #4a463f;
+  --linha: #b9b3a4;
+  --vermelho: #b01808;
+  --coral: #e06848;
+  --sobre-moldura: #e9e4d6;
+
+  --titulo: 'Comic Neue', 'Comic Sans MS', cursive;
+  --texto: 'Poppins', system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--moldura);
+  color: var(--tinta);
+  font: 400 16px/1.6 var(--texto);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--moldura);
+}
+
+:focus-visible {
+  outline: 3px solid var(--coral);
+  outline-offset: 2px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.small {
+  font-size: 14px;
+  color: var(--tinta-suave);
+}
+
+// Botões
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--moldura);
+  color: var(--branco);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--moldura-escura);
+  }
+}
+
+.button-quiet {
+  background: transparent;
+  color: var(--moldura);
+  box-shadow: inset 0 0 0 2px var(--moldura);
+
+  &:hover {
+    background: rgba(3, 96, 42, 0.08);
+  }
+
+  &[aria-pressed='true'] {
+    background: var(--moldura);
+    color: var(--branco);
+  }
+}
+
+.link-button {
+  padding: 8px 0;
+  border: 0;
+  background: none;
+  color: var(--tinta-suave);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+input[type='search'],
+input:not([type]),
+select {
+  min-height: 40px;
+  padding: 6px 10px;
+  border: 1px solid var(--linha);
+  border-radius: 6px;
+  background: var(--papel-claro);
+}
+
+input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--moldura);
+}
+
+// Moldura: cabeçalho e rodapé ficam sobre o verde, a página é o papel.
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 28px;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 18px 28px 16px;
+  color: var(--sobre-moldura);
+}
+
+.masthead-title {
+  font: 700 28px/1 var(--titulo);
+  color: var(--branco);
+  text-decoration: none;
+}
+
+.masthead-nav {
+  display: flex;
+  gap: 22px;
+
+  a {
+    color: var(--sobre-moldura);
+    font-weight: 500;
+    font-size: 15px;
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
+
+    &:hover,
+    &[aria-current='page'] {
+      color: var(--branco);
+      border-bottom-color: var(--branco);
+    }
+  }
+}
+
+.masthead-score {
+  margin-left: auto;
+  font-size: 14px;
+
+  #total-points.bump {
+    display: inline-block;
+    animation: bump 0.6s ease;
+  }
+}
+
+.page {
+  position: relative;
+  max-width: 1180px;
+  min-height: 70vh;
+  margin: 0 auto;
+  padding: 48px 56px 72px;
+  border-radius: 36px;
+  background: var(--papel);
+}
+
+// Número da página no círculo verde, como no e-book.
+.page-number {
+  position: absolute;
+  right: 24px;
+  bottom: 20px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--moldura);
+  color: var(--branco);
+  font-size: 15px;
+  font-weight: 500;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.crumb {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: var(--tinta-suave);
+}
+
+.colophon {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 22px 28px 40px;
+  color: var(--sobre-moldura);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+@keyframes bump {
+  40% {
+    transform: scale(1.25);
+  }
+}
+
+@media (max-width: 900px) {
+  .page {
+    padding: 32px 24px 72px;
+    border-radius: 26px;
+  }
+}
+
+@media (max-width: 560px) {
+  .masthead {
+    padding: 14px 16px 12px;
+    gap: 6px 18px;
+  }
+
+  .masthead-title {
+    font-size: 24px;
+  }
+
+  .masthead-score {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .page {
+    margin: 0 8px;
+    padding: 24px 18px 68px;
+    border-radius: 22px;
+  }
+
+  .colophon {
+    padding: 18px 16px 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.01ms !important;
+  }
+}

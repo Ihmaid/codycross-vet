@@ -3,175 +3,165 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#123f31">
-  <meta name="description" content="Jogo educacional de palavras-cruzadas e caça-palavras de Virologia Veterinária, com biblioteca do e-book e caderno de estudos.">
-  <title>Virologia em Jogo · Biblioteca e caderno</title>
+  <meta name="theme-color" content="#03602a">
+  <meta name="description" content="Palavras-cruzadas e caça-palavras de Virologia Veterinária, feitos a partir do Livro de Jogos da turma de Medicina Veterinária.">
+  <title>Virologia em Jogo</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png" type="image/png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
 </head>
 <body>
-<div class="shell">
-  <header class="topbar">
-    <a class="brand" href="#/" aria-label="Virologia em Jogo — início">
-      <span class="brandmark">V<span class="branddot">•</span></span>
-      <div><strong>Virologia em Jogo</strong><span>Conhecimento que se conecta.</span></div>
-    </a>
-    <nav class="top-actions" aria-label="Navegação principal">
-      <div class="global-score"><span class="mini">SUA JORNADA</span><strong id="total-points">0 pts</strong><span id="top-count">0 de 28 fases</span></div>
-      <a class="quiet-btn" href="#/caderno" title="Abrir meu caderno de estudo">☆ <span>Meu estudo</span></a>
-      <a class="quiet-btn" href="#/biblioteca" title="Abrir biblioteca de estudos">▤ <span>Biblioteca</span></a>
-      <a class="quiet-btn" href="#/" title="Voltar ao mapa de fases">⌂ <span>Mapa</span></a>
-    </nav>
-  </header>
+<header class="masthead">
+  <a class="masthead-title" href="#/">Virologia em Jogo</a>
+  <nav class="masthead-nav" aria-label="Navegação principal">
+    <a href="#/" id="nav-home">Sumário</a>
+    <a href="#/biblioteca" id="nav-library">Biblioteca</a>
+    <a href="#/caderno" id="nav-notebook">Meu caderno</a>
+  </nav>
+  <p class="masthead-score"><span id="total-points">0 pontos</span>, <span id="top-count">0 de 28 fases</span></p>
+</header>
 
-  <!-- MAPA DE FASES -->
-  <div id="home" class="home view">
-    <section class="home-hero">
-      <div>
-        <span class="eyebrow light">PROJETO ACADÊMICO · VIROLOGIA VETERINÁRIA</span>
-        <h1>Uma jornada pelo universo da virologia veterinária.</h1>
-        <p>Resolva pistas, conecte conceitos e descubra os termos escondidos. Você escolhe como quer aprender: palavras-cruzadas ou caça-palavras.</p>
-        <button class="primary light-btn" id="continue-btn" type="button">Começar a jogar <span aria-hidden="true">→</span></button>
-      </div>
-      <div class="hero-art" aria-hidden="true"><img src="assets/intro.webp" alt=""><span class="hero-bubble">27 temas no projeto original<br><b>27 temas + fundamentos</b></span></div>
-    </section>
-    <section class="library-promo">
-      <div><span class="eyebrow">BIBLIOTECA DE ESTUDOS</span><h2>Do e-book ao jogo — agora com seu caderno de estudo.</h2><p>Consulte os 27 temas e a introdução, salve favoritos, faça anotações pessoais e acompanhe suas revisões. O estudo é livre, sem desbloqueio.</p></div>
-      <a class="primary" href="#/biblioteca">Explorar biblioteca →</a>
-    </section>
-    <section class="map-head">
-      <div><span class="eyebrow">TRILHA DE APRENDIZAGEM</span><h2>Escolha sua fase</h2><p>Conclua pelo menos uma modalidade para liberar a próxima fase. Volte quando quiser para experimentar a outra.</p></div>
-      <div class="progress-meter"><b id="home-count">0 / 28</b><span>fases desbloqueadas pela conclusão</span></div>
-    </section>
-    <section class="map-controls" aria-label="Filtros do mapa de fases">
-      <label class="map-search">Buscar tema <input id="stage-search" type="search" placeholder="Ex.: FIV, raiva, bovinos..." aria-label="Buscar fase por nome, família ou descrição" autocomplete="off"></label>
-      <label class="map-family">Família ou tema <select id="family-filter" aria-label="Filtrar por família ou tema"><option value="">Todas as famílias e temas</option></select></label>
-      <label class="free-mode"><input type="checkbox" id="free-explore"><span><strong>Modo exploração</strong><small>Experimentar qualquer fase, sem desbloqueio sequencial.</small></span></label>
-      <span id="filter-count" class="filter-count" aria-live="polite"></span>
-    </section>
-    <div id="stage-map" class="stage-map"></div>
-    <div class="home-note"><b>Base acadêmica:</b> livro de jogos e TCCs fornecidos pela equipe. O príon integra o escopo original do projeto. Todos os 27 temas originais estão disponíveis. O modo exploração dispensa o desbloqueio; a revisão científica e a validação pedagógica finais permanecem com a equipe.</div>
+<!-- SUMÁRIO (mapa de fases) -->
+<main id="home" class="page view">
+  <section class="cover">
+    <div class="cover-text">
+      <h1>Virologia em Jogo</h1>
+      <p>Os 27 capítulos do nosso Livro de Jogos de Virologia Veterinária viraram fases. Em cada uma você resolve as palavras-cruzadas ou o caça-palavras da doença e libera a próxima.</p>
+      <button class="button" id="continue-btn" type="button">Começar</button>
+    </div>
+    <img class="cover-art" src="assets/intro.webp" alt="Ilustração de vírus feita pela equipe para o e-book">
+  </section>
+
+  <section class="contents" aria-labelledby="contents-title">
+    <div class="contents-head">
+      <h2 id="contents-title">Sumário</h2>
+      <p id="home-count" class="contents-count">0 de 28 fases concluídas</p>
+    </div>
+    <div class="contents-tools">
+      <label>Buscar <input id="stage-search" type="search" placeholder="raiva, bovinos, FIV" autocomplete="off"></label>
+      <label>Família <select id="family-filter"><option value="">Todas</option></select></label>
+      <label class="check"><input type="checkbox" id="free-explore"> Liberar todas as fases</label>
+    </div>
+    <p id="filter-count" class="visually-hidden" aria-live="polite"></p>
+    <ol id="stage-map" class="toc"></ol>
+  </section>
+</main>
+
+<!-- FASE -->
+<main id="game" class="page view" hidden>
+  <nav class="crumb"><a href="#/">Sumário</a> / <span id="crumb-stage">Fundamentos</span></nav>
+  <section class="stage-head">
+    <div>
+      <p id="stage-badge" class="stage-meta">Fase 1 de 28</p>
+      <h1 id="stage-title">Introdução à Virologia</h1>
+      <p id="stage-desc" class="stage-intro"></p>
+      <p class="stage-status"><span id="stage-progress">Nenhum jogo concluído</span>, <span id="stage-points">0 pontos</span></p>
+    </div>
+    <img id="stage-art" src="assets/intro.webp" alt="">
+  </section>
+
+  <div class="mode-tabs" role="tablist" aria-label="Jogo">
+    <button id="tab-cross" role="tab" aria-selected="true" type="button">Palavras-cruzadas <span class="done-flag" id="cross-flag"></span></button>
+    <button id="tab-hunt" role="tab" aria-selected="false" type="button">Caça-palavras <span class="done-flag" id="hunt-flag"></span></button>
   </div>
 
-  <!-- FASE (JOGO) -->
-  <main id="game" class="game view" hidden>
-    <nav class="crumb"><a href="#/">← Mapa de fases</a><span>/</span><span id="crumb-stage">Fundamentos</span></nav>
-    <section class="stage-hero">
-      <div>
-        <span id="stage-badge" class="eyebrow">FASE 01 · FUNDAMENTOS</span>
-        <h1 id="stage-title">Introdução à Virologia</h1>
-        <p id="stage-desc"></p>
-        <div class="stage-stats"><span id="stage-progress" class="pill">0 / 2 modalidades</span><span id="stage-points" class="pill">0 pontos</span></div>
+  <section class="play">
+    <div class="sheet">
+      <div class="sheet-progress" role="progressbar" aria-label="Progresso" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progress-bar"></div></div>
+      <div id="cross-view">
+        <p class="hint-text">Clique numa casa ou numa pista e escreva a resposta sem acentos.</p>
+        <div class="cross-scroll"><div id="cross-board" aria-label="Palavras-cruzadas"></div></div>
       </div>
-      <img id="stage-art" src="assets/intro.webp" alt="Ilustração autoral associada ao tema">
-    </section>
-    <section class="work-area">
-      <div class="work-top">
-        <div><span class="eyebrow">ESCOLHA O DESAFIO</span><h2>Como você quer jogar?</h2></div>
-        <div class="mode-tabs" role="tablist" aria-label="Modalidade">
-          <button id="tab-cross" role="tab" aria-selected="true" type="button">✣ Palavras-cruzadas <span class="done-flag" id="cross-flag"></span></button>
-          <button id="tab-hunt" role="tab" aria-selected="false" type="button">▦ Caça-palavras <span class="done-flag" id="hunt-flag"></span></button>
-        </div>
+      <div id="hunt-view" hidden>
+        <p class="hint-text">Arraste de uma ponta à outra da palavra. Vale na horizontal, vertical e diagonal, em qualquer sentido.</p>
+        <div id="hunt-board" role="grid" aria-label="Caça-palavras"></div>
       </div>
-      <div class="game-columns">
-        <section class="puzzle-card">
-          <div class="puzzle-heading">
-            <div><span id="mode-kicker" class="eyebrow">CONEXÕES</span><h3 id="mode-title">Palavras-cruzadas</h3><p id="mode-desc"></p></div>
-            <div class="round-icon" id="mode-icon" aria-hidden="true">✣</div>
-          </div>
-          <div class="bar-outer" role="progressbar" aria-label="Progresso da atividade" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progress-bar"></div></div>
-          <div id="cross-view">
-            <div class="grid-explainer">As respostas se cruzam livremente. Selecione uma casa ou uma pista e digite a palavra. Acentos e espaços são aceitos no pensamento; digite apenas as letras.</div>
-            <div class="cross-scroll"><div id="cross-board" aria-label="Grade de palavras-cruzadas"></div></div>
-            <div class="legend"><span><i class="leg selected"></i> selecionada</span><span><i class="leg typed"></i> preenchida</span><span><i class="leg success"></i> correta</span></div>
-          </div>
-          <div id="hunt-view" hidden>
-            <div class="grid-explainer">Arraste sobre as letras na horizontal, vertical ou diagonal, em qualquer sentido. Toque em uma pista para ver sua definição.</div>
-            <div id="hunt-board" role="grid" aria-label="Grade de caça-palavras"></div>
-            <div class="legend"><span><i class="leg selected"></i> selecionada</span><span><i class="leg success"></i> encontrada</span><span><i class="leg hintcolor"></i> dica</span></div>
-          </div>
-        </section>
-        <aside class="clues-card">
-          <div class="clues-head"><div><span class="eyebrow">SUAS PISTAS</span><h3 id="clues-title">Responda às perguntas</h3></div><b id="solved-count">0 / 0</b></div>
-          <div id="clues-list" class="clues-list"></div>
-          <div id="fallback" class="fallback" hidden>
-            <label for="fallback-input">Prefere digitar? Encontre uma palavra no quadro e informe-a:</label>
-            <form id="fallback-form"><input id="fallback-input" autocomplete="off" spellcheck="false" placeholder="Digite uma palavra"><button type="submit">Validar</button></form>
-          </div>
-          <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
-          <div class="side-actions">
-            <button class="primary" id="check-btn" type="button">Conferir respostas</button>
-            <button class="secondary" id="hint-btn" type="button">✧ Receber dica <small>−8 pts</small></button>
-            <button class="text-button" id="restart-btn" type="button">Reiniciar esta atividade</button>
-          </div>
-        </aside>
-      </div>
-      <div class="study-card">
-        <div class="study-icon">▤</div>
-        <div><span class="eyebrow">PAUSA PARA REVISÃO</span><h3 id="review-title">O que revisar neste tema</h3><p id="review-body"></p><small id="source-note"></small><a class="secondary" id="study-current-btn" href="#/biblioteca">▤ Ler revisão completa deste tema →</a></div>
-      </div>
-    </section>
-  </main>
+    </div>
 
-  <!-- BIBLIOTECA -->
-  <main id="library" class="library view" aria-label="Biblioteca de estudos" hidden>
-    <nav class="crumb"><a href="#/">← Mapa de fases</a><span>/</span><span id="library-crumb">Biblioteca</span></nav>
-    <section class="library-hero">
-      <span class="eyebrow light">E-BOOK INTEGRADO · 27 TEMAS + INTRODUÇÃO</span>
-      <h1>Biblioteca de Virologia Veterinária</h1>
-      <p>O conteúdo original do projeto, conectado aos jogos e a um caderno pessoal de revisão. Todos os registros ficam neste navegador.</p>
-      <a class="library-pdf-link" href="Livro_de_Jogos_Virologia_Veterinaria.pdf" target="_blank" rel="noopener" download>↓ Baixar e-book original (PDF)</a>
-    </section>
+    <aside class="clues">
+      <div class="clues-head"><h2 id="clues-title">Pistas</h2><span id="solved-count">0 de 0</span></div>
+      <div id="clues-list" class="clues-list"></div>
+      <div id="fallback" class="fallback" hidden>
+        <form id="fallback-form">
+          <label for="fallback-input">Achou uma palavra? Escreva aqui</label>
+          <div><input id="fallback-input" autocomplete="off" spellcheck="false"><button type="submit">Marcar</button></div>
+        </form>
+      </div>
+      <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+      <div class="actions">
+        <button class="button" id="check-btn" type="button">Conferir</button>
+        <button class="button button-quiet" id="hint-btn" type="button">Pedir dica (−8 pontos)</button>
+        <button class="link-button" id="restart-btn" type="button">Recomeçar este jogo</button>
+      </div>
+    </aside>
+  </section>
+
+  <section class="review">
+    <h2 id="review-title">Para revisar</h2>
+    <p id="review-body"></p>
+    <p class="review-source"><span id="source-note"></span> <a id="study-current-btn" href="#/biblioteca">Ler o capítulo</a></p>
+  </section>
+  <span class="page-number" id="stage-page-number" aria-hidden="true"></span>
+</main>
+
+<!-- BIBLIOTECA -->
+<main id="library" class="page view" aria-label="Biblioteca" hidden>
+  <nav class="crumb"><a href="#/">Sumário</a> / <span id="library-crumb">Biblioteca</span></nav>
+  <div class="library-top">
+    <h1>Biblioteca</h1>
     <nav class="library-tabs" aria-label="Seções da biblioteca">
-      <a id="lib-tab-acervo" href="#/biblioteca">▤ Acervo e revisões</a>
-      <a id="lib-tab-caderno" href="#/caderno">☆ Meu caderno</a>
-      <a id="lib-tab-references" href="#/referencias">☷ Referências</a>
+      <a id="lib-tab-acervo" href="#/biblioteca">Capítulos</a>
+      <a id="lib-tab-caderno" href="#/caderno">Meu caderno</a>
+      <a id="lib-tab-references" href="#/referencias">Referências</a>
     </nav>
-    <section class="library-layout" id="lib-acervo" aria-label="Acervo e revisões">
-      <aside class="library-sidebar">
-        <label for="library-search">Pesquisar na biblioteca</label><input id="library-search" type="search" placeholder="Ex.: envelope, raiva, gatos..." autocomplete="off">
-        <label for="library-family">Filtrar tema</label><select id="library-family"><option value="">Todas as famílias e temas</option></select>
-        <div class="library-filter-toggles"><label><input type="checkbox" id="library-only-favorites"> Somente favoritos</label><label><input type="checkbox" id="library-only-pending"> Ainda não revisados</label></div>
-        <p id="library-count" aria-live="polite"></p>
-        <div id="library-list" class="library-list" aria-label="Capítulos do e-book"></div>
-      </aside>
-      <article class="library-article" id="library-article" aria-live="polite"><p>Escolha um tema na lista para consultar sua revisão.</p></article>
-    </section>
-    <section id="lib-caderno" class="study-dashboard" aria-label="Meu caderno de estudos" hidden>
-      <div class="dashboard-head">
-        <div><span class="eyebrow">ESTUDO AUTÔNOMO</span><h2>Meu caderno</h2><p>Favoritos, assuntos revisados e anotações que você fez na biblioteca. Os dados ficam somente no navegador utilizado.</p></div>
-        <div class="backup-buttons"><button type="button" id="study-export" class="secondary">↓ Exportar meu progresso</button><label class="secondary backup-import">↑ Importar arquivo <input id="study-import" type="file" accept=".json,application/json" hidden></label></div>
-      </div>
-      <div class="study-summary" id="study-summary"></div>
-      <div id="study-dashboard-list" class="study-dashboard-list"></div>
-      <p class="library-note">Exportar gera uma cópia JSON com suas notas, favoritos, revisões e progresso no jogo. Ao importar, o progresso atual deste navegador será substituído após confirmação.</p>
-    </section>
-    <section id="lib-references" class="study-dashboard" aria-label="Referências do projeto" hidden>
-      <div class="dashboard-head">
-        <div><span class="eyebrow">FONTE ORIGINAL</span><h2>Referências bibliográficas</h2><p>Páginas 58–59 do PDF original, reproduzidas sem revisão ou atualização editorial.</p></div>
-        <a class="secondary reference-pdf-link" href="Livro_de_Jogos_Virologia_Veterinaria.pdf#page=58" target="_blank" rel="noopener">↗ Consultar o PDF</a>
-      </div>
-      <div class="reference-pages" id="reference-pages"></div>
-      <details class="reference-transcript"><summary>Consultar transcrição pesquisável das referências originais</summary><pre id="references-text"></pre></details>
-    </section>
-  </main>
+    <a class="pdf-link" href="Livro_de_Jogos_Virologia_Veterinaria.pdf" target="_blank" rel="noopener" download>Baixar o e-book (PDF, 31 MB)</a>
+  </div>
 
-  <footer>Projeto acadêmico · Universidade de Vassouras · Ilustrações autorais extraídas do e-book fornecido pela equipe · Progresso armazenado apenas neste navegador.</footer>
-</div>
+  <section class="library-layout" id="lib-acervo" aria-label="Capítulos">
+    <aside class="library-sidebar">
+      <label for="library-search">Buscar no texto</label><input id="library-search" type="search" placeholder="envelope, gatos" autocomplete="off">
+      <label for="library-family">Família</label><select id="library-family"><option value="">Todas</option></select>
+      <div class="library-filter-toggles"><label><input type="checkbox" id="library-only-favorites"> Só favoritos</label><label><input type="checkbox" id="library-only-pending"> Só os que faltam revisar</label></div>
+      <p id="library-count" class="sidebar-count" aria-live="polite"></p>
+      <div id="library-list" class="library-list"></div>
+    </aside>
+    <article class="library-article" id="library-article" aria-live="polite"><p>Escolha um capítulo na lista.</p></article>
+  </section>
+
+  <section id="lib-caderno" class="notebook" aria-label="Meu caderno" hidden>
+    <h2>Meu caderno</h2>
+    <p id="study-summary" class="notebook-summary"></p>
+    <div id="study-dashboard-list" class="notebook-list"></div>
+    <div class="backup">
+      <p>Suas anotações e seu progresso ficam só neste navegador. Para levar para outro aparelho, exporte um arquivo e importe lá.</p>
+      <button type="button" id="study-export" class="button button-quiet">Exportar</button>
+      <label class="button button-quiet backup-import">Importar <input id="study-import" type="file" accept=".json,application/json" hidden></label>
+    </div>
+  </section>
+
+  <section id="lib-references" class="references" aria-label="Referências" hidden>
+    <h2>Referências</h2>
+    <p>As referências bibliográficas do e-book (páginas 58 e 59 do PDF). <a href="Livro_de_Jogos_Virologia_Veterinaria.pdf#page=58" target="_blank" rel="noopener">Abrir no PDF</a></p>
+    <div class="reference-pages" id="reference-pages"></div>
+    <details><summary>Ver como texto</summary><pre id="references-text"></pre></details>
+  </section>
+</main>
+
+<footer class="colophon">
+  Projeto da turma de Medicina Veterinária da Universidade de Vassouras, feito a partir do Livro de Jogos de Virologia Veterinária.
+  Ilustrações da equipe. Seu progresso fica salvo só neste navegador.
+</footer>
 
 <div id="win-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="win-title" hidden>
   <div class="modal-panel">
-    <div class="trophy" aria-hidden="true">✦</div>
-    <span class="eyebrow">DESAFIO CONCLUÍDO</span>
+    <span class="stamp" aria-hidden="true">Concluída</span>
     <h2 id="win-title">Muito bem!</h2>
-    <div class="win-stars" id="win-stars"></div>
     <p id="win-message"></p>
-    <div class="earned" id="win-earned">+100 pontos</div>
+    <p class="earned" id="win-earned"></p>
     <div class="modal-actions">
-      <button id="modal-other" class="secondary" type="button">Outra modalidade</button>
-      <button id="modal-next" class="primary" type="button">Próxima fase →</button>
-      <button id="modal-map" class="text-button" type="button">Voltar ao mapa</button>
+      <button id="modal-next" class="button" type="button">Próxima fase</button>
+      <button id="modal-other" class="button button-quiet" type="button">Outro jogo</button>
+      <button id="modal-map" class="link-button" type="button">Voltar ao sumário</button>
     </div>
   </div>
 </div>

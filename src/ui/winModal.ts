@@ -1,22 +1,23 @@
-import { $, html, setHtml } from './dom';
-import { countUp, launchConfetti } from './effects';
+import { $ } from './dom';
+import { countUp } from './effects';
 
 export interface WinOptions {
   title: string;
   message: string;
   points: number;
-  pointsLabel: string;
-  stars: number;
-  /** Nome da fase liberada por esta conquista. */
+  /** Já tinha concluído antes: mostra o recorde em vez dos pontos ganhos agora. */
+  recordOnly: boolean;
+  /** Frase sobre a fase liberada, se houver. */
   unlocked?: string;
-  otherLabel: string;
   nextLabel: string;
-  onOther: () => void;
+  /** null = o outro jogo já foi feito (o botão some). */
+  otherLabel: string | null;
   onNext: () => void;
+  onOther: () => void;
   onMap: () => void;
 }
 
-/** Pop-up "Desafio concluído" com estrelas, pontos e confete. */
+/** Fase concluída: um carimbo "Concluída" na página, com os pontos. */
 export class WinModal {
   private readonly el = $('win-modal');
   private lastFocus: Element | null = null;
@@ -37,43 +38,38 @@ export class WinModal {
   show(o: WinOptions): void {
     this.lastFocus = document.activeElement;
     $('win-title').textContent = o.title;
-    $('win-message').textContent = o.message;
-    setHtml(
-      $('win-stars'),
-      html`${[0, 1, 2].map((i) => html`<span class="star ${i < o.stars ? 'is-on' : ''}" style="--i:${i}">★</span>`)}`
-    );
-    $('win-stars').setAttribute('aria-label', `${o.stars} de 3 estrelas`);
+    $('win-message').textContent = o.unlocked ? `${o.message} ${o.unlocked}` : o.message;
 
     const earned = $('win-earned');
-    setHtml(
-      earned,
-      html`<small>${o.pointsLabel}</small><span id="win-points">0</span> pontos${
-        o.unlocked ? html`<em class="unlocked">🔓 Nova fase liberada: ${o.unlocked}</em>` : ''
-      }`
-    );
-    countUp($('win-points'), o.points, (n) => (o.pointsLabel.startsWith('Recorde') ? String(n) : `+${n}`));
+    if (o.recordOnly) {
+      earned.textContent = `Seu recorde neste jogo: ${o.points} pontos`;
+    } else {
+      earned.textContent = '';
+      const value = document.createElement('strong');
+      earned.append('+', value, ' pontos');
+      countUp(value, o.points, String);
+    }
 
     const bind = (id: string, label: string | null, action: () => void) => {
       const btn = $<HTMLButtonElement>(id);
+      btn.hidden = label === null && id === 'modal-other';
       if (label) btn.textContent = label;
       btn.onclick = () => {
         this.hide();
         action();
       };
     };
-    bind('modal-other', o.otherLabel, o.onOther);
     bind('modal-next', o.nextLabel, o.onNext);
+    bind('modal-other', o.otherLabel, o.onOther);
     bind('modal-map', null, o.onMap);
 
     this.el.hidden = false;
-    launchConfetti(this.el);
     $('modal-next').focus();
   }
 
   hide(): void {
     if (this.el.hidden) return;
     this.el.hidden = true;
-    this.el.querySelector('.confetti')?.remove();
     (this.lastFocus as HTMLElement | null)?.focus?.({ preventScroll: true });
   }
 }

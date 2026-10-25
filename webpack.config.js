@@ -15,9 +15,10 @@ class ServiceWorkerPlugin {
       compilation.hooks.processAssets.tap(
         { name: 'ServiceWorkerPlugin', stage: Compilation.PROCESS_ASSETS_STAGE_REPORT },
         (assets) => {
-          // O PDF (~32 MB) não é pré-armazenado: abre direto da internet.
+          // Não pré-armazena o PDF (~32 MB, abre direto da internet) nem as fontes .woff de reserva
+          // (os navegadores atuais usam as .woff2).
           const files = Object.keys(assets)
-            .filter((f) => !/\.(map|pdf)$/i.test(f) && f !== 'sw.js')
+            .filter((f) => !/\.(map|pdf|woff)$/i.test(f) && f !== 'sw.js')
             .sort();
           const hash = crypto.createHash('sha256');
           for (const f of files) hash.update(f).update(assets[f].buffer());
@@ -59,12 +60,17 @@ module.exports = (env, argv) => {
           exclude: /node_modules/
         },
         {
-          test: /\.s[ac]ss$/i,
+          test: /\.(s[ac]|c)ss$/i,
           use: [
             isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
             'css-loader',
             'sass-loader'
           ]
+        },
+        {
+          test: /\.woff2?$/i,
+          type: 'asset/resource',
+          generator: { filename: 'fonts/[name].[contenthash][ext]' }
         }
       ]
     },
