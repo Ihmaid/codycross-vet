@@ -49,3 +49,6 @@ Thumbs.db
 # Arquivos temporários
 /tmp
 /temp
+
+# Pasta original do protótipo V5 (o conteúdo foi migrado para public/ e src/data/)
+/Virologia_em_Jogo_V5

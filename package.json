@@ -1,8 +1,11 @@
 {
-  "name": "codycross-veterinaria",
-  "version": "0.1.0",
+  "name": "virologia-em-jogo",
+  "version": "1.0.0",
   "private": true,
-  "description": "Jogo de palavras cruzadas estilo CodyCross com tema de Medicina Veterinária",
+  "description": "Virologia em Jogo: palavras-cruzadas, caça-palavras e biblioteca de estudos de Virologia Veterinária",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
@@ -14,7 +17,9 @@
   "keywords": [
     "game",
     "crossword",
+    "word-search",
     "veterinary",
+    "virology",
     "educational"
   ],
   "author": "",
@@ -22,6 +27,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.5",
     "@types/jest": "^29.5.2",
+    "copy-webpack-plugin": "^14.0.0",
     "css-loader": "^6.8.1",
     "eslint": "^9.39.5",
     "html-webpack-plugin": "^5.5.3",
@@ -37,8 +43,5 @@
     "webpack": "^5.86.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^6.1.0"
-  },
-  "dependencies": {
-    "pixi.js": "^7.2.4"
   }
 }

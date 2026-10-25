@@ -1,80 +1,71 @@
 import './ui/styles/main.scss';
-import { GameEngine } from './core/engine/GameEngine';
-import { Level } from './core/models/Level';
-import { prepareLevel } from './core/levels';
-import { loadProgress, saveProgress } from './core/progress';
-import { RAW_LEVELS } from './data/levels';
-import { bindMobileInput, focusIME } from './ui/mobileInput';
+import { stageIndex, STAGES } from './core/content';
+import { Notebook } from './core/notebook';
+import { Progress } from './core/progress';
+import { $, replayAnimation, show } from './ui/dom';
+import { GameView } from './ui/gameView';
+import { HomeView } from './ui/homeView';
+import { LibraryView } from './ui/libraryView';
+import { navigate, parseRoute } from './ui/router';
 
-const AUTO_ADVANCE_DELAY_MS = 1000;
+const progress = Progress.load(STAGES);
+const notebook = Notebook.load();
 
-function showMessage(root: HTMLElement, className: string, text: string): HTMLElement {
-  const box = document.createElement('div');
-  box.className = className;
-  const p = document.createElement('p');
-  p.textContent = text;
-  box.append(p);
-  root.replaceChildren(box);
-  return box;
+let lastPoints = progress.totalPoints();
+
+/** Cabeçalho: pontos e fases concluídas. */
+function renderHeader(): void {
+  const points = progress.totalPoints();
+  $('total-points').textContent = `${points} pts`;
+  $('top-count').textContent = `${progress.finishedCount()} de ${STAGES.length} fases`;
+  if (points > lastPoints) replayAnimation($('total-points'), 'bump');
+  lastPoints = points;
 }
 
-function start(root: HTMLElement): void {
-  let levels: Level[];
-  try {
-    levels = RAW_LEVELS.map(prepareLevel);
-  } catch (error) {
-    console.error(error);
-    showMessage(root, 'error-message', `Erro ao carregar o jogo: ${(error as Error).message}`);
-    return;
-  }
-
-  let engine: GameEngine | null = null;
-
-  function loadLevel(index: number): void {
-    engine?.destroy();
-    root.replaceChildren();
-    saveProgress(index);
-
-    engine = new GameEngine(root, levels[index], {
-      autoAdvanceDelayMs: AUTO_ADVANCE_DELAY_MS,
-      onComplete: () => (index + 1 < levels.length ? loadLevel(index + 1) : showEndGame()),
-    });
-    engine.startGame();
-    setTimeout(focusIME, 300);
-  }
-
-  function showEndGame(): void {
-    engine?.destroy();
-    engine = null;
-    const box = showMessage(root, 'endgame', '');
-    const title = document.createElement('h2');
-    title.textContent = 'Parabéns! Você concluiu todos os níveis 🎉';
-    const restart = document.createElement('button');
-    restart.className = 'btn btn-primary';
-    restart.textContent = 'Recomeçar do início';
-    restart.addEventListener('click', () => loadLevel(0));
-    box.replaceChildren(title, restart);
-  }
-
-  document.getElementById('hint-button')?.addEventListener('click', () => {
-    engine?.useHint();
-    focusIME();
-  });
-  document.getElementById('reset-button')?.addEventListener('click', () => {
-    engine?.startGame();
-    focusIME();
-  });
-
-  loadLevel(loadProgress(levels.length));
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const root = document.getElementById('crossword-container');
-  if (!root) {
-    document.body.textContent = 'Erro: container do jogo não encontrado!';
-    return;
-  }
-  root.classList.add('crossword-container-active');
-  bindMobileInput(root);
-  start(root);
+const home = new HomeView(progress);
+const game = new GameView(progress, (unlockedIndex) => {
+  renderHeader();
+  if (unlockedIndex !== undefined) home.highlightUnlocked(unlockedIndex);
 });
+const library = new LibraryView(progress, notebook, () => {
+  renderHeader();
+  home.render();
+});
+
+const views = { home: $('home'), stage: $('game'), library: $('library') };
+/** Tela/aba atual: só rola ao topo quando ela muda (escolher outro tema na biblioteca não rola). */
+let currentScreen = '';
+
+function route(): void {
+  const r = parseRoute(location.hash);
+  if (r.view === 'stage') {
+    const index = stageIndex(r.id);
+    // Fase inexistente ou ainda bloqueada (link antigo/compartilhado): volta ao mapa.
+    if (index < 0 || !progress.isAvailable(index)) {
+      navigate({ view: 'home' }, { replace: true });
+      return;
+    }
+  }
+
+  for (const [name, el] of Object.entries(views)) show(el, name === r.view);
+  if (r.view !== 'stage') game.close();
+
+  const screen = r.view === 'library' ? `library:${r.tab}` : r.view;
+  if (screen !== currentScreen && r.view !== 'stage') window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+  currentScreen = screen;
+
+  if (r.view === 'home') home.render();
+  else if (r.view === 'stage') game.open(stageIndex(r.id), r.mode);
+  else library.open(r.tab, r.id);
+  renderHeader();
+}
+
+window.addEventListener('hashchange', route);
+route();
+
+// Modo offline / instalável (PWA). Só em HTTPS ou localhost.
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || ['localhost', '127.0.0.1'].includes(location.hostname))) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => undefined);
+  });
+}
