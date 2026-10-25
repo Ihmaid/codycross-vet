@@ -128,6 +128,13 @@
   margin-bottom: 15px;
 }
 
+.game-complete-message .overlay-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
 .game-complete-message button {
   margin-top: 15px;
 }

@@ -1,5 +1,5 @@
 /* Responsividade */
-@import 'variables';
+@use 'variables';
 
 /* Utilitários responsivos */
 .d-none {
@@ -15,7 +15,7 @@
 }
 
 /* Breakpoints */
-@media (min-width: $breakpoint-sm) {
+@media (min-width: variables.$breakpoint-sm) {
   .d-sm-none {
     display: none !important;
   }
@@ -29,7 +29,7 @@
   }
 }
 
-@media (min-width: $breakpoint-md) {
+@media (min-width: variables.$breakpoint-md) {
   .d-md-none {
     display: none !important;
   }
@@ -43,7 +43,7 @@
   }
 }
 
-@media (min-width: $breakpoint-lg) {
+@media (min-width: variables.$breakpoint-lg) {
   .d-lg-none {
     display: none !important;
   }
@@ -61,7 +61,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: $spacing-md;
+  gap: variables.$spacing-md;
 }
 
 .col-12 {
@@ -80,7 +80,7 @@
   grid-column: span 3;
 }
 
-@media (max-width: $breakpoint-md) {
+@media (max-width: variables.$breakpoint-md) {
   .col-md-12 {
     grid-column: span 12;
   }
@@ -94,7 +94,7 @@
   }
 }
 
-@media (max-width: $breakpoint-sm) {
+@media (max-width: variables.$breakpoint-sm) {
   .col-sm-12 {
     grid-column: span 12;
   }
@@ -104,14 +104,14 @@
   }
   
   .grid {
-    gap: $spacing-sm;
+    gap: variables.$spacing-sm;
   }
 }
 
 /* Ajustes responsivos para o jogo */
-@media (max-width: $breakpoint-md) {
+@media (max-width: variables.$breakpoint-md) {
   .game-board {
-    padding: $spacing-sm;
+    padding: variables.$spacing-sm;
   }
   
   .clue-container {
@@ -119,18 +119,18 @@
   }
   
   .header {
-    padding: 0 $spacing-sm;
+    padding: 0 variables.$spacing-sm;
   }
 }
 
-@media (max-width: $breakpoint-sm) {
+@media (max-width: variables.$breakpoint-sm) {
   .game-board {
-    padding: $spacing-xs;
+    padding: variables.$spacing-xs;
   }
   
   .btn {
-    padding: $spacing-xs $spacing-sm;
-    font-size: $font-size-small;
+    padding: variables.$spacing-xs variables.$spacing-sm;
+    font-size: variables.$font-size-small;
   }
   
   .crossword-container {
@@ -149,7 +149,7 @@
   }
   
   .game-board {
-    padding-top: $spacing-xs;
-    padding-bottom: $spacing-xs;
+    padding-top: variables.$spacing-xs;
+    padding-bottom: variables.$spacing-xs;
   }
 }

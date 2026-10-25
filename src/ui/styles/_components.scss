@@ -1,5 +1,6 @@
 /* Componentes */
-@import 'variables';
+@use "sass:color";
+@use 'variables';
 
 /* Botões */
 .btn {
@@ -10,11 +11,11 @@
   vertical-align: middle;
   user-select: none;
   border: 1px solid transparent;
-  padding: $spacing-sm $spacing-md;
-  font-size: $font-size-base;
+  padding: variables.$spacing-sm variables.$spacing-md;
+  font-size: variables.$font-size-base;
   line-height: 1.5;
-  border-radius: $border-radius-sm;
-  transition: all $transition-speed ease-in-out;
+  border-radius: variables.$border-radius-sm;
+  transition: all variables.$transition-speed ease-in-out;
   cursor: pointer;
   
   &:focus, &:hover {
@@ -30,34 +31,34 @@
 
 .btn-primary {
   color: white;
-  background-color: $primary-color;
-  border-color: $primary-color;
+  background-color: variables.$primary-color;
+  border-color: variables.$primary-color;
   
   &:hover, &:focus {
-    background-color: darken($primary-color, 10%);
-    border-color: darken($primary-color, 12%);
+    background-color: color.adjust(variables.$primary-color, $lightness: -10%);
+    border-color: color.adjust(variables.$primary-color, $lightness: -12%);
   }
 }
 
 .btn-secondary {
   color: white;
-  background-color: $secondary-color;
-  border-color: $secondary-color;
+  background-color: variables.$secondary-color;
+  border-color: variables.$secondary-color;
   
   &:hover, &:focus {
-    background-color: darken($secondary-color, 10%);
-    border-color: darken($secondary-color, 12%);
+    background-color: color.adjust(variables.$secondary-color, $lightness: -10%);
+    border-color: color.adjust(variables.$secondary-color, $lightness: -12%);
   }
 }
 
 .btn-accent {
-  color: $text-color;
-  background-color: $accent-color;
-  border-color: $accent-color;
+  color: variables.$text-color;
+  background-color: variables.$accent-color;
+  border-color: variables.$accent-color;
   
   &:hover, &:focus {
-    background-color: darken($accent-color, 10%);
-    border-color: darken($accent-color, 12%);
+    background-color: color.adjust(variables.$accent-color, $lightness: -10%);
+    border-color: color.adjust(variables.$accent-color, $lightness: -12%);
   }
 }
 
@@ -65,24 +66,24 @@
   background-color: transparent;
   
   &.btn-primary {
-    color: $primary-color;
-    border-color: $primary-color;
+    color: variables.$primary-color;
+    border-color: variables.$primary-color;
     
     &:hover, &:focus {
       color: white;
-      background-color: $primary-color;
+      background-color: variables.$primary-color;
     }
   }
 }
 
 .btn-sm {
-  padding: $spacing-xs $spacing-sm;
-  font-size: $font-size-small;
+  padding: variables.$spacing-xs variables.$spacing-sm;
+  font-size: variables.$font-size-small;
 }
 
 .btn-lg {
-  padding: $spacing-md $spacing-lg;
-  font-size: $font-size-large;
+  padding: variables.$spacing-md variables.$spacing-lg;
+  font-size: variables.$font-size-large;
 }
 
 /* Cards */
@@ -95,11 +96,11 @@
   background-color: white;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: $border-radius-md;
-  box-shadow: $box-shadow;
+  border-radius: variables.$border-radius-md;
+  box-shadow: variables.$box-shadow;
   
   .card-header {
-    padding: $spacing-md;
+    padding: variables.$spacing-md;
     margin-bottom: 0;
     background-color: rgba(0, 0, 0, 0.03);
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
@@ -107,11 +108,11 @@
   
   .card-body {
     flex: 1 1 auto;
-    padding: $spacing-md;
+    padding: variables.$spacing-md;
   }
   
   .card-footer {
-    padding: $spacing-md;
+    padding: variables.$spacing-md;
     background-color: rgba(0, 0, 0, 0.03);
     border-top: 1px solid rgba(0, 0, 0, 0.125);
   }
@@ -119,89 +120,89 @@
 
 /* Formulários */
 .form-group {
-  margin-bottom: $spacing-md;
+  margin-bottom: variables.$spacing-md;
 }
 
 .form-label {
   display: inline-block;
-  margin-bottom: $spacing-xs;
+  margin-bottom: variables.$spacing-xs;
 }
 
 .form-control {
   display: block;
   width: 100%;
-  padding: $spacing-sm;
-  font-size: $font-size-base;
+  padding: variables.$spacing-sm;
+  font-size: variables.$font-size-base;
   line-height: 1.5;
-  color: $text-color;
+  color: variables.$text-color;
   background-color: white;
   background-clip: padding-box;
   border: 1px solid #ced4da;
-  border-radius: $border-radius-sm;
-  transition: border-color $transition-speed ease-in-out, box-shadow $transition-speed ease-in-out;
+  border-radius: variables.$border-radius-sm;
+  transition: border-color variables.$transition-speed ease-in-out, box-shadow variables.$transition-speed ease-in-out;
   
   &:focus {
-    color: $text-color;
+    color: variables.$text-color;
     background-color: white;
-    border-color: lighten($primary-color, 25%);
+    border-color: color.adjust(variables.$primary-color, $lightness: 25%);
     outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(variables.$primary-color, 0.25);
   }
 }
 
 /* Alertas */
 .alert {
   position: relative;
-  padding: $spacing-sm $spacing-md;
-  margin-bottom: $spacing-md;
+  padding: variables.$spacing-sm variables.$spacing-md;
+  margin-bottom: variables.$spacing-md;
   border: 1px solid transparent;
-  border-radius: $border-radius-sm;
+  border-radius: variables.$border-radius-sm;
 }
 
 .alert-success {
-  color: darken($success-color, 30%);
-  background-color: lighten($success-color, 40%);
-  border-color: lighten($success-color, 35%);
+  color: color.adjust(variables.$success-color, $lightness: -30%);
+  background-color: color.adjust(variables.$success-color, $lightness: 40%);
+  border-color: color.adjust(variables.$success-color, $lightness: 35%);
 }
 
 .alert-error {
-  color: darken($error-color, 30%);
-  background-color: lighten($error-color, 40%);
-  border-color: lighten($error-color, 35%);
+  color: color.adjust(variables.$error-color, $lightness: -30%);
+  background-color: color.adjust(variables.$error-color, $lightness: 40%);
+  border-color: color.adjust(variables.$error-color, $lightness: 35%);
 }
 
 .alert-warning {
-  color: darken($warning-color, 30%);
-  background-color: lighten($warning-color, 40%);
-  border-color: lighten($warning-color, 35%);
+  color: color.adjust(variables.$warning-color, $lightness: -30%);
+  background-color: color.adjust(variables.$warning-color, $lightness: 40%);
+  border-color: color.adjust(variables.$warning-color, $lightness: 35%);
 }
 
 /* Badges */
 .badge {
   display: inline-block;
-  padding: $spacing-xs $spacing-sm;
+  padding: variables.$spacing-xs variables.$spacing-sm;
   font-size: 75%;
   font-weight: 700;
   line-height: 1;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  border-radius: $border-radius-sm;
+  border-radius: variables.$border-radius-sm;
 }
 
 .badge-primary {
   color: white;
-  background-color: $primary-color;
+  background-color: variables.$primary-color;
 }
 
 .badge-secondary {
   color: white;
-  background-color: $secondary-color;
+  background-color: variables.$secondary-color;
 }
 
 .badge-accent {
-  color: $text-color;
-  background-color: $accent-color;
+  color: variables.$text-color;
+  background-color: variables.$accent-color;
 }
 
 /* Spinners */

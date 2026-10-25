@@ -1,5 +1,5 @@
 /* Animações */
-@import 'variables';
+@use 'variables';
 
 @keyframes fadeIn {
   from {
@@ -90,15 +90,15 @@
 }
 
 .transition-all {
-  transition: all $transition-speed ease-in-out;
+  transition: all variables.$transition-speed ease-in-out;
 }
 
 .transition-transform {
-  transition: transform $transition-speed ease-in-out;
+  transition: transform variables.$transition-speed ease-in-out;
 }
 
 .transition-opacity {
-  transition: opacity $transition-speed ease-in-out;
+  transition: opacity variables.$transition-speed ease-in-out;
 }
 
 .hover-scale {
@@ -115,6 +115,6 @@
 
 .hover-shadow {
   &:hover {
-    box-shadow: $box-shadow-lg;
+    box-shadow: variables.$box-shadow-lg;
   }
 }
