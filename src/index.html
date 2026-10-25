@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#6d1d20">
   <title>CodyCross Veterinária</title>
   <meta name="description" content="Jogo de palavras cruzadas estilo CodyCross com tema de Medicina Veterinária">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700;800;900&display=swap">
 
   <!-- IME inputs (keyboard helpers) + touch optimizations -->
   <style>
@@ -47,51 +49,90 @@
   </style>
 </head>
 <body>
-  <div id="app">
-    <div class="game-container">
-      <header class="game-header">
-        <div class="game-title">CodyCross Veterinária</div>
-        <div class="game-stats">
-          <div class="timer">Tempo: 05:00</div>
-          <div class="score">Pontuação: 0</div>
+  <div id="app" class="app">
+    <header class="app-header">
+      <div class="app-header__inner">
+        <div class="brand">
+          <span class="brand-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" focusable="false"><g fill="currentColor"><ellipse cx="32" cy="42" rx="14" ry="12"/><ellipse cx="14" cy="27" rx="6.5" ry="8.5" transform="rotate(-20 14 27)"/><ellipse cx="50" cy="27" rx="6.5" ry="8.5" transform="rotate(20 50 27)"/><ellipse cx="24" cy="14" rx="6" ry="8.5" transform="rotate(-8 24 14)"/><ellipse cx="40" cy="14" rx="6" ry="8.5" transform="rotate(8 40 14)"/></g></svg>
+          </span>
+          <div class="brand-text">
+            <h1 class="brand-title">CodyCross <span>Veterinária</span></h1>
+            <p class="brand-subtitle">Medicina Veterinária · Universidade de Vassouras</p>
+          </div>
         </div>
-      </header>
-      
-      <main class="game-board">
+
+        <div class="stats">
+          <div class="stat stat--timer" title="Tempo restante">
+            <span class="stat-icon" aria-hidden="true">⏱</span>
+            <span class="stat-label">Tempo</span>
+            <span class="stat-value" id="timer-value">05:00</span>
+          </div>
+          <div class="stat stat--score" title="Pontuação">
+            <span class="stat-icon" aria-hidden="true">★</span>
+            <span class="stat-label">Pontos</span>
+            <span class="stat-value" id="score-value">0</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="game-board">
+      <section class="level-bar" aria-label="Progresso do nível">
+        <span class="level-pill" id="level-label">Nível 1</span>
+        <span class="level-theme" id="level-theme"></span>
+        <div class="progress" id="progress" role="progressbar" aria-label="Palavras resolvidas" aria-valuemin="0" aria-valuenow="0" aria-valuemax="1">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <span class="progress-text" id="progress-text"></span>
+      </section>
+
+      <div class="board-card">
         <div id="crossword-container"></div>
+        <div id="toast" class="toast" role="status" aria-live="polite"></div>
+      </div>
 
-        <!-- Primary hidden input (Android/most browsers) -->
-        <input
-          id="ime-input"
-          type="text"
-          inputmode="text"
-          autocapitalize="characters"
-          autocomplete="off"
-          autocorrect="off"
-          spellcheck="false"
-          maxlength="1"
-          enterkeyhint="next"
-          aria-label="Entrada de letra do jogo"
-        />
+      <!-- Primary hidden input (Android/most browsers) -->
+      <input
+        id="ime-input"
+        type="text"
+        inputmode="text"
+        autocapitalize="characters"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+        maxlength="1"
+        enterkeyhint="next"
+        aria-label="Entrada de letra do jogo"
+      />
 
-        <!-- iOS fallback (contenteditable) -->
-        <div id="ime-ce" contenteditable="true" aria-label="Entrada de letra do jogo (iOS)"></div>
+      <!-- iOS fallback (contenteditable) -->
+      <div id="ime-ce" contenteditable="true" aria-label="Entrada de letra do jogo (iOS)"></div>
 
-        <div class="vertical-word-display">
-          <div id="vertical-word"></div>
-          <p>Dica: <span id="vertical-clue"></span></p>
-        </div>
-        
-        <div class="clue-container">
-          <p>Selecione uma célula para ver a dica</p>
-        </div>
-        
-        <div class="controls">
-          <button id="hint-button" class="btn btn-hint">Usar Dica</button>
-          <button id="reset-button" class="btn btn-primary">Reiniciar</button>
-        </div>
-      </main>
-    </div>
+      <section class="vertical-word-display" aria-label="Palavra-chave">
+        <span class="section-label">Palavra-chave</span>
+        <div id="vertical-word"></div>
+        <p class="vertical-clue"><span id="vertical-clue"></span></p>
+      </section>
+
+      <section class="clue-container" aria-live="polite">
+        <span class="clue-label">Dica</span>
+        <p class="clue-text">Selecione uma célula para ver a dica</p>
+      </section>
+
+      <div class="controls">
+        <button id="hint-button" class="btn btn-secondary" type="button">
+          <span aria-hidden="true">💡</span> Usar dica <span class="btn-badge" id="hint-count" aria-label="dicas usadas">0</span>
+        </button>
+        <button id="reset-button" class="btn btn-ghost" type="button">
+          <span aria-hidden="true">↺</span> Reiniciar
+        </button>
+      </div>
+    </main>
+
+    <footer class="app-footer">
+      Projeto acadêmico · Medicina Veterinária
+    </footer>
   </div>
 </body>
 </html>

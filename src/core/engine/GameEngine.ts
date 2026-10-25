@@ -3,18 +3,23 @@ import { Level } from '../models/Level';
 import { CrosswordRenderer } from './CrosswordRenderer';
 import { WordValidator } from './WordValidator';
 import { CountdownTimer } from './CountdownTimer';
-import { calculateScore } from '../scoring';
+import { calculateScore, calculateStars } from '../scoring';
 import { normalizeLetter } from '../input';
 import { GameHud, formatTime } from '../../ui/GameHud';
+import { DialogAction, showDialog } from '../../ui/Dialog';
 
 export type GameEngineOptions = {
   /** Chamado para avançar ao próximo nível (automaticamente ou pelo botão). */
   onComplete?: () => void;
-  /** Espera antes de avançar automaticamente. Negativo = não avança sozinho. */
+  /** Espera (a partir da conclusão) antes de avançar sozinho. Negativo = não avança sozinho. */
   autoAdvanceDelayMs?: number;
 };
 
 type Status = 'playing' | 'complete' | 'timeup';
+
+/** Tempo da comemoração na grade antes do pop-up aparecer. */
+const CELEBRATION_MS = 700;
+const SUCCESS_MESSAGES = ['Acertou!', 'Muito bem!', 'Mandou bem!', 'Excelente!', 'Isso aí!'];
 
 /** Regras de uma partida: liga o teclado, a grade (renderer), as respostas (validator) e o HUD. */
 export class GameEngine {
@@ -22,28 +27,28 @@ export class GameEngine {
   private readonly renderer: CrosswordRenderer;
   private readonly validator: WordValidator;
   private readonly timer: CountdownTimer;
-  private readonly hud = new GameHud();
   private readonly onComplete?: () => void;
   private readonly autoAdvanceDelayMs: number;
   private status: Status = 'playing';
   private hintsUsed = 0;
   private overlay: HTMLElement | null = null;
-  private advanceTimeout: ReturnType<typeof setTimeout> | null = null;
+  private pending: ReturnType<typeof setTimeout>[] = [];
   private readonly handleKeyDown = (event: KeyboardEvent) => this.onKeyDown(event);
   private readonly handleResize = () => this.resize();
 
   constructor(
     private readonly container: HTMLElement,
     private readonly level: Level,
+    private readonly hud: GameHud,
     options: GameEngineOptions = {}
   ) {
     this.onComplete = options.onComplete;
-    this.autoAdvanceDelayMs = options.autoAdvanceDelayMs ?? 1000;
+    this.autoAdvanceDelayMs = options.autoAdvanceDelayMs ?? 3000;
 
     this.app = new PIXI.Application({
       width: container.clientWidth || 800,
       height: container.clientHeight || 600,
-      backgroundColor: 0xf8f9fa,
+      backgroundAlpha: 0,
       antialias: true,
       resolution: window.devicePixelRatio || 1,
       autoDensity: true,
@@ -60,12 +65,11 @@ export class GameEngine {
     window.addEventListener('keydown', this.handleKeyDown);
     window.addEventListener('resize', this.handleResize);
     this.resize();
-    this.hud.showLevel(level);
   }
 
   /** Começa (ou recomeça do zero) o nível. */
   public startGame(): void {
-    this.cancelAutoAdvance();
+    this.cancelPending();
     this.closeOverlay();
     this.validator.reset();
     this.renderer.reset();
@@ -74,6 +78,7 @@ export class GameEngine {
 
     this.hud.setScore(0);
     this.hud.setHintsUsed(0);
+    this.hud.setProgress(0, this.level.horizontalWords.length);
     this.hud.setVerticalLetters(this.validator.getVerticalLetters());
     this.timer.start(this.level.timeLimit);
   }
@@ -95,13 +100,13 @@ export class GameEngine {
 
     const { word, intersectionIndex } = this.level.horizontalWords[selected.row];
     for (let i = 0; i < word.length; i++) {
-      this.placeLetter(selected.row, intersectionIndex + i, word[i]);
+      this.placeLetter(selected.row, intersectionIndex + i, word[i], { quiet: true });
     }
   }
 
   public destroy(): void {
     this.timer.stop();
-    this.cancelAutoAdvance();
+    this.cancelPending();
     this.closeOverlay();
     window.removeEventListener('keydown', this.handleKeyDown);
     window.removeEventListener('resize', this.handleResize);
@@ -159,16 +164,27 @@ export class GameEngine {
     event.preventDefault(); // evita rolar a página com as setas
   }
 
-  /** Escreve uma letra na grade. Linhas já resolvidas ficam travadas. */
-  private placeLetter(row: number, col: number, letter: string): void {
+  /** Escreve uma letra na grade. Linhas já resolvidas ficam travadas. `quiet` = sem aviso de erro (dica). */
+  private placeLetter(row: number, col: number, letter: string, { quiet = false } = {}): void {
     if (this.validator.isRowSolved(row)) return;
 
     this.renderer.setCellValue(row, col, letter);
     if (this.validator.setLetter(row, col, letter)) {
-      this.renderer.markRowSolved(row);
-      this.hud.setVerticalLetters(this.validator.getVerticalLetters());
-      if (this.validator.isLevelComplete()) this.onLevelComplete();
+      this.onRowSolved(row);
+    } else if (!quiet && letter && this.validator.isRowFilled(row)) {
+      this.renderer.flashRowError(row);
+      this.hud.toast('Quase! Confira as letras.', 'error');
     }
+  }
+
+  private onRowSolved(row: number): void {
+    const word = this.level.horizontalWords[row].word;
+    const message = SUCCESS_MESSAGES[Math.floor(Math.random() * SUCCESS_MESSAGES.length)];
+    this.renderer.markRowSolved(row);
+    this.hud.toast(`${message} ${word} ✓`, 'success');
+    this.hud.setProgress(this.validator.solvedCount(), this.level.horizontalWords.length);
+    this.hud.setVerticalLetters(this.validator.getVerticalLetters());
+    if (this.validator.isLevelComplete()) this.onLevelComplete();
   }
 
   private onLevelComplete(): void {
@@ -176,69 +192,71 @@ export class GameEngine {
     this.timer.stop();
     const timeRemaining = this.timer.secondsLeft();
     const score = calculateScore(this.level.points, timeRemaining, this.hintsUsed);
+    const stars = calculateStars(timeRemaining, this.level.timeLimit, this.hintsUsed);
     this.hud.setScore(score);
+    this.renderer.celebrate();
 
-    const actions: OverlayAction[] = [{ label: 'Jogar Novamente', className: 'btn btn-primary', onClick: () => this.startGame() }];
+    const actions: DialogAction[] = [];
+    let countdownMs = 0;
     if (this.onComplete) {
-      actions.push({ label: 'Próximo Nível ▶', className: 'btn btn-hint', onClick: () => this.advance() });
+      actions.push({ label: 'Próximo nível ▶', variant: 'primary', onClick: () => this.advance() });
       if (this.autoAdvanceDelayMs >= 0) {
-        this.advanceTimeout = setTimeout(() => this.advance(), this.autoAdvanceDelayMs);
+        countdownMs = Math.max(0, this.autoAdvanceDelayMs - CELEBRATION_MS);
+        this.later(() => this.advance(), this.autoAdvanceDelayMs);
       }
     }
+    actions.push({ label: 'Jogar novamente', variant: 'secondary', onClick: () => this.startGame() });
 
-    this.showOverlay(
-      'Parabéns!',
-      ['Você completou o nível!', `Pontuação: ${score}`, `Tempo restante: ${formatTime(timeRemaining)}`, `Dicas usadas: ${this.hintsUsed}`],
-      actions
-    );
+    const verticalWord = this.level.verticalWord.word;
+    this.later(() => {
+      this.showOverlay({
+        icon: '🏆',
+        title: 'Nível concluído!',
+        message: verticalWord ? `Palavra-chave: ${verticalWord}` : 'Você completou todas as palavras!',
+        stars,
+        stats: [
+          ['Pontuação', String(score)],
+          ['Tempo restante', formatTime(timeRemaining)],
+          ['Dicas usadas', String(this.hintsUsed)],
+        ],
+        actions,
+        countdownMs,
+        countdownLabel: countdownMs ? 'Próximo nível em instantes…' : undefined,
+        confetti: true,
+      });
+    }, CELEBRATION_MS);
   }
 
   private onTimeUp(): void {
     this.status = 'timeup';
-    this.showOverlay('Tempo Esgotado!', ['Infelizmente o tempo acabou.', 'Pontuação: 0'], [
-      { label: 'Tentar Novamente', className: 'btn btn-primary', onClick: () => this.startGame() },
-    ]);
+    this.showOverlay({
+      icon: '⏰',
+      title: 'Tempo esgotado!',
+      message: 'Não foi dessa vez, mas você está quase lá. Que tal tentar de novo?',
+      tone: 'warning',
+      actions: [{ label: 'Tentar novamente', variant: 'primary', onClick: () => this.startGame() }],
+    });
   }
 
   private advance(): void {
-    this.cancelAutoAdvance();
+    this.cancelPending();
     this.closeOverlay();
     this.onComplete?.();
   }
 
-  private cancelAutoAdvance(): void {
-    if (this.advanceTimeout) clearTimeout(this.advanceTimeout);
-    this.advanceTimeout = null;
+  /** setTimeout que é cancelado ao reiniciar ou destruir o nível. */
+  private later(fn: () => void, ms: number): void {
+    this.pending.push(setTimeout(fn, ms));
   }
 
-  private showOverlay(title: string, lines: string[], actions: OverlayAction[]): void {
+  private cancelPending(): void {
+    this.pending.forEach(clearTimeout);
+    this.pending = [];
+  }
+
+  private showOverlay(options: Parameters<typeof showDialog>[1]): void {
     this.closeOverlay();
-    const overlay = document.createElement('div');
-    overlay.className = 'game-complete-message';
-    overlay.setAttribute('role', 'dialog');
-
-    const heading = document.createElement('h2');
-    heading.textContent = title;
-    overlay.append(heading);
-    for (const line of lines) {
-      const p = document.createElement('p');
-      p.textContent = line;
-      overlay.append(p);
-    }
-
-    const buttons = document.createElement('div');
-    buttons.className = 'overlay-actions';
-    for (const action of actions) {
-      const button = document.createElement('button');
-      button.className = action.className;
-      button.textContent = action.label;
-      button.addEventListener('click', action.onClick);
-      buttons.append(button);
-    }
-    overlay.append(buttons);
-
-    this.container.append(overlay);
-    this.overlay = overlay;
+    this.overlay = showDialog(this.container, options);
   }
 
   private closeOverlay(): void {
@@ -246,5 +264,3 @@ export class GameEngine {
     this.overlay = null;
   }
 }
-
-type OverlayAction = { label: string; className: string; onClick: () => void };

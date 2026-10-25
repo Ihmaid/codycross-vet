@@ -4,18 +4,27 @@ import { Level } from './core/models/Level';
 import { prepareLevel } from './core/levels';
 import { loadProgress, saveProgress } from './core/progress';
 import { RAW_LEVELS } from './data/levels';
+import { GameHud } from './ui/GameHud';
+import { showDialog } from './ui/Dialog';
 import { bindMobileInput, focusIME } from './ui/mobileInput';
 
-const AUTO_ADVANCE_DELAY_MS = 1000;
+/** Tempo entre concluir um nível e ir para o próximo (comemoração + pop-up). */
+const AUTO_ADVANCE_DELAY_MS = 3500;
 
-function showMessage(root: HTMLElement, className: string, text: string): HTMLElement {
+function showError(root: HTMLElement, text: string): void {
   const box = document.createElement('div');
-  box.className = className;
-  const p = document.createElement('p');
-  p.textContent = text;
-  box.append(p);
+  box.className = 'error-message';
+  box.textContent = text;
   root.replaceChildren(box);
-  return box;
+}
+
+/** As letras da grade são desenhadas no canvas: espera a fonte carregar (no máximo 1,5s). */
+function waitForFonts(): Promise<unknown> {
+  if (!document.fonts?.load) return Promise.resolve();
+  return Promise.race([
+    document.fonts.load('800 32px Nunito').catch(() => undefined),
+    new Promise((resolve) => setTimeout(resolve, 1500)),
+  ]);
 }
 
 function start(root: HTMLElement): void {
@@ -24,10 +33,11 @@ function start(root: HTMLElement): void {
     levels = RAW_LEVELS.map(prepareLevel);
   } catch (error) {
     console.error(error);
-    showMessage(root, 'error-message', `Erro ao carregar o jogo: ${(error as Error).message}`);
+    showError(root, `Erro ao carregar o jogo: ${(error as Error).message}`);
     return;
   }
 
+  const hud = new GameHud();
   let engine: GameEngine | null = null;
 
   function loadLevel(index: number): void {
@@ -35,7 +45,10 @@ function start(root: HTMLElement): void {
     root.replaceChildren();
     saveProgress(index);
 
-    engine = new GameEngine(root, levels[index], {
+    const level = levels[index];
+    hud.setLevel(index, levels.length, level);
+    hud.showLevelIntro(index, level.theme);
+    engine = new GameEngine(root, level, hud, {
       autoAdvanceDelayMs: AUTO_ADVANCE_DELAY_MS,
       onComplete: () => (index + 1 < levels.length ? loadLevel(index + 1) : showEndGame()),
     });
@@ -46,14 +59,24 @@ function start(root: HTMLElement): void {
   function showEndGame(): void {
     engine?.destroy();
     engine = null;
-    const box = showMessage(root, 'endgame', '');
-    const title = document.createElement('h2');
-    title.textContent = 'Parabéns! Você concluiu todos os níveis 🎉';
-    const restart = document.createElement('button');
-    restart.className = 'btn btn-primary';
-    restart.textContent = 'Recomeçar do início';
-    restart.addEventListener('click', () => loadLevel(0));
-    box.replaceChildren(title, restart);
+    root.replaceChildren();
+    const dialog = showDialog(root, {
+      icon: '🎓',
+      title: 'Parabéns, você zerou o jogo!',
+      message: 'Você concluiu todos os níveis do CodyCross Veterinária.',
+      actions: [
+        {
+          label: 'Recomeçar do início',
+          variant: 'primary',
+          onClick: () => {
+            dialog.remove();
+            loadLevel(0);
+          },
+        },
+      ],
+      confetti: true,
+      className: 'endgame',
+    });
   }
 
   document.getElementById('hint-button')?.addEventListener('click', () => {
@@ -74,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.textContent = 'Erro: container do jogo não encontrado!';
     return;
   }
-  root.classList.add('crossword-container-active');
   bindMobileInput(root);
-  start(root);
+  waitForFonts().then(() => start(root));
 });

@@ -1,0 +1,182 @@
+@use 'variables' as *;
+
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba($bordo-deep, 0.55);
+  backdrop-filter: blur(4px);
+  animation: fade-in 0.25s ease;
+  overflow: hidden;
+}
+
+.dialog {
+  position: relative;
+  z-index: 1;
+  width: min(420px, 100%);
+  padding: 2.25rem 1.5rem 1.5rem;
+  border-radius: $radius-lg;
+  background: $white;
+  text-align: center;
+  box-shadow: $shadow-lg;
+  animation: dialog-pop 0.5s $ease-out-back;
+
+  // Faixa colorida no topo
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 8px;
+    border-radius: $radius-lg $radius-lg 0 0;
+    background: linear-gradient(90deg, $bordo 0%, $bordo-light 50%, $gold 100%);
+  }
+}
+
+.dialog-icon {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  margin: -4.25rem auto 0.5rem;
+  border-radius: 50%;
+  background: linear-gradient(180deg, $bordo-light 0%, $bordo-dark 100%);
+  border: 4px solid $white;
+  box-shadow: $shadow-md;
+  font-size: 2.3rem;
+  animation: icon-bounce 0.9s $ease-out-back 0.15s both;
+}
+
+.dialog--warning .dialog-icon {
+  background: linear-gradient(180deg, #fbe7b6 0%, $gold 100%);
+}
+
+.dialog-title {
+  font-family: $font-display;
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: $bordo-dark;
+}
+
+.dialog-stars {
+  display: flex;
+  justify-content: center;
+  gap: 0.35rem;
+  margin: 0.6rem 0 0.2rem;
+
+  .star {
+    font-size: 2.4rem;
+    line-height: 1;
+    color: $gray-light;
+    animation: star-pop 0.5s $ease-out-back both;
+    animation-delay: calc(0.35s + var(--i) * 0.18s);
+  }
+
+  .star.is-on {
+    color: $gold;
+    text-shadow: 0 2px 0 #a97b25, 0 0 18px rgba($gold, 0.6);
+  }
+
+  .star:nth-child(2) {
+    font-size: 2.9rem;
+    transform: translateY(-6px);
+  }
+}
+
+.dialog-message {
+  margin-top: 0.5rem;
+  color: $ink-soft;
+  font-weight: 600;
+}
+
+.dialog-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+}
+
+.dialog-stat {
+  padding: 0.6rem 0.25rem;
+  border-radius: $radius-sm;
+  background: $bordo-wash;
+  border: 1px solid $gray-line;
+
+  dt {
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: $gray-dark;
+  }
+
+  dd {
+    margin: 0.1rem 0 0;
+    font-family: $font-display;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: $bordo;
+  }
+}
+
+.overlay-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+
+  .btn {
+    flex: 1 1 160px;
+    white-space: nowrap;
+  }
+}
+
+.dialog-countdown {
+  height: 6px;
+  margin-top: 1.1rem;
+  border-radius: $radius-pill;
+  background: $gray-line;
+  overflow: hidden;
+}
+
+.dialog-countdown-bar {
+  height: 100%;
+  background: linear-gradient(90deg, $gold 0%, $bordo 100%);
+  transform-origin: left;
+  animation: countdown linear forwards;
+}
+
+.dialog-countdown-label {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: $gray-dark;
+}
+
+// Confete (gerado em ui/effects.ts)
+.confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+
+  span {
+    position: absolute;
+    top: -16px;
+    left: var(--x);
+    width: 9px;
+    height: 14px;
+    border-radius: 2px;
+    background: var(--color);
+    animation: confetti-fall var(--duration) cubic-bezier(0.25, 0.6, 0.5, 1) var(--delay) forwards;
+  }
+
+  span.round {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+}

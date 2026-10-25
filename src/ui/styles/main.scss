@@ -1,8 +1,6 @@
-@use 'variables';
 @use 'reset';
-@use 'typography';
-@use 'layout';
-@use 'components';
+@use 'base';
 @use 'animations';
-@use 'responsive';
-@use 'game';
+@use 'header';
+@use 'board';
+@use 'dialog';

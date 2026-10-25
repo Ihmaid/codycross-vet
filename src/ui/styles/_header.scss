@@ -1,0 +1,162 @@
+@use 'variables' as *;
+
+.app-header {
+  position: relative;
+  color: $white;
+  background: linear-gradient(135deg, $bordo 0%, $bordo-dark 55%, $bordo-deep 100%);
+  border-radius: 0 0 $radius-lg $radius-lg;
+  box-shadow: $shadow-md;
+  overflow: hidden;
+
+  // Patinhas decorativas ao fundo
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 64 64'%3E%3Cg fill='%23ffffff' fill-opacity='0.06' transform='rotate(-18 32 32)'%3E%3Cellipse cx='32' cy='42' rx='12' ry='10'/%3E%3Cellipse cx='16' cy='28' rx='5' ry='7'/%3E%3Cellipse cx='48' cy='28' rx='5' ry='7'/%3E%3Cellipse cx='25' cy='17' rx='5' ry='7'/%3E%3Cellipse cx='39' cy='17' rx='5' ry='7'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+}
+
+.app-header__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: $content-width;
+  margin: 0 auto;
+  padding: 1rem 1.25rem 1.1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.brand-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  color: $bordo;
+  background: $white;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.18);
+  transform: rotate(-6deg);
+
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.brand-title {
+  font-family: $font-display;
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.01em;
+
+  span {
+    color: $gold-light;
+  }
+}
+
+.brand-subtitle {
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.stats {
+  display: flex;
+  gap: 0.5rem;
+  flex: none;
+}
+
+.stat {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  column-gap: 0.45rem;
+  align-items: center;
+  padding: 0.45rem 0.85rem;
+  border-radius: $radius-md;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(4px);
+  transition: background-color 0.3s ease;
+}
+
+.stat-icon {
+  grid-row: span 2;
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+}
+
+.stat-value {
+  font-family: $font-display;
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat--score .stat-icon {
+  color: $gold-light;
+}
+
+.stat--timer.is-warning {
+  background: rgba($gold, 0.35);
+}
+
+.stat--timer.is-critical {
+  background: rgba($danger, 0.75);
+  animation: pulse-critical 1s ease-in-out infinite;
+}
+
+.stat--score.is-bumped .stat-value {
+  display: inline-block;
+  animation: bump 0.6s $ease-out-back;
+}
+
+@media (max-width: $breakpoint-sm) {
+  .app-header__inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem 1rem;
+  }
+
+  .brand-icon {
+    width: 40px;
+    height: 40px;
+
+    svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .brand-title {
+    font-size: 1.35rem;
+  }
+
+  .stats .stat {
+    flex: 1;
+  }
+}

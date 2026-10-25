@@ -1,4 +1,4 @@
-import { calculateScore } from '../src/core/scoring';
+import { calculateScore, calculateStars } from '../src/core/scoring';
 import { normalizeLetter } from '../src/core/input';
 import { CountdownTimer } from '../src/core/engine/CountdownTimer';
 
@@ -11,6 +11,18 @@ describe('calculateScore', () => {
 
   it('nunca fica negativa', () => {
     expect(calculateScore(points, 0, 50)).toBe(0);
+  });
+});
+
+describe('calculateStars', () => {
+  it.each([
+    [250, 0, 3],
+    [250, 1, 2],
+    [250, 3, 1],
+    [60, 0, 2],
+    [10, 5, 1],
+  ])('tempo %i, %i dicas -> %i estrelas', (time, hints, stars) => {
+    expect(calculateStars(time, 300, hints)).toBe(stars);
   });
 });
 

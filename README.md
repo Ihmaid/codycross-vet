@@ -35,12 +35,20 @@ src/
     levels.ts                  validação dos arquivos de nível
     scoring.ts, input.ts, progress.ts
   data/levels/                 níveis em JSON (+ index.ts com a ordem)
-  ui/GameHud.ts                textos da página (tempo, pontuação, dicas)
+  ui/GameHud.ts                textos da página (tempo, pontuação, progresso, avisos)
+  ui/Dialog.ts                 pop-ups (nível concluído, tempo esgotado, fim de jogo)
+  ui/effects.ts                confete
   ui/mobileInput.ts            teclado virtual no celular
-  ui/styles/                   estilos (SCSS)
+  ui/styles/                   estilos (SCSS); cores em _variables.scss
 tests/                         testes automatizados
 docs/                          documentação e anotações do projeto
 ```
+
+## Identidade visual
+
+Cores baseadas na Universidade de Vassouras: bordô do logo (`#803031`) e do site (`#6D1D20`), cinza quente do logo (`#A19896`) e branco, com dourado (`#D9A441`) como destaque. A paleta da página fica em `src/ui/styles/_variables.scss` e a da grade em `src/core/engine/CrosswordRenderer.ts` (`COLORS`).
+
+Todas as animações respeitam a opção "reduzir movimento" do sistema.
 
 ## Como criar um nível
 

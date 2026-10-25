@@ -26,10 +26,14 @@ describe('WordValidator', () => {
     expect(v.isRowSolved(0)).toBe(true);
   });
 
-  it('não marca palavra errada como resolvida', () => {
+  it('não marca palavra errada como resolvida, mas sabe que a linha está cheia', () => {
     const v = new WordValidator(level('GA'));
-    type(v, 0, 0, 'GATA');
+    type(v, 0, 0, 'GAT');
+    expect(v.isRowFilled(0)).toBe(false);
+    v.setLetter(0, 3, 'A');
     expect(v.isRowSolved(0)).toBe(false);
+    expect(v.isRowFilled(0)).toBe(true);
+    expect(v.solvedCount()).toBe(0);
   });
 
   it('trava linhas resolvidas e ignora células fora da palavra', () => {
