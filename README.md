@@ -8,16 +8,60 @@ Jogo educacional de Virologia Veterinária — projeto acadêmico da Universidad
 - **caderno de estudos**: favoritos, revisados e anotações, com backup (exportar/importar);
 - **funciona offline** e pode ser instalado no celular (PWA).
 
-O conteúdo e o visual seguem o protótipo **V5 aprovado pela equipe** de estudantes; esta versão o reescreve em TypeScript com testes, mantendo as mesmas fases, grades e textos.
+**Jogar agora:** https://codycross-vet.vercel.app (funciona no computador e no celular, sem instalar nada).
 
-## Como rodar
+O conteúdo segue o protótipo **V5 aprovado pela equipe** de estudantes (mesmas fases, perguntas e grades); esta versão o reescreve em TypeScript com testes.
 
-Requer Node.js 20 ou mais recente.
+O visual segue o próprio e-book: moldura verde `#03602A`, página cor de papel `#DDD8CC`, texto preto, Comic Neue nos títulos de capítulo e Poppins no texto (cores medidas nas páginas do PDF; fontes servidas pelo site). As palavras-cruzadas imitam as de revista e o caça-palavras marca as palavras com "marca-texto". O sumário lista as fases como o sumário do livro. Os textos do site, com o antes e depois, estão em `docs/textos-do-site.md`.
+
+## Passo a passo: baixar e rodar no seu computador
+
+Não é preciso saber programar. Você vai instalar um programa (o Node.js), baixar os arquivos e digitar três comandos.
+
+**1. Instale o Node.js (só na primeira vez).**
+Entre em [nodejs.org](https://nodejs.org), baixe a versão **LTS** e instale clicando em "Avançar" até o fim. Serve a versão 20 ou mais recente.
+
+**2. Baixe os arquivos do jogo.**
+Nesta página do GitHub, clique no botão verde **Code** e depois em **Download ZIP**. Descompacte o arquivo numa pasta fácil de achar, por exemplo na Área de Trabalho. A pasta vai se chamar `codycross-vet-main`.
+(Quem usa Git pode clonar: `git clone https://github.com/Ihmaid/codycross-vet.git`.)
+
+**3. Abra um terminal dentro da pasta.**
+- Windows: abra a pasta descompactada, clique com o botão direito num espaço vazio e escolha **Abrir no Terminal**. (Outra forma: clique na barra de endereço da pasta, digite `cmd` e aperte Enter.)
+- Mac: abra o app **Terminal**, digite `cd ` (com um espaço no fim), arraste a pasta para a janela e aperte Enter.
+
+**4. Instale as dependências (só na primeira vez).**
+Digite e aperte Enter:
 
 ```bash
 npm install
+```
+
+Leva um ou dois minutos. Avisos em amarelo (`npm warn`) são normais e podem ser ignorados.
+
+**5. Inicie o jogo.**
+
+```bash
+npm start
+```
+
+Quando aparecer `compiled successfully`, abra o navegador em **http://localhost:3000**. O jogo fica no ar enquanto o terminal estiver aberto; para parar, volte ao terminal e aperte `Ctrl + C`.
+
+**Da próxima vez**, basta repetir os passos 3 e 5.
+
+### Problemas comuns
+
+| O que aparece | O que fazer |
+|---|---|
+| `'npm' não é reconhecido` ou `command not found: npm` | O Node.js não foi instalado ou o terminal foi aberto antes da instalação. Instale (passo 1), feche o terminal e abra de novo. |
+| `ENOENT ... package.json` | O terminal não está dentro da pasta do jogo. Refaça o passo 3 na pasta que tem o arquivo `package.json`. |
+| `EADDRINUSE: address already in use :::3000` | O jogo já está aberto em outro terminal. Use esse, ou feche-o com `Ctrl + C`. |
+| O progresso sumiu | O progresso fica salvo no navegador. `localhost:3000` e o site publicado guardam progressos separados. |
+
+## Comandos para desenvolvimento
+
+```bash
 npm start          # servidor de desenvolvimento em http://localhost:3000
-npm run build      # versão final em dist/
+npm run build      # versão final em dist/ (é a pasta publicada no site)
 ```
 
 ## Verificações
@@ -53,12 +97,12 @@ src/
     progress.ts               progresso, pontuação e desbloqueio
     notebook.ts               caderno de estudos e backup
     content.ts, text.ts, types.ts
-  ui/                         telas: homeView (mapa), gameView (fase), libraryView (biblioteca), winModal, effects
-  ui/styles/                  estilos do V5 (_v5-*.scss) + _extras.scss (efeitos e ajustes)
+  ui/                         telas: homeView (sumário), gameView (fase), libraryView (biblioteca), winModal (carimbo)
+  ui/styles/                  _base (cores, fontes, moldura), _home, _game, _library, _modal
   sw.template.js              modo offline (o build gera dist/sw.js)
 public/                       ilustrações, páginas do e-book, ícones, manifesto e PDF (copiados como estão)
 tests/                        testes automatizados
-docs/                         anotações históricas da versão anterior (CodyCross)
+docs/                         textos do site aprovados pelo time (antes e depois)
 ```
 
 ## Como editar o conteúdo

@@ -1,3 +1,9 @@
+// Fontes do e-book, servidas pelo próprio site (funcionam offline).
+import '@fontsource/poppins/latin-400.css';
+import '@fontsource/poppins/latin-500.css';
+import '@fontsource/poppins/latin-600.css';
+import '@fontsource/poppins/latin-700.css';
+import '@fontsource/comic-neue/latin-700.css';
 import './ui/styles/main.scss';
 import { stageIndex, STAGES } from './core/content';
 import { Notebook } from './core/notebook';
@@ -13,13 +19,19 @@ const notebook = Notebook.load();
 
 let lastPoints = progress.totalPoints();
 
-/** Cabeçalho: pontos e fases concluídas. */
-function renderHeader(): void {
+/** Cabeçalho: pontos, fases concluídas e seção atual do menu. */
+function renderHeader(view?: string): void {
   const points = progress.totalPoints();
-  $('total-points').textContent = `${points} pts`;
+  $('total-points').textContent = `${points} ${points === 1 ? 'ponto' : 'pontos'}`;
   $('top-count').textContent = `${progress.finishedCount()} de ${STAGES.length} fases`;
   if (points > lastPoints) replayAnimation($('total-points'), 'bump');
   lastPoints = points;
+  if (view) {
+    for (const [id, name] of [['nav-home', 'home'], ['nav-library', 'library:acervo'], ['nav-notebook', 'library:caderno']]) {
+      if (name === view) $(id).setAttribute('aria-current', 'page');
+      else $(id).removeAttribute('aria-current');
+    }
+  }
 }
 
 const home = new HomeView(progress);
@@ -57,7 +69,7 @@ function route(): void {
   if (r.view === 'home') home.render();
   else if (r.view === 'stage') game.open(stageIndex(r.id), r.mode);
   else library.open(r.tab, r.id);
-  renderHeader();
+  renderHeader(screen);
 }
 
 window.addEventListener('hashchange', route);

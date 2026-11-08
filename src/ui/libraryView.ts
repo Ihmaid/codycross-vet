@@ -5,7 +5,14 @@ import { normalize } from '../core/text';
 import { $, html, setHtml, show } from './dom';
 import { LibraryTab, navigate } from './router';
 
-/** Biblioteca: acervo do e-book, caderno pessoal e referências. */
+/** Junta itens em português: "a", "a e b", "a, b e c". */
+function joinPt(items: string[]): string {
+  return items.length <= 1 ? items.join('') : `${items.slice(0, -1).join(', ')} e ${items[items.length - 1]}`;
+}
+
+const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+
+/** Biblioteca: capítulos do e-book, caderno pessoal e referências. */
 export class LibraryView {
   private active = 0;
   private readonly search = $<HTMLInputElement>('library-search');
@@ -40,7 +47,7 @@ export class LibraryView {
     });
   }
 
-  /** Abre a aba pedida (e o tema, se informado). */
+  /** Abre a aba pedida (e o capítulo, se informado). */
   open(tab: LibraryTab, id?: string): void {
     if (id && stageIndex(id) >= 0) this.active = stageIndex(id);
     for (const name of ['acervo', 'caderno', 'references'] as const) {
@@ -49,7 +56,8 @@ export class LibraryView {
       if (name === tab) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
     }
-    $('library-crumb').textContent = tab === 'acervo' ? STAGES[this.active].short : tab === 'caderno' ? 'Meu caderno' : 'Referências';
+    $('library-crumb').textContent =
+      tab === 'acervo' ? STAGES[this.active].short : tab === 'caderno' ? 'Meu caderno' : 'Referências';
     if (tab === 'acervo') {
       this.renderList();
       this.renderArticle();
@@ -71,17 +79,18 @@ export class LibraryView {
         (!this.onlyPending.checked || !nb.isReviewed(s.id)) &&
         (!q || normalize([s.title, s.short, s.tag, STUDY[s.id]?.text ?? ''].join(' ')).includes(q))
     );
-    $('library-count').textContent = `${filtered.length} de ${STAGES.length} temas exibidos`;
+    $('library-count').textContent =
+      filtered.length === STAGES.length ? `${STAGES.length} capítulos` : `${filtered.length} de ${STAGES.length} capítulos`;
     setHtml(
       this.list,
       filtered.length
         ? html`${filtered.map(
             ({ s, i }) => html`<button type="button" class="${i === this.active ? 'active' : ''}" data-lib="${s.id}" aria-current="${i === this.active ? 'page' : 'false'}">
-              <img src="${assetPath(s.image)}" alt="" loading="lazy"><span>${s.title}${nb.isFavorite(s.id) ? html` <b aria-label="Favorito">★</b>` : ''}${
-                nb.isReviewed(s.id) ? html` <b aria-label="Revisado">✓</b>` : ''
-              }</span></button>`
+              <img src="${assetPath(s.image)}" alt="" loading="lazy"><span>${s.title}</span>${
+                nb.isFavorite(s.id) ? html`<b title="Favorito" aria-label="favorito">★</b>` : ''
+              }${nb.isReviewed(s.id) ? html`<b title="Revisado" aria-label="revisado">✓</b>` : ''}</button>`
           )}`
-        : html`<p class="library-empty">Nenhum resultado. Modifique os filtros.</p>`
+        : html`<p class="library-empty">Nenhum capítulo com esses filtros.</p>`
     );
   }
 
@@ -90,47 +99,46 @@ export class LibraryView {
     const entry = STUDY[s.id];
     const nb = this.notebook;
     if (!entry) {
-      this.article.textContent = 'Não foi possível localizar as páginas deste capítulo.';
+      this.article.textContent = 'Não encontramos as páginas deste capítulo.';
       return;
     }
+    const pages = joinPt(entry.pages.map(String));
     setHtml(
       this.article,
-      html`<div class="library-article-head"><img src="${assetPath(s.image)}" alt="Ilustração original de ${s.title}">
-          <div><span class="eyebrow">${s.tag}</span><h2>${s.title}</h2><p class="meta">E-book original · ${entry.pages.map((n) => `página ${n}`).join(' e ')}</p></div></div>
-        <p class="library-note">As páginas e a transcrição abaixo reproduzem o e-book fornecido pela equipe. As perguntas de revisão reutilizam pistas já presentes no jogo. Este acervo não representa uma atualização científica automática do material.</p>
-        <div class="library-actions">
-          <button type="button" id="lib-play">✣ Jogar este tema →</button>
-          <a class="reference-pdf-link" href="${PDF_PATH}#page=${entry.pages[0]}" target="_blank" rel="noopener">↗ Abrir no PDF original</a>
+      html`<header class="article-head">
+          <img src="${assetPath(s.image)}" alt="">
+          <div><h2>${s.title} <i>${s.tag}</i></h2><p>${entry.pages.length > 1 ? 'Páginas' : 'Página'} ${pages} do e-book</p></div>
+        </header>
+        <div class="article-actions">
+          <button type="button" class="button" id="lib-play">Jogar esta fase</button>
+          <a href="${PDF_PATH}#page=${entry.pages[0]}" target="_blank" rel="noopener">Abrir no PDF</a>
         </div>
-        <div class="study-tools">
-          <div><h3>Caderno de revisão</h3><p class="meta">Seu registro pessoal de estudo deste assunto.</p></div>
-          <div class="study-toggle-row">
-            <button id="lib-favorite" type="button" class="secondary" aria-pressed="${nb.isFavorite(s.id)}">${nb.isFavorite(s.id) ? '★ Remover favorito' : '☆ Salvar favorito'}</button>
-            <button id="lib-reviewed" type="button" class="secondary" aria-pressed="${nb.isReviewed(s.id)}">${nb.isReviewed(s.id) ? '✓ Revisado · desfazer' : '○ Marcar revisado'}</button>
-          </div>
-          <label for="lib-notes">Minhas anotações (somente neste navegador)</label>
-          <textarea id="lib-notes" rows="4" maxlength="10000" placeholder="Escreva aqui dúvidas, conceitos para retomar ou observações sobre ${s.short}.">${nb.note(s.id)}</textarea>
-          <p id="lib-notes-status" role="status" class="meta">Salvo automaticamente neste dispositivo. Use o backup em Meu caderno para não perder anotações.</p>
-        </div>
-        <div class="recall-box"><span class="eyebrow">REVISÃO ATIVA</span><h3>Teste sua lembrança</h3>
-          <p class="meta">Três pistas já existentes na fase de ${s.short}. Revele cada resposta quando quiser; isto não modifica sua pontuação no jogo.</p>
-          ${s.cross.slice(0, 3).map(
-            ([answer, clue], i) => html`<div class="recall-item"><p><b>${i + 1}.</b> ${clue}</p>
-              <button class="recall-answer" type="button" aria-expanded="false" data-answer="${answer}">Revelar resposta</button></div>`
-          )}
-        </div>
-        <h3>Revisão ilustrada do e-book</h3>
         ${entry.images.map(
-          (path, i) => html`<figure><img class="library-image" src="${path}" loading="lazy" alt="Página original ${entry.pages[i]} do e-book: ${s.title}">
-            <figcaption class="meta">Página ${entry.pages[i]} do PDF original · ilustração e texto originais</figcaption></figure>`
+          (path, i) => html`<figure class="ebook-page"><img src="${path}" loading="lazy" alt="Página ${entry.pages[i]} do e-book: ${s.title}"></figure>`
         )}
-        <details><summary>Consultar transcrição pesquisável destas páginas</summary>
-          <p class="library-note">Transcrição obtida automaticamente do PDF para facilitar a busca; confira a imagem original acima em caso de divergência.</p>
-          <div class="library-text">${entry.text}</div></details>`
+        <section class="study-tools">
+          <h3>Seu estudo</h3>
+          <div class="study-toggle-row">
+            <button id="lib-favorite" type="button" class="button button-quiet" aria-pressed="${nb.isFavorite(s.id)}">${nb.isFavorite(s.id) ? '★ Favorito' : '☆ Marcar como favorito'}</button>
+            <button id="lib-reviewed" type="button" class="button button-quiet" aria-pressed="${nb.isReviewed(s.id)}">${nb.isReviewed(s.id) ? '✓ Revisado' : 'Marcar como revisado'}</button>
+          </div>
+          <label for="lib-notes">Anotações</label>
+          <textarea id="lib-notes" rows="5" maxlength="10000" placeholder="Dúvidas, coisas para lembrar na prova...">${nb.note(s.id)}</textarea>
+          <p id="lib-notes-status" role="status" class="small">Salvo automaticamente neste navegador.</p>
+        </section>
+        <section class="recall">
+          <h3>Teste sua memória</h3>
+          <p class="small">Três pistas do jogo desta fase. Tente lembrar antes de ver a resposta.</p>
+          <ol>${s.cross.slice(0, 3).map(
+            ([answer, clue]) => html`<li><p>${clue}</p>
+              <button class="recall-answer" type="button" aria-expanded="false" data-answer="${answer}">Ver resposta</button></li>`
+          )}</ol>
+        </section>
+        <details class="transcript"><summary>Ver o texto destas páginas</summary><div class="library-text">${entry.text}</div></details>`
     );
 
     $('lib-play').addEventListener('click', () => {
-      // Estudar é livre: se a fase estiver bloqueada, liga o modo exploração para poder jogá-la.
+      // Estudar é livre: se a fase estiver bloqueada, libera todas para poder jogá-la.
       if (!this.progress.isAvailable(this.active)) {
         this.progress.state.explore = true;
         this.progress.save();
@@ -149,39 +157,42 @@ export class LibraryView {
     });
     $('lib-notes').addEventListener('input', (e) => {
       nb.setNote(s.id, (e.target as HTMLTextAreaElement).value);
-      $('lib-notes-status').textContent = 'Anotação salva neste navegador.';
+      $('lib-notes-status').textContent = 'Salvo.';
     });
     this.article.querySelectorAll<HTMLButtonElement>('.recall-answer').forEach((btn) =>
       btn.addEventListener('click', () => {
         const expanded = btn.getAttribute('aria-expanded') === 'true';
         btn.setAttribute('aria-expanded', String(!expanded));
-        btn.textContent = expanded ? 'Revelar resposta' : btn.dataset.answer!;
+        btn.textContent = expanded ? 'Ver resposta' : btn.dataset.answer!;
       })
     );
   }
 
   private renderNotebook(): void {
     const nb = this.notebook;
+    const reviewed = nb.count(STAGES, 'reviewed');
+    const favorites = nb.count(STAGES, 'favorites');
     const withNotes = STAGES.filter((s) => nb.hasNote(s.id)).length;
-    setHtml(
-      $('study-summary'),
-      html`${[
-        ['Revisados', nb.count(STAGES, 'reviewed')],
-        ['Favoritos', nb.count(STAGES, 'favorites')],
-        ['Com anotações', withNotes],
-        ['Fases concluídas', this.progress.finishedCount()],
-      ].map(([label, num]) => html`<div><b>${num}</b><span>${label}</span></div>`)}`
-    );
+    const finished = this.progress.finishedCount();
+
+    const parts = [
+      reviewed && `revisou ${plural(reviewed, 'capítulo', 'capítulos')}`,
+      favorites && `marcou ${plural(favorites, 'favorito', 'favoritos')}`,
+      withNotes && `tem anotações em ${plural(withNotes, 'capítulo', 'capítulos')}`,
+    ].filter(Boolean) as string[];
+    $('study-summary').textContent = parts.length
+      ? `Até agora você ${joinPt(parts)}. No jogo, concluiu ${plural(finished, 'fase', 'fases')} de ${STAGES.length}.`
+      : 'Seu caderno ainda está vazio. Na biblioteca, marque capítulos como favoritos ou revisados e escreva anotações; eles aparecem aqui.';
+
     const saved = STAGES.filter((s) => nb.isFavorite(s.id) || nb.isReviewed(s.id) || nb.hasNote(s.id));
     setHtml(
       $('study-dashboard-list'),
-      saved.length
-        ? html`${saved.map(
-            (s) => html`<button class="study-saved-item" type="button" data-study="${s.id}"><img src="${assetPath(s.image)}" alt="">
-              <span><b>${s.title}</b><small>${nb.isFavorite(s.id) ? '★ Favorito · ' : ''}${nb.isReviewed(s.id) ? '✓ Revisado · ' : ''}${nb.hasNote(s.id) ? '✎ Anotação' : ''}</small>
-              <small class="note-snippet">${nb.note(s.id).slice(0, 110)}</small></span><strong>Reabrir →</strong></button>`
-          )}`
-        : html`<div class="library-empty">Seu caderno ainda está vazio. Abra uma revisão, salve um favorito ou faça uma anotação para começar.</div>`
+      html`${saved.map((s) => {
+        const tags = [nb.isFavorite(s.id) && 'favorito', nb.isReviewed(s.id) && 'revisado'].filter(Boolean) as string[];
+        return html`<button class="notebook-item" type="button" data-study="${s.id}"><img src="${assetPath(s.image)}" alt="">
+          <span><b>${s.title}</b>${tags.length ? html` <small>${joinPt(tags)}</small>` : ''}
+          ${nb.hasNote(s.id) ? html`<span class="note-snippet">${nb.note(s.id).slice(0, 140)}</span>` : ''}</span></button>`;
+      })}`
     );
   }
 
@@ -189,11 +200,10 @@ export class LibraryView {
     setHtml(
       $('reference-pages'),
       html`${REFERENCES.map(
-        (r) => html`<figure><img class="library-image" src="${r.image}" loading="lazy" alt="Referências bibliográficas do e-book, página ${r.page}">
-          <figcaption class="meta">Referências do e-book, página ${r.page} do PDF</figcaption></figure>`
+        (r) => html`<figure class="ebook-page"><img src="${r.image}" loading="lazy" alt="Referências bibliográficas, página ${r.page} do e-book"></figure>`
       )}`
     );
-    $('references-text').textContent = REFERENCES.map((r) => `PÁGINA ${r.page} DO PDF\n${r.text}`).join('\n\n');
+    $('references-text').textContent = REFERENCES.map((r) => `Página ${r.page}\n${r.text}`).join('\n\n');
   }
 
   private exportBackup(): void {
@@ -210,18 +220,18 @@ export class LibraryView {
   private async importBackup(file: File | undefined): Promise<void> {
     if (!file) return;
     try {
-      if (file.size > MAX_BACKUP_BYTES) throw new Error('Arquivo muito grande.');
+      if (file.size > MAX_BACKUP_BYTES) throw new Error('o arquivo é grande demais.');
       const { game, caderno } = parseBackup(await file.text());
-      if (!confirm('Importar este backup substituirá as notas e o progresso atuais neste navegador. Deseja continuar?')) return;
+      if (!confirm('Importar este arquivo vai substituir o progresso e as anotações deste navegador. Continuar?')) return;
       this.progress.state = game;
       this.notebook.state = caderno;
       this.progress.save();
       this.notebook.save();
       this.onProgressReplaced();
       this.renderNotebook();
-      alert('Backup restaurado. Seu progresso e caderno estão disponíveis.');
+      alert('Pronto, progresso e anotações importados.');
     } catch (e) {
-      alert(`Não foi possível importar: ${(e as Error).message}`);
+      alert(`Não deu para importar: ${(e as Error).message}`);
     }
   }
 }
