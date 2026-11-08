@@ -12,7 +12,7 @@ Jogo educacional de Virologia Veterinária — projeto acadêmico da Universidad
 
 O conteúdo segue o protótipo **V5 aprovado pela equipe** de estudantes (mesmas fases, perguntas e grades); esta versão o reescreve em TypeScript com testes.
 
-O visual segue o próprio e-book: moldura verde `#03602A`, página cor de papel `#DDD8CC`, texto preto, Comic Neue nos títulos de capítulo e Poppins no texto (cores medidas nas páginas do PDF; fontes servidas pelo site). As palavras-cruzadas imitam as de revista e o caça-palavras marca as palavras com "marca-texto". O sumário lista as fases como o sumário do livro. Os textos estão em `docs/textos-para-aprovacao.md`.
+O visual segue o próprio e-book: moldura verde `#03602A`, página cor de papel `#DDD8CC`, texto preto, Comic Neue nos títulos de capítulo e Poppins no texto (cores medidas nas páginas do PDF; fontes servidas pelo site). As palavras-cruzadas imitam as de revista e o caça-palavras marca as palavras com "marca-texto". O sumário lista as fases como o sumário do livro. Os textos do site, com o antes e depois, estão em `docs/textos-do-site.md`.
 
 ## Passo a passo: baixar e rodar no seu computador
 
@@ -102,7 +102,7 @@ src/
   sw.template.js              modo offline (o build gera dist/sw.js)
 public/                       ilustrações, páginas do e-book, ícones, manifesto e PDF (copiados como estão)
 tests/                        testes automatizados
-docs/                         textos para aprovação + anotações históricas da versão anterior (CodyCross)
+docs/                         textos do site aprovados pelo time (antes e depois)
 ```
 
 ## Como editar o conteúdo

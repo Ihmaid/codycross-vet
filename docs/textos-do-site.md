@@ -1,4 +1,4 @@
-# Textos do novo visual: para aprovação do time
+# Textos do novo visual (aprovados pelo time)
 
 O novo visual segue o e-book: moldura verde, página cor de papel, títulos de capítulo na letra "de mão" e texto em Poppins.
 Junto com ele, os textos do site foram reescritos para soar como a turma falando, e não como um modelo de site.
@@ -10,8 +10,6 @@ O que guiou a reescrita:
 - nada de setas no fim dos botões, travessões ou frases de efeito ("Conhecimento que se conecta");
 - os avisos repetidos ("não representa uma atualização científica automática...") saíram; o crédito ficou em um só lugar, no rodapé;
 - sempre que possível, o texto vem do próprio e-book.
-
-Marque o que aprovar e anote o que quiser mudar. Tudo pode ser trocado.
 
 ## 1. Textos da interface
 
