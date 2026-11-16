@@ -17,6 +17,7 @@
     <a href="#/" id="nav-home">Sumário</a>
     <a href="#/biblioteca" id="nav-library">Biblioteca</a>
     <a href="#/caderno" id="nav-notebook">Meu caderno</a>
+    <a href="#/competicao" id="nav-competition">Competição</a>
   </nav>
   <p class="masthead-score"><span id="total-points">0 pontos</span>, <span id="top-count">0 de 28 fases</span></p>
 </header>
@@ -70,11 +71,11 @@
       <div class="sheet-progress" role="progressbar" aria-label="Progresso" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progress-bar"></div></div>
       <div id="cross-view">
         <p class="hint-text">Clique numa casa ou numa pista e escreva a resposta sem acentos.</p>
-        <div class="cross-scroll"><div id="cross-board" aria-label="Palavras-cruzadas"></div></div>
+        <div class="cross-scroll"><div id="cross-board" class="cross-board" aria-label="Palavras-cruzadas"></div></div>
       </div>
       <div id="hunt-view" hidden>
         <p class="hint-text">Arraste de uma ponta à outra da palavra. Vale na horizontal, vertical e diagonal, em qualquer sentido.</p>
-        <div id="hunt-board" role="grid" aria-label="Caça-palavras"></div>
+        <div id="hunt-board" class="hunt-board" role="grid" aria-label="Caça-palavras"></div>
       </div>
     </div>
 
@@ -144,6 +145,120 @@
     <p>As referências bibliográficas do e-book (páginas 58 e 59 do PDF). <a href="Livro_de_Jogos_Virologia_Veterinaria.pdf#page=58" target="_blank" rel="noopener">Abrir no PDF</a></p>
     <div class="reference-pages" id="reference-pages"></div>
     <details><summary>Ver como texto</summary><pre id="references-text"></pre></details>
+  </section>
+</main>
+
+<!-- COMPETIÇÃO (salas com a turma) -->
+<main id="competition" class="page view" hidden>
+  <nav class="crumb"><a href="#/">Sumário</a> / <span>Competição</span></nav>
+  <p id="comp-status" class="comp-status" role="status" aria-live="polite" hidden></p>
+
+  <section id="comp-entry" aria-labelledby="comp-entry-title">
+    <h1 id="comp-entry-title" class="comp-title">Competição</h1>
+    <p class="comp-lead">Jogue com a turma ao mesmo tempo, cada um no seu celular. Quem cria a sala escolhe os temas, manda o código para os colegas e também joga.</p>
+    <div class="comp-forms">
+      <form id="comp-create-form" class="comp-form" novalidate>
+        <h2>Criar uma sala</h2>
+        <label for="comp-create-name">Seu apelido</label>
+        <input id="comp-create-name" maxlength="16" autocomplete="nickname" spellcheck="false">
+        <button class="button" type="submit">Criar sala</button>
+      </form>
+      <form id="comp-join-form" class="comp-form" novalidate>
+        <h2>Entrar numa sala</h2>
+        <label for="comp-join-code">Código da sala</label>
+        <input id="comp-join-code" class="code-input" maxlength="5" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ABC23">
+        <label for="comp-join-name">Seu apelido</label>
+        <input id="comp-join-name" maxlength="16" autocomplete="nickname" spellcheck="false">
+        <button class="button" type="submit">Entrar</button>
+      </form>
+    </div>
+    <p id="comp-entry-message" class="feedback" role="alert"></p>
+    <section class="comp-rules" aria-labelledby="comp-rules-title">
+      <h2 id="comp-rules-title">Como funciona</h2>
+      <ul>
+        <li>Até 30 jogadores por sala. Todos recebem a mesma grade, ao mesmo tempo.</li>
+        <li>Cada palavra certa vale 100 pontos. Quem termina antes do tempo ganha 1 ponto por segundo que sobrou.</li>
+        <li>Cada dica tira 25 pontos. Em caso de empate, fica na frente quem chegou primeiro à pontuação.</li>
+        <li>Se a internet cair, abra o site de novo: você volta para a sala com os seus pontos.</li>
+      </ul>
+    </section>
+  </section>
+
+  <section id="comp-lobby" aria-labelledby="lobby-title" hidden>
+    <div class="lobby-head">
+      <div>
+        <h1 id="lobby-title" class="comp-title">Sala <span id="lobby-code" class="room-code"></span></h1>
+        <p>Para entrar, os colegas abrem a Competição e digitam o código, ou apontam a câmera para o QR code.</p>
+        <p class="lobby-link"><span id="lobby-link"></span> <button id="lobby-copy" class="button button-quiet" type="button">Copiar link</button></p>
+      </div>
+      <div id="lobby-qr" class="lobby-qr"></div>
+    </div>
+    <div class="lobby-body">
+      <section aria-labelledby="lobby-players-title">
+        <h2 id="lobby-players-title">Jogadores <span id="lobby-count" class="muted"></span></h2>
+        <ol id="lobby-players" class="player-list"></ol>
+      </section>
+      <section aria-labelledby="lobby-rules-title">
+        <h2 id="lobby-rules-title">Partida</h2>
+        <div id="lobby-rules"></div>
+        <div class="lobby-start">
+          <button id="lobby-start" class="button" type="button">Começar partida</button>
+          <p id="lobby-wait" class="muted"></p>
+        </div>
+      </section>
+    </div>
+    <button id="lobby-leave" class="link-button" type="button">Sair da sala</button>
+  </section>
+
+  <section id="comp-play" aria-labelledby="match-title" hidden>
+    <div class="match-bar">
+      <div class="match-name">
+        <p id="match-round" class="stage-meta"></p>
+        <h1 id="match-title"></h1>
+      </div>
+      <p class="match-clock"><span class="visually-hidden">Tempo restante: </span><span id="match-timer">0:00</span></p>
+      <p class="match-me"><strong id="match-score">0</strong> <span id="match-place"></span></p>
+    </div>
+    <div id="match-results" class="match-results" hidden>
+      <div>
+        <h2 id="results-title"></h2>
+        <p id="results-text"></p>
+      </div>
+      <button id="results-next" class="button" type="button" hidden>Começar agora</button>
+    </div>
+    <div class="play">
+      <div class="sheet">
+        <div class="sheet-progress" role="progressbar" aria-label="Progresso" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="match-progress"></div></div>
+        <p id="match-instructions" class="hint-text"></p>
+        <div id="match-cross" class="cross-scroll"><div id="match-cross-board" class="cross-board" aria-label="Palavras-cruzadas"></div></div>
+        <div id="match-hunt-board" class="hunt-board" role="grid" aria-label="Caça-palavras" hidden></div>
+      </div>
+      <aside class="clues">
+        <div class="clues-head"><h2 id="match-clues-title">Pistas</h2><span id="match-solved"></span></div>
+        <div id="match-clues" class="clues-list"></div>
+        <p id="match-feedback" class="feedback" role="status" aria-live="polite"></p>
+        <div class="actions">
+          <button id="match-hint" class="button button-quiet" type="button">Pedir dica (−25 pontos)</button>
+          <button id="match-leave" class="link-button" type="button">Sair da sala</button>
+        </div>
+        <section class="scoreboard" aria-labelledby="scoreboard-title">
+          <h2 id="scoreboard-title">Placar</h2>
+          <ol id="match-ranking" class="ranking"></ol>
+        </section>
+      </aside>
+    </div>
+  </section>
+
+  <section id="comp-final" class="final" aria-labelledby="final-title" hidden>
+    <span class="stamp" aria-hidden="true">Fim de jogo</span>
+    <h1 id="final-title" class="comp-title">Classificação final</h1>
+    <ol id="final-podium" class="podium"></ol>
+    <ol id="final-ranking" class="ranking"></ol>
+    <div class="final-actions">
+      <button id="final-again" class="button" type="button">Jogar de novo</button>
+      <p id="final-wait" class="muted"></p>
+      <button id="final-leave" class="link-button" type="button">Sair da sala</button>
+    </div>
   </section>
 </main>
 

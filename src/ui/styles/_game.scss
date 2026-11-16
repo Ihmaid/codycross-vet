@@ -115,7 +115,7 @@
   padding: 2px;
 }
 
-#cross-board {
+.cross-board {
   --cell: 34px;
   display: grid;
   gap: 0;
@@ -130,7 +130,7 @@
     container-type: inline-size;
   }
 
-  #cross-board {
+  .cross-board {
     --cell: clamp(13px, calc((100cqi - 4px) / var(--cols, 15)), 34px);
   }
 }
@@ -188,7 +188,7 @@
 }
 
 // Caça-palavras
-#hunt-board {
+.hunt-board {
   position: relative;
   display: grid;
   grid-template-columns: repeat(var(--n), minmax(0, 1fr));

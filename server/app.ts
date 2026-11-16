@@ -91,7 +91,9 @@ export function createApp(options: AppOptions = {}): CompetitionApp {
   const pending = new Set<string>();
   // Uma turma inteira pode entrar pela mesma rede (mesmo IP): limites generosos.
   const entryLimit = new RateLimiter(120, 60_000);
-  const actionLimit = new RateLimiter(25, 10_000);
+  // Respostas e dicas (contra "chutes" em sequência) e comandos do organizador têm limites separados.
+  const playLimit = new RateLimiter(30, 10_000);
+  const hostLimit = new RateLimiter(40, 10_000);
 
   const http = createServer((req, res) => {
     const origin = req.headers.origin;
@@ -202,7 +204,7 @@ export function createApp(options: AppOptions = {}): CompetitionApp {
     const handle = <T extends object>(
       ack: unknown,
       fn: () => Ack<T> | T,
-      limiter: RateLimiter | null = actionLimit,
+      limiter: RateLimiter | null = hostLimit,
       key = socket.id
     ) => {
       const reply = typeof ack === 'function' ? (ack as (r: Ack<T>) => void) : () => undefined;
@@ -342,7 +344,7 @@ export function createApp(options: AppOptions = {}): CompetitionApp {
         }
         const { room, playerId } = current();
         return room.answer(playerId, o.round, o.index, o.answer);
-      })
+      }, playLimit)
     );
 
     socket.on('select', (p, ack) =>
@@ -351,7 +353,7 @@ export function createApp(options: AppOptions = {}): CompetitionApp {
         if (!isInt(o.round) || !isInt(o.from) || !isInt(o.to)) throw new RoomError('Seleção inválida.');
         const { room, playerId } = current();
         return room.select(playerId, o.round, o.from, o.to);
-      })
+      }, playLimit)
     );
 
     socket.on('hint', (p, ack) =>
@@ -361,12 +363,13 @@ export function createApp(options: AppOptions = {}): CompetitionApp {
         const typed = typeof o.typed === 'string' ? o.typed.slice(0, 60) : undefined;
         const { room, playerId } = current();
         return room.hint(playerId, o.round, o.index, typed);
-      })
+      }, playLimit)
     );
 
     socket.on('disconnect', () => {
       detach(socket);
-      actionLimit.forget(socket.id);
+      playLimit.forget(socket.id);
+      hostLimit.forget(socket.id);
     });
   });
 
@@ -384,7 +387,8 @@ export function createApp(options: AppOptions = {}): CompetitionApp {
       }
     }
     entryLimit.prune(t);
-    actionLimit.prune(t);
+    playLimit.prune(t);
+    hostLimit.prune(t);
   }, sweepMs);
   sweeper.unref();
 

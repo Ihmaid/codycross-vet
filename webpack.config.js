@@ -3,6 +3,10 @@ const crypto = require('crypto');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { DefinePlugin } = require('webpack');
+
+/** Servidor da competição (render.yaml). Pode ser trocado pela variável COMPETITION_SERVER_URL no build. */
+const COMPETITION_SERVER = 'https://virologia-em-jogo.onrender.com';
 
 /**
  * Gera o service worker (modo offline / app instalável) com a lista de arquivos do build.
@@ -78,6 +82,12 @@ module.exports = (env, argv) => {
       extensions: ['.ts', '.js', '.json']
     },
     plugins: [
+      // No computador (npm run dev), vazio: o site procura o servidor na porta 3001 da mesma máquina.
+      new DefinePlugin({
+        __COMPETITION_SERVER__: JSON.stringify(
+          (process.env.COMPETITION_SERVER_URL ?? (isProduction ? COMPETITION_SERVER : '')).replace(/\/$/, '')
+        )
+      }),
       new HtmlWebpackPlugin({
         template: './src/index.html',
         filename: 'index.html',

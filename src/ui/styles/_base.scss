@@ -164,7 +164,8 @@ input[type='checkbox'] {
 
 .masthead-nav {
   display: flex;
-  gap: 22px;
+  flex-wrap: wrap;
+  gap: 4px 22px;
 
   a {
     color: var(--sobre-moldura);

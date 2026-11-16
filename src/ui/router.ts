@@ -5,7 +5,8 @@ export type LibraryTab = 'acervo' | 'caderno' | 'references';
 export type Route =
   | { view: 'home' }
   | { view: 'stage'; id: string; mode: Mode }
-  | { view: 'library'; tab: LibraryTab; id?: string };
+  | { view: 'library'; tab: LibraryTab; id?: string }
+  | { view: 'competition'; code?: string };
 
 /**
  * Rotas por "#" (funcionam em qualquer hospedagem estática, sem configurar o servidor):
@@ -14,6 +15,8 @@ export type Route =
  *   #/fase/raiva/caca-palavras
  *   #/biblioteca[/raiva]     acervo (opcionalmente aberto em um tema)
  *   #/caderno  #/referencias
+ *   #/competicao             criar ou entrar numa sala
+ *   #/sala/ABC23             link da sala (para a turma entrar)
  */
 export function parseRoute(hash: string): Route {
   const [section, id, extra] = decodeURIComponent(hash.replace(/^#\/?/, '')).split('/').filter(Boolean);
@@ -26,6 +29,10 @@ export function parseRoute(hash: string): Route {
       return { view: 'library', tab: 'caderno' };
     case 'referencias':
       return { view: 'library', tab: 'references' };
+    case 'competicao':
+      return { view: 'competition' };
+    case 'sala':
+      return { view: 'competition', code: id };
     default:
       return { view: 'home' };
   }
@@ -41,6 +48,8 @@ export function routeHref(route: Route): string {
       if (route.tab === 'caderno') return '#/caderno';
       if (route.tab === 'references') return '#/referencias';
       return route.id ? `#/biblioteca/${route.id}` : '#/biblioteca';
+    case 'competition':
+      return route.code ? `#/sala/${route.code}` : '#/competicao';
   }
 }
 

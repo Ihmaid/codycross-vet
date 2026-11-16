@@ -158,6 +158,6 @@ it('limita tentativas seguidas', async () => {
   ok(await send(host, 'create', { name: 'Rápido' }));
   ok(await send(host, 'start', {}));
   const results = [];
-  for (let i = 0; i < 30; i++) results.push(await send(host, 'answer', { round: 1, index: 0, answer: 'X' }));
+  for (let i = 0; i < 40; i++) results.push(await send(host, 'answer', { round: 1, index: 0, answer: 'X' }));
   expect(results.some((r) => !r.ok && /Calma/.test(r.error))).toBe(true);
 });

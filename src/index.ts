@@ -8,6 +8,7 @@ import './ui/styles/main.scss';
 import { stageIndex, STAGES } from './core/content';
 import { Notebook } from './core/notebook';
 import { Progress } from './core/progress';
+import type { CompetitionView } from './ui/competition/competitionView';
 import { $, replayAnimation, show } from './ui/dom';
 import { GameView } from './ui/gameView';
 import { HomeView } from './ui/homeView';
@@ -27,7 +28,12 @@ function renderHeader(view?: string): void {
   if (points > lastPoints) replayAnimation($('total-points'), 'bump');
   lastPoints = points;
   if (view) {
-    for (const [id, name] of [['nav-home', 'home'], ['nav-library', 'library:acervo'], ['nav-notebook', 'library:caderno']]) {
+    for (const [id, name] of [
+      ['nav-home', 'home'],
+      ['nav-library', 'library:acervo'],
+      ['nav-notebook', 'library:caderno'],
+      ['nav-competition', 'competition'],
+    ]) {
       if (name === view) $(id).setAttribute('aria-current', 'page');
       else $(id).removeAttribute('aria-current');
     }
@@ -44,7 +50,17 @@ const library = new LibraryView(progress, notebook, () => {
   home.render();
 });
 
-const views = { home: $('home'), stage: $('game'), library: $('library') };
+// A competição (e a biblioteca de conexão) só é baixada quando alguém abre a aba.
+let competition: CompetitionView | null = null;
+async function competitionView(): Promise<CompetitionView> {
+  if (!competition) {
+    const { CompetitionView } = await import(/* webpackChunkName: "competicao" */ './ui/competition/competitionView');
+    competition ??= new CompetitionView();
+  }
+  return competition;
+}
+
+const views = { home: $('home'), stage: $('game'), library: $('library'), competition: $('competition') };
 /** Tela/aba atual: só rola ao topo quando ela muda (escolher outro tema na biblioteca não rola). */
 let currentScreen = '';
 
@@ -61,6 +77,7 @@ function route(): void {
 
   for (const [name, el] of Object.entries(views)) show(el, name === r.view);
   if (r.view !== 'stage') game.close();
+  if (r.view !== 'competition') competition?.close();
 
   const screen = r.view === 'library' ? `library:${r.tab}` : r.view;
   if (screen !== currentScreen && r.view !== 'stage') window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
@@ -68,7 +85,13 @@ function route(): void {
 
   if (r.view === 'home') home.render();
   else if (r.view === 'stage') game.open(stageIndex(r.id), r.mode);
-  else library.open(r.tab, r.id);
+  else if (r.view === 'library') library.open(r.tab, r.id);
+  else
+    void competitionView().then((c) => {
+      // Ainda na competição quando terminou de carregar?
+      const now = parseRoute(location.hash);
+      if (now.view === 'competition') c.open(now.code);
+    });
   renderHeader(screen);
 }
 

@@ -3,7 +3,7 @@ import { spawn } from 'node:child_process';
 
 const tasks = [
   ['site', 'npm run start'],
-  ['competição', 'npm run server'],
+  ['servidor', 'npm run server'],
 ];
 
 const children = tasks.map(([name, command]) => {
