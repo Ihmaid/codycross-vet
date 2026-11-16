@@ -1,0 +1,18 @@
+# Servidor da competição no Render (Blueprint). O site continua na Vercel.
+# No Render: New > Blueprint > escolher este repositório.
+services:
+  - type: web
+    name: virologia-em-jogo
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run build:server
+    startCommand: npm run start:server
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      # Site oficial e prévias da Vercel.
+      - key: ALLOWED_ORIGINS
+        value: https://codycross-vet.vercel.app,https://codycross-*-gabriels-projects-7817f710.vercel.app
