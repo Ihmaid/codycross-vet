@@ -74,3 +74,23 @@ Mantivemos tudo como está no e-book. Se o time quiser corrigir, corrigimos no s
 - As perguntas e respostas dos jogos, as revisões de cada fase e as páginas do e-book continuam exatamente como no protótipo V5 aprovado.
 - As palavras-cruzadas e os caça-palavras são os mesmos (verificado por teste automático em todas as 28 fases).
 - Quem já jogou mantém o progresso e as anotações.
+
+## 5. Textos novos para o time aprovar (capa e sala da competição)
+
+A barra de menu do topo saiu. No lugar dela, o site abre numa capa (`#/`) com a apresentação do projeto e os links para cada parte. O sumário de fases passou para `#/fases`.
+
+| Onde | Texto |
+|---|---|
+| Capa (acima do título) | Universidade de Vassouras, Medicina Veterinária |
+| Capa (abaixo do título) | Palavras-cruzadas e caça-palavras para estudar as doenças virais mais importantes da Medicina Veterinária. |
+| Capa (botões) | Começar (depois: "Continuar na fase 2, Peritonite Infecciosa Felina") / Ver todas as fases |
+| Sobre o projeto (1º parágrafo) | Este site é a versão para jogar do *Livro de Jogos de Virologia Veterinária*, o e-book feito pela turma de Medicina Veterinária da Universidade de Vassouras. O livro tem uma introdução à virologia e 27 capítulos, cada um sobre uma doença que afeta animais de companhia, de produção ou silvestres. |
+| Sobre o projeto (2º parágrafo) | Cada capítulo virou uma fase. As pistas cobrem o agente, a transmissão, os sinais clínicos e a prevenção de cada doença, e o texto original do livro fica sempre a um clique, na Biblioteca. A proposta é revisar a matéria jogando, sozinho ou com a turma. |
+| Citação | "Mas aprender virologia não precisa ser algo complicado ou distante da realidade!" (Livro de Jogos de Virologia Veterinária, capítulo 1) |
+| O que tem aqui: Sumário | As 28 fases, liberadas uma depois da outra. Cada fase tem palavras-cruzadas e caça-palavras. |
+| O que tem aqui: Biblioteca | As páginas do e-book, com busca no texto, perguntas de revisão e o PDF para baixar. |
+| O que tem aqui: Meu caderno | Seus favoritos, os capítulos que você já revisou e as suas anotações. |
+| O que tem aqui: Competição | Salas para jogar com a turma ao mesmo tempo, cada um no seu celular, com placar ao vivo e pódio. |
+| Caminho no topo das páginas | Início / Sumário, Início / Biblioteca, Início / Competição |
+| Sala da competição | Quem já entrou (4 de 30) / Bia entrou na sala. / Bia e Caio entraram na sala. / Caio saiu. / QR code da sala |
+| Aba do navegador na sala | Sala ABC23 (4 jogadores) |

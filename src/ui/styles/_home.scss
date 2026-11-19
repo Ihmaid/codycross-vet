@@ -1,34 +1,5 @@
 // Sumário (mapa de fases)
 
-.cover {
-  display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-  gap: 40px;
-  align-items: center;
-
-  h1 {
-    font: 700 60px/1.02 var(--titulo);
-    color: var(--moldura);
-  }
-
-  p {
-    max-width: 34em;
-    margin: 18px 0 24px;
-    font-size: 18px;
-  }
-}
-
-.cover-art {
-  justify-self: center;
-  width: 280px;
-  height: 280px;
-  object-fit: contain;
-}
-
-.contents {
-  margin-top: 56px;
-}
-
 .contents-head {
   display: flex;
   flex-wrap: wrap;
@@ -38,7 +9,7 @@
   padding-bottom: 8px;
   border-bottom: 2px solid var(--moldura);
 
-  h2 {
+  h1 {
     font: 700 40px/1.1 var(--titulo);
     color: var(--moldura);
   }
@@ -164,24 +135,6 @@
 @keyframes highlighter {
   to {
     background-size: 100% 100%;
-  }
-}
-
-@media (max-width: 900px) {
-  .cover {
-    grid-template-columns: 1fr;
-    gap: 8px;
-
-    h1 {
-      font-size: 46px;
-    }
-  }
-
-  .cover-art {
-    grid-row: 1;
-    justify-self: start;
-    width: 140px;
-    height: 140px;
   }
 }
 

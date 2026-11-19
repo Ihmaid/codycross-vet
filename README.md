@@ -13,7 +13,9 @@ Jogo educacional de Virologia Veterinária — projeto acadêmico da Universidad
 
 O conteúdo segue o protótipo **V5 aprovado pela equipe** de estudantes (mesmas fases, perguntas e grades); esta versão o reescreve em TypeScript com testes.
 
-O visual segue o próprio e-book: moldura verde `#03602A`, página cor de papel `#DDD8CC`, texto preto, Comic Neue nos títulos de capítulo e Poppins no texto (cores medidas nas páginas do PDF; fontes servidas pelo site). As palavras-cruzadas imitam as de revista e o caça-palavras marca as palavras com "marca-texto". O sumário lista as fases como o sumário do livro. Os textos do site, com o antes e depois, estão em `docs/textos-do-site.md`.
+O site abre numa capa com a apresentação do projeto e os links para cada parte (sumário de fases, biblioteca, caderno e competição).
+
+O visual segue o próprio e-book: moldura verde `#03602A`, página cor de papel `#DDD8CC`, texto preto, Comic Neue nos títulos de capítulo e Poppins no texto (cores medidas nas páginas do PDF; fontes servidas pelo site). As palavras-cruzadas imitam as de revista e o caça-palavras marca as palavras com "marca-texto". O sumário (`#/fases`) lista as fases como o sumário do livro. Os textos do site, com o antes e depois, estão em `docs/textos-do-site.md`.
 
 ## Passo a passo: baixar e rodar no seu computador
 
@@ -121,7 +123,7 @@ Se o Render der outro endereço (por exemplo, porque o nome já estava em uso), 
 
 ```
 src/
-  index.html, index.ts        página e inicialização (rotas por #: #/fase/raiva, #/biblioteca, #/caderno...)
+  index.html, index.ts        página e inicialização (rotas por #: #/ capa, #/fases, #/fase/raiva, #/biblioteca, #/caderno...)
   data/                       conteúdo do e-book: stages.json (fases), study.json (páginas), references.json
   core/                       lógica pura e testada
     crossword.ts              montagem das palavras-cruzadas
@@ -131,9 +133,9 @@ src/
     content.ts, text.ts, types.ts
     match.ts, protocol.ts     regras e mensagens da competição (usadas pelo site e pelo servidor)
   competition/connection.ts   conexão com o servidor da competição (reconecta sozinha)
-  ui/                         telas: homeView (sumário), gameView (fase), libraryView (biblioteca), winModal (carimbo)
+  ui/                         telas: coverView (capa), homeView (sumário), gameView (fase), libraryView (biblioteca), winModal (carimbo)
   ui/competition/             competição: competitionView (salas), crossBoard e huntBoard (grades), qr
-  ui/styles/                  _base (cores, fontes, moldura), _home, _game, _library, _modal, _competition
+  ui/styles/                  _base (cores, fontes, moldura), _cover, _home, _game, _library, _modal, _competition
   sw.template.js              modo offline (o build gera dist/sw.js)
 server/                       servidor da competição: room.ts (regras da sala), app.ts (conexões), index.ts
 render.yaml                   configuração do servidor no Render

@@ -24,6 +24,14 @@ type FeedbackKind = '' | 'good' | 'bad';
 const stageTitle = (id: string): string => STAGES.find((s) => s.id === id)?.title ?? id;
 const minutes = (seconds: number): string => (seconds % 60 ? `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}` : `${seconds / 60}`);
 const plural = (n: number, one: string, many: string): string => `${n} ${n === 1 ? one : many}`;
+const DEFAULT_TITLE = document.title;
+/** Tempo em que quem acabou de entrar fica destacado na lista. */
+const FRESH_MS = 6000;
+
+/** "Bia", "Bia e Caio", "Bia, Caio e Duda". */
+function joinNames(names: string[]): string {
+  return names.length > 1 ? `${names.slice(0, -1).join(', ')} e ${names[names.length - 1]}` : (names[0] ?? '');
+}
 
 /** Competição: criar ou entrar numa sala, esperar a turma, jogar as rodadas e ver o pódio. */
 export class CompetitionView {
@@ -44,6 +52,11 @@ export class CompetitionView {
   private announcedFinish = 0;
   /** O carimbo do pódio aparece uma vez por partida. */
   private stamped = false;
+  /** Jogadores vistos na sala de espera (id → apelido), para avisar quem entrou ou saiu. */
+  private lobbyPlayers: Map<string, string> | null = null;
+  /** Quem acabou de entrar fica destacado na lista por alguns segundos. */
+  private readonly freshPlayers = new Map<string, number>();
+  private freshTimer: number | null = null;
 
   constructor() {
     this.conn = new Connection({
@@ -112,6 +125,7 @@ export class CompetitionView {
 
   close(): void {
     this.visible = false;
+    document.title = DEFAULT_TITLE;
   }
 
   // ---------------------------------------------------------------- eventos do servidor
@@ -156,6 +170,8 @@ export class CompetitionView {
     this.round = null;
     this.loadedRound = 0;
     this.stopTicker();
+    this.resetLobbyNews();
+    document.title = DEFAULT_TITLE;
     const message = {
       kicked: 'Você foi removido da sala pelo organizador.',
       closed: 'A sala foi encerrada.',
@@ -180,6 +196,10 @@ export class CompetitionView {
   private render(): void {
     const v = this.room;
     if (!v) return;
+    if (v.status !== 'lobby') {
+      this.resetLobbyNews();
+      if (this.visible) document.title = DEFAULT_TITLE;
+    }
     if (v.status === 'lobby') {
       this.showScreen('lobby');
       this.renderLobby(v);
@@ -238,10 +258,14 @@ export class CompetitionView {
       this.renderedQr = link;
     }
     $('lobby-count').textContent = `(${v.players.length} de ${MAX_PLAYERS})`;
+    this.lobbyNews(v);
+    // Na aba do navegador, para quem foi mandar o link e voltou.
+    if (this.visible) document.title = `Sala ${v.code} (${plural(v.players.length, 'jogador', 'jogadores')})`;
+    const now = Date.now();
     setHtml(
       $('lobby-players'),
       html`${v.players.map(
-        (p) => html`<li class="${p.online ? '' : 'is-offline'} ${p.id === v.you.id ? 'is-you' : ''}">
+        (p) => html`<li class="${p.online ? '' : 'is-offline'} ${p.id === v.you.id ? 'is-you' : ''} ${(this.freshPlayers.get(p.id) ?? 0) > now ? 'is-new' : ''}">
           <span class="player-name">${p.name}</span>
           ${p.host ? html`<i>organiza a partida</i>` : ''}
           ${p.id === v.you.id ? html`<i>você</i>` : ''}
@@ -257,6 +281,42 @@ export class CompetitionView {
         ? 'Você pode começar sozinho para testar, ou esperar a turma entrar.'
         : ''
       : `Esperando ${this.hostName(v)} começar a partida.`;
+  }
+
+  /** Avisa quem entrou ou saiu desde a última atualização (não na primeira vez que a sala aparece). */
+  private lobbyNews(v: RoomView): void {
+    const before = this.lobbyPlayers;
+    this.lobbyPlayers = new Map(v.players.map((p) => [p.id, p.name]));
+    if (!before) return;
+    const joined = v.players.filter((p) => !before.has(p.id) && p.id !== v.you.id);
+    const left = [...before].filter(([id]) => !this.lobbyPlayers!.has(id)).map(([, name]) => name);
+    if (!joined.length && !left.length) return;
+    const until = Date.now() + FRESH_MS;
+    for (const p of joined) this.freshPlayers.set(p.id, until);
+    const news = [
+      joined.length ? `${joinNames(joined.map((p) => p.name))} ${joined.length === 1 ? 'entrou' : 'entraram'} na sala.` : '',
+      left.length ? `${joinNames(left)} ${left.length === 1 ? 'saiu' : 'saíram'}.` : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
+    $('lobby-news').textContent = news;
+    if (joined.length) replayAnimation($('lobby-news'), 'bump-in');
+    // Tira o destaque depois de alguns segundos.
+    if (this.freshTimer) clearTimeout(this.freshTimer);
+    this.freshTimer = window.setTimeout(() => {
+      this.freshTimer = null;
+      this.freshPlayers.clear();
+      if (this.room?.status === 'lobby') this.renderLobby(this.room);
+    }, FRESH_MS);
+  }
+
+  private resetLobbyNews(): void {
+    this.lobbyPlayers = null;
+    this.freshPlayers.clear();
+    if (this.freshTimer) clearTimeout(this.freshTimer);
+    this.freshTimer = null;
+    const news = document.getElementById('lobby-news');
+    if (news) news.textContent = '';
   }
 
   private renderRules(v: RoomView, host: boolean): void {
@@ -476,6 +536,7 @@ export class CompetitionView {
     this.entryMessage(event === 'create' ? 'Criando a sala…' : 'Entrando…');
     if (this.conn.session) await this.conn.leave();
     this.room = null;
+    this.resetLobbyNews();
     const r = await this.conn.enter(event, { name, code });
     if (!r.ok) this.entryMessage(r.error, 'bad');
     else navigate({ view: 'competition', code: r.code }, { replace: true });
@@ -489,6 +550,8 @@ export class CompetitionView {
     this.round = null;
     this.loadedRound = 0;
     this.stopTicker();
+    this.resetLobbyNews();
+    document.title = DEFAULT_TITLE;
     navigate({ view: 'competition' });
     this.showScreen('entry');
     this.entryMessage('');

@@ -22,9 +22,6 @@ export class HomeView {
       this.progress.save();
       this.render();
     });
-    $('continue-btn').addEventListener('click', () => {
-      navigate({ view: 'stage', id: STAGES[this.progress.nextStageIndex()].id, mode: 'cross' });
-    });
     this.list.addEventListener('click', (e) => {
       const row = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-stage]');
       if (row && !row.disabled) navigate({ view: 'stage', id: row.dataset.stage!, mode: 'cross' });
@@ -40,10 +37,6 @@ export class HomeView {
     const finished = p.finishedCount();
     $('home-count').textContent = `${finished} de ${STAGES.length} fases concluídas`;
     this.explore.checked = p.state.explore;
-
-    const next = p.nextStageIndex();
-    $('continue-btn').textContent =
-      finished === 0 ? 'Começar' : `Continuar na fase ${next + 1}, ${STAGES[next].title}`;
 
     const query = normalize(this.search.value);
     const family = this.family.value;

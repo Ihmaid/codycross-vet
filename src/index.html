@@ -13,29 +13,53 @@
 <body>
 <header class="masthead">
   <a class="masthead-title" href="#/">Virologia em Jogo</a>
-  <nav class="masthead-nav" aria-label="Navegação principal">
-    <a href="#/" id="nav-home">Sumário</a>
-    <a href="#/biblioteca" id="nav-library">Biblioteca</a>
-    <a href="#/caderno" id="nav-notebook">Meu caderno</a>
-    <a href="#/competicao" id="nav-competition">Competição</a>
-  </nav>
   <p class="masthead-score"><span id="total-points">0 pontos</span>, <span id="top-count">0 de 28 fases</span></p>
 </header>
 
-<!-- SUMÁRIO (mapa de fases) -->
-<main id="home" class="page view">
+<!-- CAPA (início) -->
+<main id="cover" class="page view">
   <section class="cover">
     <div class="cover-text">
+      <p class="cover-kicker">Universidade de Vassouras, Medicina Veterinária</p>
       <h1>Virologia em Jogo</h1>
-      <p>Os 27 capítulos do nosso Livro de Jogos de Virologia Veterinária viraram fases. Em cada uma você resolve as palavras-cruzadas ou o caça-palavras da doença e libera a próxima.</p>
-      <button class="button" id="continue-btn" type="button">Começar</button>
+      <p class="cover-lead">Palavras-cruzadas e caça-palavras para estudar as doenças virais mais importantes da Medicina Veterinária.</p>
+      <div class="cover-actions">
+        <button class="button" id="continue-btn" type="button">Começar</button>
+        <a class="link-button" href="#/fases">Ver todas as fases</a>
+      </div>
     </div>
     <img class="cover-art" src="assets/intro.webp" alt="Ilustração de vírus feita pela equipe para o e-book">
   </section>
 
+  <div class="cover-body">
+    <section class="cover-about" aria-labelledby="about-title">
+      <h2 id="about-title">Sobre o projeto</h2>
+      <p>Este site é a versão para jogar do <em>Livro de Jogos de Virologia Veterinária</em>, o e-book feito pela turma de Medicina Veterinária da Universidade de Vassouras. O livro tem uma introdução à virologia e 27 capítulos, cada um sobre uma doença que afeta animais de companhia, de produção ou silvestres.</p>
+      <p>Cada capítulo virou uma fase. As pistas cobrem o agente, a transmissão, os sinais clínicos e a prevenção de cada doença, e o texto original do livro fica sempre a um clique, na Biblioteca. A proposta é revisar a matéria jogando, sozinho ou com a turma.</p>
+      <blockquote class="cover-quote">
+        <p>Mas aprender virologia não precisa ser algo complicado ou distante da realidade!</p>
+        <cite>Livro de Jogos de Virologia Veterinária, capítulo 1</cite>
+      </blockquote>
+    </section>
+
+    <nav class="cover-index" aria-labelledby="index-title">
+      <h2 id="index-title">O que tem aqui</h2>
+      <ol>
+        <li><a href="#/fases"><span class="cover-index-name">Sumário</span><span class="cover-index-text">As 28 fases, liberadas uma depois da outra. Cada fase tem palavras-cruzadas e caça-palavras.</span></a></li>
+        <li><a href="#/biblioteca"><span class="cover-index-name">Biblioteca</span><span class="cover-index-text">As páginas do e-book, com busca no texto, perguntas de revisão e o PDF para baixar.</span></a></li>
+        <li><a href="#/caderno"><span class="cover-index-name">Meu caderno</span><span class="cover-index-text">Seus favoritos, os capítulos que você já revisou e as suas anotações.</span></a></li>
+        <li><a href="#/competicao"><span class="cover-index-name">Competição</span><span class="cover-index-text">Salas para jogar com a turma ao mesmo tempo, cada um no seu celular, com placar ao vivo e pódio.</span></a></li>
+      </ol>
+    </nav>
+  </div>
+</main>
+
+<!-- SUMÁRIO (lista de fases) -->
+<main id="home" class="page view" hidden>
+  <nav class="crumb"><a href="#/">Início</a> / <span>Sumário</span></nav>
   <section class="contents" aria-labelledby="contents-title">
     <div class="contents-head">
-      <h2 id="contents-title">Sumário</h2>
+      <h1 id="contents-title">Sumário</h1>
       <p id="home-count" class="contents-count">0 de 28 fases concluídas</p>
     </div>
     <div class="contents-tools">
@@ -50,7 +74,7 @@
 
 <!-- FASE -->
 <main id="game" class="page view" hidden>
-  <nav class="crumb"><a href="#/">Sumário</a> / <span id="crumb-stage">Fundamentos</span></nav>
+  <nav class="crumb"><a href="#/fases">Sumário</a> / <span id="crumb-stage">Fundamentos</span></nav>
   <section class="stage-head">
     <img id="stage-art" src="assets/intro.webp" alt="">
     <div>
@@ -107,7 +131,7 @@
 
 <!-- BIBLIOTECA -->
 <main id="library" class="page view" aria-label="Biblioteca" hidden>
-  <nav class="crumb"><a href="#/">Sumário</a> / <span id="library-crumb">Biblioteca</span></nav>
+  <nav class="crumb"><a href="#/">Início</a> / <span id="library-crumb">Biblioteca</span></nav>
   <div class="library-top">
     <h1>Biblioteca</h1>
     <nav class="library-tabs" aria-label="Seções da biblioteca">
@@ -150,7 +174,7 @@
 
 <!-- COMPETIÇÃO (salas com a turma) -->
 <main id="competition" class="page view" hidden>
-  <nav class="crumb"><a href="#/">Sumário</a> / <span>Competição</span></nav>
+  <nav class="crumb"><a href="#/">Início</a> / <span>Competição</span></nav>
   <p id="comp-status" class="comp-status" role="status" aria-live="polite" hidden></p>
 
   <section id="comp-entry" aria-labelledby="comp-entry-title">
@@ -184,21 +208,25 @@
     </section>
   </section>
 
-  <section id="comp-lobby" aria-labelledby="lobby-title" hidden>
+  <section id="comp-lobby" class="lobby" aria-labelledby="lobby-title" hidden>
     <div class="lobby-head">
-      <div>
+      <div class="lobby-share">
         <h1 id="lobby-title" class="comp-title">Sala <span id="lobby-code" class="room-code"></span></h1>
-        <p>Para entrar, os colegas abrem a Competição e digitam o código, ou apontam a câmera para o QR code.</p>
+        <p>Para entrar, os colegas abrem a Competição e digitam o código, abrem o link ou apontam a câmera para o QR code.</p>
         <p class="lobby-link"><span id="lobby-link"></span> <button id="lobby-copy" class="button button-quiet" type="button">Copiar link</button></p>
       </div>
-      <div id="lobby-qr" class="lobby-qr"></div>
+      <div class="lobby-qr-box">
+        <p class="lobby-qr-label">QR code da sala</p>
+        <div id="lobby-qr" class="lobby-qr"></div>
+      </div>
     </div>
     <div class="lobby-body">
-      <section aria-labelledby="lobby-players-title">
-        <h2 id="lobby-players-title">Jogadores <span id="lobby-count" class="muted"></span></h2>
+      <section class="lobby-players" aria-labelledby="lobby-players-title">
+        <h2 id="lobby-players-title">Quem já entrou <span id="lobby-count" class="muted"></span></h2>
+        <p id="lobby-news" class="lobby-news" role="status" aria-live="polite"></p>
         <ol id="lobby-players" class="player-list"></ol>
       </section>
-      <section aria-labelledby="lobby-rules-title">
+      <section class="lobby-rules" aria-labelledby="lobby-rules-title">
         <h2 id="lobby-rules-title">Partida</h2>
         <div id="lobby-rules"></div>
         <div class="lobby-start">

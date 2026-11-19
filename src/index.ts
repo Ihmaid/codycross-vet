@@ -9,6 +9,7 @@ import { stageIndex, STAGES } from './core/content';
 import { Notebook } from './core/notebook';
 import { Progress } from './core/progress';
 import type { CompetitionView } from './ui/competition/competitionView';
+import { CoverView } from './ui/coverView';
 import { $, replayAnimation, show } from './ui/dom';
 import { GameView } from './ui/gameView';
 import { HomeView } from './ui/homeView';
@@ -27,19 +28,11 @@ function renderHeader(view?: string): void {
   $('top-count').textContent = `${progress.finishedCount()} de ${STAGES.length} fases`;
   if (points > lastPoints) replayAnimation($('total-points'), 'bump');
   lastPoints = points;
-  if (view) {
-    for (const [id, name] of [
-      ['nav-home', 'home'],
-      ['nav-library', 'library:acervo'],
-      ['nav-notebook', 'library:caderno'],
-      ['nav-competition', 'competition'],
-    ]) {
-      if (name === view) $(id).setAttribute('aria-current', 'page');
-      else $(id).removeAttribute('aria-current');
-    }
-  }
+  // Na capa o título grande já está na página; o do cabeçalho some (ver _cover.scss).
+  if (view) document.body.dataset.view = view;
 }
 
+const cover = new CoverView(progress);
 const home = new HomeView(progress);
 const game = new GameView(progress, (unlockedIndex) => {
   renderHeader();
@@ -60,7 +53,7 @@ async function competitionView(): Promise<CompetitionView> {
   return competition;
 }
 
-const views = { home: $('home'), stage: $('game'), library: $('library'), competition: $('competition') };
+const views = { cover: $('cover'), home: $('home'), stage: $('game'), library: $('library'), competition: $('competition') };
 /** Tela/aba atual: só rola ao topo quando ela muda (escolher outro tema na biblioteca não rola). */
 let currentScreen = '';
 
@@ -83,7 +76,8 @@ function route(): void {
   if (screen !== currentScreen && r.view !== 'stage') window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
   currentScreen = screen;
 
-  if (r.view === 'home') home.render();
+  if (r.view === 'cover') cover.render();
+  else if (r.view === 'home') home.render();
   else if (r.view === 'stage') game.open(stageIndex(r.id), r.mode);
   else if (r.view === 'library') library.open(r.tab, r.id);
   else

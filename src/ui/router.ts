@@ -3,6 +3,7 @@ import { Mode } from '../core/types';
 export type LibraryTab = 'acervo' | 'caderno' | 'references';
 
 export type Route =
+  | { view: 'cover' }
   | { view: 'home' }
   | { view: 'stage'; id: string; mode: Mode }
   | { view: 'library'; tab: LibraryTab; id?: string }
@@ -10,7 +11,8 @@ export type Route =
 
 /**
  * Rotas por "#" (funcionam em qualquer hospedagem estática, sem configurar o servidor):
- *   #/                       mapa de fases
+ *   #/                       capa (início)
+ *   #/fases                  sumário (lista de fases)
  *   #/fase/raiva             palavras-cruzadas da fase
  *   #/fase/raiva/caca-palavras
  *   #/biblioteca[/raiva]     acervo (opcionalmente aberto em um tema)
@@ -21,6 +23,8 @@ export type Route =
 export function parseRoute(hash: string): Route {
   const [section, id, extra] = decodeURIComponent(hash.replace(/^#\/?/, '')).split('/').filter(Boolean);
   switch (section) {
+    case 'fases':
+      return { view: 'home' };
     case 'fase':
       return id ? { view: 'stage', id, mode: extra === 'caca-palavras' ? 'hunt' : 'cross' } : { view: 'home' };
     case 'biblioteca':
@@ -34,14 +38,16 @@ export function parseRoute(hash: string): Route {
     case 'sala':
       return { view: 'competition', code: id };
     default:
-      return { view: 'home' };
+      return { view: 'cover' };
   }
 }
 
 export function routeHref(route: Route): string {
   switch (route.view) {
-    case 'home':
+    case 'cover':
       return '#/';
+    case 'home':
+      return '#/fases';
     case 'stage':
       return `#/fase/${route.id}${route.mode === 'hunt' ? '/caca-palavras' : ''}`;
     case 'library':

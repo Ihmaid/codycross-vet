@@ -150,6 +150,31 @@
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.12), 0 8px 20px rgba(40, 30, 10, 0.12);
 }
 
+// Só no celular, onde o QR fica no fim da tela.
+.lobby-qr-label {
+  display: none;
+}
+
+// "Bia entrou na sala."
+.lobby-news {
+  min-height: 1.6em;
+  margin-bottom: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--moldura);
+
+  &.bump-in {
+    animation: news-in 0.5s ease;
+  }
+}
+
+@keyframes news-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
 .lobby-body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -209,6 +234,11 @@
 
   .is-offline .player-name {
     opacity: 0.5;
+  }
+
+  // Acabou de entrar: marca-texto amarelo, como no caça-palavras.
+  .is-new .player-name {
+    background: linear-gradient(transparent 45%, rgba(255, 214, 64, 0.75) 45%, rgba(255, 214, 64, 0.75) 90%, transparent 90%);
   }
 }
 
@@ -559,8 +589,49 @@
     font-size: 16px;
   }
 
-  .lobby-head {
-    grid-template-columns: minmax(0, 1fr);
+  // No celular: código e link, quem já entrou, regras e, por último, o QR code.
+  .lobby {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lobby-head,
+  .lobby-body {
+    display: contents;
+  }
+
+  .lobby-share {
+    padding-bottom: 18px;
+    border-bottom: 2px solid var(--moldura);
+  }
+
+  .lobby-players {
+    margin-top: 22px;
+  }
+
+  .lobby-rules {
+    margin-top: 28px;
+  }
+
+  .lobby-qr-box {
+    order: 1;
+    margin-top: 32px;
+    padding-top: 18px;
+    border-top: 1px solid var(--linha);
+  }
+
+  .lobby-qr-label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--moldura);
+  }
+
+  #lobby-leave {
+    order: 2;
+    align-self: flex-start;
+    margin-top: 24px;
   }
 
   .lobby-qr svg {

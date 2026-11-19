@@ -162,27 +162,6 @@ input[type='checkbox'] {
   text-decoration: none;
 }
 
-.masthead-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 22px;
-
-  a {
-    color: var(--sobre-moldura);
-    font-weight: 500;
-    font-size: 15px;
-    text-decoration: none;
-    padding-bottom: 2px;
-    border-bottom: 2px solid transparent;
-
-    &:hover,
-    &[aria-current='page'] {
-      color: var(--branco);
-      border-bottom-color: var(--branco);
-    }
-  }
-}
-
 .masthead-score {
   margin-left: auto;
   font-size: 14px;
@@ -262,8 +241,7 @@ input[type='checkbox'] {
   }
 
   .masthead-score {
-    margin-left: 0;
-    width: 100%;
+    font-size: 13px;
   }
 
   .page {
